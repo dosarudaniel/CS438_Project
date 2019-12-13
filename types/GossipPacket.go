@@ -10,7 +10,7 @@ type GossipPacket struct {
 	Private     	*PrivateMessage
 	DataRequest 	*DataRequest
 	DataReply   	*DataReply
-	GossipAddr  	*string
+	GossipAddr  	*string   			// This field caused me problems from HW3
 	SearchRequest 	*SearchRequest
 	SearchReply 	*SearchReply
 }

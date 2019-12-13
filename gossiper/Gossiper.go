@@ -1,25 +1,17 @@
 package gossiper
 
 import (
-//========= REDACTED =========
-//========= REDACTED =========
-//========= REDACTED =========
 	"time"
-	"github.com/2_alt_hw2/Peerster/logger"
+	"github.com/dosarudaniel/CS438_Project/logger"
 
-	"github.com/2_alt_hw2/Peerster/types"
-	"github.com/2_alt_hw2/Peerster/messaging"
-	"github.com/2_alt_hw2/Peerster/communication"
-	"github.com/2_alt_hw2/Peerster/file_sharing"
-	"github.com/2_alt_hw2/Peerster/ui"
-
-//========= REDACTED =========
-
-//========= REDACTED =========
-//========= REDACTED =========
+	"github.com/dosarudaniel/CS438_Project/types"
+	"github.com/dosarudaniel/CS438_Project/messaging"
+	"github.com/dosarudaniel/CS438_Project/communication"
+	"github.com/dosarudaniel/CS438_Project/file_sharing"
+	"github.com/dosarudaniel/CS438_Project/ui"
 )
 
-// Gossiper represents the main logic of Peerster
+// Gossiper represents the main logic of CS438_Project
 // It handles incoming messages
 type Gossiper struct {
 	settings types.Settings

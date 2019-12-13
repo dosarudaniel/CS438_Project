@@ -2,7 +2,7 @@ package messaging
 
 import (
 	"sync"
-	"github.com/2_alt_hw2/Peerster/types"
+	"github.com/dosarudaniel/CS438_Project/types"
 )
 
 // PeerStatusRepository stores pending communications with other peers

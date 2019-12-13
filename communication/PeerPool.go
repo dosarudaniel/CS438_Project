@@ -2,17 +2,13 @@ package communication
 
 import (
 	"fmt"
-//========= REDACTED =========
 	"math/rand"
 	"strings"
 	"sync"
 
-	"github.com/2_alt_hw2/Peerster/logger"
-	"github.com/2_alt_hw2/Peerster/types"
+	"github.com/dosarudaniel/CS438_Project/logger"
+	"github.com/dosarudaniel/CS438_Project/types"
 	"github.com/dedis/protobuf"
-//========= REDACTED =========
-
-//========= REDACTED =========
 )
 
 // PeerPool hides the unexported type to keep to properties private

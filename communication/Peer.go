@@ -2,15 +2,11 @@ package communication
 
 import (
 	"fmt"
-//========= REDACTED =========
 	"net"
 	"sync"
-	"github.com/2_alt_hw2/Peerster/logger"
-	"github.com/2_alt_hw2/Peerster/types"
+	"github.com/dosarudaniel/CS438_Project/logger"
+	"github.com/dosarudaniel/CS438_Project/types"
 	"github.com/dedis/protobuf"
-
-//========= REDACTED =========
-//========= REDACTED =========
 )
 
 // Peer represents a peer in the pool

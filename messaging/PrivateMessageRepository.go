@@ -1,7 +1,7 @@
 package messaging
 
 import (
-	"github.com/2_alt_hw2/Peerster/types"
+	"github.com/dosarudaniel/CS438_Project/types"
 )
 
 // PrivateMessageRepository represent a simple volatile database of rumors
