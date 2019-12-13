@@ -14,7 +14,7 @@ import (
 	"github.com/dosarudaniel/CS438_Project/gossiper"
 )
 
-func main() {
+func main() {i
 	uiPort := flag.String("UIPort", "8080", "port for the UI client")
 	guiPort := flag.String("GUIPort", "8080", "port for the graphical UI client")
 	gossipAddr := flag.String("gossipAddr", "127.0.0.1:5000", "ip:port for the gossiper")
