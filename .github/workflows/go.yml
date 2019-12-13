@@ -4,12 +4,11 @@ on:
     branches: 
       - '*'
 jobs:
-
   build:
     name: Build
+    
     runs-on: ubuntu-latest
     steps:
-
     - name: Set up Go 1.13
       uses: actions/setup-go@v1
       with:
@@ -28,4 +27,5 @@ jobs:
         fi
 
     - name: Build
+      uses: ./
       run: go build -v .
