@@ -11,5 +11,5 @@ type SearchReply struct {
 
 func (sReply *SearchReply) String() string {
 	return fmt.Sprintf("SearchReply{Origin %v Destination %v HopLimit: %v, Results.len = %v}",
-		sReply.Origin sReply.Destination, sReply.HopLimit, len(sReply.Results))
+		sReply.Origin, sReply.Destination, sReply.HopLimit, len(sReply.Results))
 }
