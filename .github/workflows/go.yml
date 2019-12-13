@@ -29,4 +29,6 @@ jobs:
         fi
 
     - name: Build
-      run: go vet && go build -v . && timeout  -s SIGINT 2 ./CS438_Project -v
+      run: go vet 
+            go build -v .
+            
