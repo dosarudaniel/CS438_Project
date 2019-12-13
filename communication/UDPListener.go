@@ -29,7 +29,7 @@ func NewUDPListener(address string, decoder UDPDecoder, log *logger.Logger) (*UD
 
 	udpConn, err := net.ListenUDP("udp4", udpAddr)
 	if err != nil {
-		return nil
+		return nil, err
 	}
 
 	go func() {
