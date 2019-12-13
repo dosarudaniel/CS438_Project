@@ -2,12 +2,12 @@ package gossiper
 
 import (
 	"fmt"
-	"github.com/2_alt_hw2/Peerster/types"
-	"github.com/2_alt_hw2/Peerster/communication"
-	"github.com/2_alt_hw2/Peerster/logger"
+	"github.com/dosarudaniel/CS438_Project/types"
+	"github.com/dosarudaniel/CS438_Project/communication"
+	"github.com/dosarudaniel/CS438_Project/logger"
 )
 
-// Gossiper represents the main logic of Peerster
+// Gossiper represents the main logic of CS438_Project
 // It handles incoming messages
 type SimpleGossiper struct {
 	name        string

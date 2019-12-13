@@ -2,15 +2,11 @@ package communication
 
 import (
 	"fmt"
-//========= REDACTED =========
 	"net"
-
 	"github.com/dedis/protobuf"
-	"github.com/2_alt_hw2/Peerster/logger"
-	"github.com/2_alt_hw2/Peerster/types"
+	"github.com/dosarudaniel/CS438_Project/logger"
+	"github.com/dosarudaniel/CS438_Project/types"
 
-//========= REDACTED =========
-//========= REDACTED =========
 )
 
 // UDPWriter represents a connexion through UDP which encapsulates a socket

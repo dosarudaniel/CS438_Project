@@ -2,9 +2,9 @@ package gossiper
 
 import (
 	"fmt"
-	"github.com/2_alt_hw2/Peerster/types"
-	"github.com/2_alt_hw2/Peerster/communication"
-	"github.com/2_alt_hw2/Peerster/logger"
+	"github.com/dosarudaniel/CS438_Project/types"
+	"github.com/dosarudaniel/CS438_Project/communication"
+	"github.com/dosarudaniel/CS438_Project/logger"
 	"time"
 )
 

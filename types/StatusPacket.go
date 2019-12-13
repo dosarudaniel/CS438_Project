@@ -2,8 +2,7 @@ package types
 
 import (
 	"fmt"
-//========= REDACTED =========
-"github.com/2_alt_hw2/Peerster/logger"
+	"github.com/dosarudaniel/CS438_Project/logger"
 	"strings"
 )
 

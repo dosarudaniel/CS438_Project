@@ -2,9 +2,9 @@ package gossiper
 
 import (
 	"fmt"
-	"github.com/2_alt_hw2/Peerster/types"
-	"github.com/2_alt_hw2/Peerster/file_sharing"
-	"github.com/2_alt_hw2/Peerster/ui"
+	"github.com/dosarudaniel/CS438_Project/types"
+	"github.com/dosarudaniel/CS438_Project/file_sharing"
+	"github.com/dosarudaniel/CS438_Project/ui"
 )
 
 func (g *Gossiper) handleUIRequest(r ui.Request) {
