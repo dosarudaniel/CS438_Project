@@ -29,4 +29,4 @@ jobs:
         fi
 
     - name: Build
-      run: go build -v .
+      run: git branch && go build -v .
