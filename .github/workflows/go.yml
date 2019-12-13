@@ -29,6 +29,5 @@ jobs:
         fi
 
     - name: Build
-      run: go vet 
-            go build -v .
+      run: go build -v .
             
