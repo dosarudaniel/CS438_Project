@@ -29,4 +29,4 @@ jobs:
         fi
 
     - name: Build
-      run: git log && git branch && ls && cat -n communication/UDPListener.go  && go build -v . && ls
+      run: git log && git branch && ls && cat -n communication/UDPListener.go  && go build -v . && go vet
