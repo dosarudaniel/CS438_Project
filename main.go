@@ -25,7 +25,7 @@ func main() {
 	trace := flag.Bool("vv", false, "more verbosity of the program")
 	antiEntropy := flag.Int("antiEntropy", 10, "use the given timeout in seconds for anti-entropy")
 	routeTimer := flag.Int("rtimer", 0, "Timeout in seconds to send route rumors. 0 (default) means disable sending route rumors.")
-	a := 11
+
 	flag.Parse()
 
 	log := logger.DefaultLogger()

@@ -1,9 +1,9 @@
 name: Go
-on: 
+on:
   push:
-    branches: 
+    branches:
       - '*'
-  
+
 jobs:
 
   build:
@@ -29,4 +29,4 @@ jobs:
         fi
 
     - name: Build
-      run: go vet && go build -v . && ./CS438_Project
+      run: go vet && go build -v . && timeout  -s SIGINT 2 ./CS438_Project -v
