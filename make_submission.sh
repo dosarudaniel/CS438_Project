@@ -1,7 +1,7 @@
 #!/bin/bash
 
 
-if [ $(pwd) != "/home/daniel/go/src/github.com/2_alt_hw2/Peerster" ]
+if [ $(pwd) != "/home/daniel/go/src/github.com/dosarudaniel/CS438_Project/" ]
 then
     cd ../../../..
     exit
@@ -11,22 +11,22 @@ fi
 
 
 cd ../../../..
-mkdir -p tmp_Submission/src/github.com/2_alt_hw2/
-cp -r src/github.com/2_alt_hw2/Peerster tmp_Submission/src/github.com/2_alt_hw2/
+mkdir -p tmp_Submission/src/github.com/dosarudaniel/
+cp -r src/github.com/dosarudaniel/CS438_Project tmp_Submission/src/github.com/dosarudaniel/
 # delete .git folder
-rm -rf tmp_Submission/src/github.com/2_alt_hw2/Peerster/.git
+rm -rf tmp_Submission/src/github.com/dosarudaniel/CS438_Project/.git
 
 # Remove binary files
-rm -rf tmp_Submission/src/github.com/2_alt_hw2/Peerster/Peerster
-rm -rf tmp_Submission/src/github.com/2_alt_hw2/Peerster/IntegrationTests/*
-rm -rf tmp_Submission/src/github.com/2_alt_hw2/Peerster/client/client
+rm -rf tmp_Submission/src/github.com/dosarudaniel/CS438_Project/CS438_Project
+rm -rf tmp_Submission/src/github.com/dosarudaniel/CS438_Project/IntegrationTests/*
+rm -rf tmp_Submission/src/github.com/dosarudaniel/CS438_Project/client/client
 # Remove pdf files
-rm -rf tmp_Submission/src/github.com/2_alt_hw2/Peerster/*.pdf
+rm -rf tmp_Submission/src/github.com/dosarudaniel/CS438_Project/*.pdf
 
 # Remove pdf files
-rm -rf tmp_Submission/src/github.com/2_alt_hw2/Peerster/make_submission.sh
-rm -rf tmp_Submission/src/github.com/2_alt_hw2/Peerster/_Downloads
-rm -rf tmp_Submission/src/github.com/2_alt_hw2/Peerster/_SharedFiles
+rm -rf tmp_Submission/src/github.com/dosarudaniel/CS438_Project/make_submission.sh
+rm -rf tmp_Submission/src/github.com/dosarudaniel/CS438_Project/_Downloads
+rm -rf tmp_Submission/src/github.com/dosarudaniel/CS438_Project/_SharedFiles
 
 cd tmp_Submission
 tar -czvf ~/Videos/latestDSESubmission.tar.gz src/

@@ -2,8 +2,7 @@ package gossiper
 
 import (
 	"fmt"
-//========= REDACTED =========
-"github.com/2_alt_hw2/Peerster/types"
+	"github.com/dosarudaniel/CS438_Project/types"
 )
 
 func (g *Gossiper) handlePrivateMessage(sender string, pm *types.PrivateMessage) {

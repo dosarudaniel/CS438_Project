@@ -2,8 +2,8 @@ package gossiper
 
 import (
 	//"fmt"
-	"github.com/2_alt_hw2/Peerster/types"
-	//"github.com/2_alt_hw2/Peerster/file_sharing"
+	"github.com/dosarudaniel/CS438_Project/types"
+	//"github.com/dosarudaniel/CS438_Project/file_sharing"
 )
 
 func (g *Gossiper) handleSearchRequest(request *types.SearchRequest) {

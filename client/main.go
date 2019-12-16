@@ -5,10 +5,10 @@ import (
 	"fmt"
 	"net"
 	"os"
-	"github.com/2_alt_hw2/Peerster/logger"
-	"github.com/2_alt_hw2/Peerster/communication"
-	"github.com/2_alt_hw2/Peerster/types"
-	"github.com/2_alt_hw2/Peerster/file_sharing"
+	"github.com/dosarudaniel/CS438_Project/logger"
+	"github.com/dosarudaniel/CS438_Project/communication"
+	"github.com/dosarudaniel/CS438_Project/types"
+	"github.com/dosarudaniel/CS438_Project/file_sharing"
 	"github.com/dedis/protobuf"
 )
 

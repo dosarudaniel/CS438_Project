@@ -1,8 +1,7 @@
 package communication
 
-//========= REDACTED =========
 import (
-"github.com/2_alt_hw2/Peerster/types"
+	"github.com/dosarudaniel/CS438_Project/types"
 )
 
 type ClientMessageType int

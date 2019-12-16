@@ -2,7 +2,7 @@ package file_sharing
 
 import (
 	"fmt"
-	"github.com/2_alt_hw2/Peerster/logger"
+	"github.com/dosarudaniel/CS438_Project/logger"
 	"io/ioutil"
 	"path/filepath"
 )

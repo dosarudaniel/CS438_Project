@@ -3,21 +3,15 @@ package main
 import (
 	"flag"
 	"fmt"
-//========= REDACTED =========
 	"math/rand"
 	"os"
 	"strconv"
 	"strings"
 	"time"
-	"github.com/2_alt_hw2/Peerster/logger"
-	"github.com/2_alt_hw2/Peerster/communication"
-	"github.com/2_alt_hw2/Peerster/ui/http"
-	"github.com/2_alt_hw2/Peerster/gossiper"
-
-//========= REDACTED =========
-
-//========= REDACTED =========
-//========= REDACTED =========
+	"github.com/dosarudaniel/CS438_Project/logger"
+	"github.com/dosarudaniel/CS438_Project/communication"
+	"github.com/dosarudaniel/CS438_Project/ui/http"
+	"github.com/dosarudaniel/CS438_Project/gossiper"
 )
 
 func main() {

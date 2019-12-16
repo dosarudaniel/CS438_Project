@@ -2,11 +2,8 @@ package file_sharing
 
 import (
 	"fmt"
-//========= REDACTED =========
-//========= REDACTED =========
-
-	"github.com/2_alt_hw2/Peerster/types"
-	"github.com/2_alt_hw2/Peerster/logger"
+	"github.com/dosarudaniel/CS438_Project/types"
+	"github.com/dosarudaniel/CS438_Project/logger"
 	"os"
 	"path/filepath"
 	"time"
