@@ -12,5 +12,5 @@
 #### How to start GUI:
 1. `cd web-react`   
 2. `npm install`
-3. `./CS438_Project`
-4. `npm start`    
+3. `npm start`     
+Additionally, start the Gossiper `../CS438_Project`  and refresh the GUI.     
