@@ -21,9 +21,9 @@ func (fe FingerEntry) String() string {
 
 func (ft FingerTable) String() string {
 	outputString := ""
-	// for entry in FingerTable {
-	// 	outputString += entry.id + " <-> " + entry.gossiperAddress
-	// }
+	for _, entry := range ft {
+		outputString += entry.id + "  <--->  " + entry.gossiperAddress + "\n"
+	}
 
 	return outputString
 }
