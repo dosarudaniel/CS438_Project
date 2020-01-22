@@ -1,0 +1,11 @@
+syntax = "proto3";
+package chord;
+
+message Node {
+    string id = 1;
+    string ip = 2;
+}
+
+message ID {
+    string id = 1;
+}
