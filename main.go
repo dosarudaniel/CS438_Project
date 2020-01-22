@@ -3,8 +3,10 @@ package main
 import (
 	"flag"
 	"fmt"
+	"github.com/dosarudaniel/CS438_Project/chord"
 	"github.com/dosarudaniel/CS438_Project/logger"
 	"math/rand"
+	"net"
 	"os"
 	"strconv"
 	"time"
@@ -41,10 +43,21 @@ func main() {
 	log.Info(fmt.Sprint("Number of bits in one node's id: ", *m))
 	log.Info(fmt.Sprint("Number of nodes in the successor list: ", *r))
 
+	listener, err := net.Listen("tcp", *peersterAddr)
+	if err != nil {
+		log.Fatal(fmt.Sprintf("listening to %s failed: %v", *peersterAddr, err))
+	}
+
+	chordNode, err := chord.NewChordNode(listener)
+	if err != nil {
+		log.Fatal("creating new Chord node failed")
+		os.Exit(-1)
+	}
+
 	switch {
 	case *shouldCreateDHT && !*shouldJoinExistingDHT:
-		// TODO: Create a new Chord DHT network with one node
-		log.Info(fmt.Sprint("Creating a new Chord DHT network ..."))
+		log.Info("creating a new Chord ring...")
+		chordNode.Create()
 
 	case *shouldJoinExistingDHT && !*shouldCreateDHT:
 		if *existingNodeId == "" || *existingNodeIp == "" {
