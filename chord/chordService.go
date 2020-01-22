@@ -25,7 +25,7 @@ func (chordNode *ChordNode) getStubFor(ip ipAddr) (ChordClient, error) {
 	}
 	newStub := NewChordClient(conn)
 	chordNode.stubsPool.Lock()
-	chordNode.stubsPool.pool[ip] = stub
+	chordNode.stubsPool.pool[ip] = newStub
 	chordNode.stubsPool.Unlock()
 	return newStub, nil
 }
