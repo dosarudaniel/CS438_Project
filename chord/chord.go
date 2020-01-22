@@ -46,8 +46,6 @@ func (chordNode *ChordNode) Create() {
 	chordNode.predecessor.Unlock()
 
 	chordNode.successorsList.Lock()
-	chordNode.successorsList = successorsListWithMux{
-		successorsList: []Node{chordNode.node},
-	}
+	chordNode.successorsList.list = []Node{chordNode.node}
 	chordNode.successorsList.Unlock()
 }
