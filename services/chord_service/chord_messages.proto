@@ -1,11 +1,15 @@
 syntax = "proto3";
 package chord;
 
+message ID {
+    string id = 1;
+}
+
 message Node {
     string id = 1;
     string ip = 2;
 }
 
-message ID {
-    string id = 1;
+message Nodes {
+    repeated Node nodeArray = 1;
 }

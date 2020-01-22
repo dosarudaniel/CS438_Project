@@ -1,8 +1,10 @@
 syntax = "proto3";
 import "services/chord_service/chord_messages.proto";
+import "google/protobuf/empty.proto";
 package chord;
 
 service Chord {
-    rpc FindSuccessor(ID) returns (Node);
+    rpc FindSuccessor (ID) returns (Nodes);
+    rpc Notify (Node) returns (google.protobuf.Empty);
 }
 
