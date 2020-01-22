@@ -31,6 +31,12 @@ func (chordNode *ChordNode) getStubFor(ip ipAddr) (ChordClient, error) {
 	return newStub, nil
 }
 
+func (chordNode *ChordNode) GetPredecessor(ctx context.Context, e *empty.Empty) (*Node, error) {
+	chordNode.predecessor.RLock()
+	defer chordNode.predecessor.RUnlock()
+	return chordNode.predecessor.node, nil
+}
+
 // FIXME implement functions below
 func (chordNode *ChordNode) FindSuccessor(ctx context.Context, in *ID) (*Nodes, error) {
 	return nil, nil
