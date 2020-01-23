@@ -10,12 +10,25 @@ import (
 
 // IChordNode interface defines all of the functions that Chord will have (which I know at this moment)
 type IChordNode interface {
+	// interface created by the chord_service proto file for RPC methods
 	ChordServer
+
+	// to create own Chord ring (network)
 	Create()
+
+	// to join the Chord ring (network) knowing a single node already in the ring
 	Join(Node)
+
+	// to search the local finger table for the highest predecessor of id
 	ClosestPrecedingNode(ID) Node
+
+	// to learn about newly joined nodes
 	StabilizeDaemon()
+
+	// to make sure finger table entries are correct (and up to date)
 	FixFingersDaemon()
+
+	// to clear the node's predecessor pointer if the predecessor has failed
 	CheckPredecessorsDaemon()
 }
 
@@ -25,6 +38,8 @@ type IChordNode interface {
 // or by joining an existing network using `join`
 // Both `create` and `join` must be followed by a call to `launchFingerTableDaemons`
 type ChordNode struct {
+	// constant to keep own IP and ID
+	// Note: it must not be changed after initial definition in NewChordNode()
 	node Node
 
 	predecessor    nodeWithMux
@@ -32,11 +47,15 @@ type ChordNode struct {
 
 	fingerTable fingerTableWithMux
 
+	// to keep ChordClients, which allows avoiding creation of connections to other nodes every time
+	// we want to communicate with them: connections are memoized upon creation
 	stubsPool stubsPoolWithMux
 
+	// for gRPC server functionality
 	chordServer *grpc.Server
 }
 
+// NewChordNode is a constructor for ChordNode struct
 func NewChordNode(listener net.Listener) (ChordNode, error) {
 	chordNode := ChordNode{}
 

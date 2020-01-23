@@ -9,7 +9,7 @@ import (
 )
 import . "github.com/dosarudaniel/CS438_Project/services/chord_service"
 
-// getStubFor either returns the stub for the known stub
+// getStubFor either returns the stub for the known stub (ChordClient) for gRPC
 // or creates a new one and memoizes it
 func (chordNode *ChordNode) getStubFor(ip ipAddr) (ChordClient, error) {
 	chordNode.stubsPool.RLock()
@@ -31,6 +31,7 @@ func (chordNode *ChordNode) getStubFor(ip ipAddr) (ChordClient, error) {
 	return newStub, nil
 }
 
+// GetPredecessor (RPC) returns a pointer to the predecessor node
 func (chordNode *ChordNode) GetPredecessor(ctx context.Context, e *empty.Empty) (*Node, error) {
 	chordNode.predecessor.RLock()
 	defer chordNode.predecessor.RUnlock()
@@ -42,6 +43,7 @@ func (chordNode *ChordNode) FindSuccessor(ctx context.Context, in *ID) (*Nodes, 
 	return nil, nil
 }
 
+// Notify(n0) checks whether n0 needs to be my predecessor
 func (chordNode *ChordNode) Notify(ctx context.Context, n0 *Node) (*empty.Empty, error) {
 	// n0 thinks it might be our predecessor.
 	// n.notify(n0)
