@@ -18,6 +18,8 @@ func main() {
 	existingNodeId := flag.String("existingNodeId", "", "The id to which this node should join")
 	existingNodeIp := flag.String("existingNodeIp", "", "ip:port for the existing Peerster in the Chord ring to join")
 	trace := flag.Bool("v", false, "more verbosity of the program")
+	m := flag.Int("m", 32, "Number of bits in one node's id")
+	r := flag.Int("r", 2, "Number of nodes in the successor list")
 
 	flag.Parse()
 
@@ -36,6 +38,8 @@ func main() {
 
 	log.Info(fmt.Sprint("Peerster IP Address: ", *peersterAddr))
 	log.Info(fmt.Sprint("Peerster Name: ", *name))
+	log.Info(fmt.Sprint("Number of bits in one node's id: ", *m))
+	log.Info(fmt.Sprint("Number of nodes in the successor list: ", *r))
 
 	switch {
 	case *shouldCreateDHT && !*shouldJoinExistingDHT:
