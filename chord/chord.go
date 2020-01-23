@@ -116,14 +116,25 @@ func (chordNode *ChordNode) Join(n0 Node) {
 
 func (chordNode *ChordNode) String() string {
 	outputString := "Node " + chordNode.node.Id + " ip: " + chordNode.node.Ip + "\n"
+
+	outputString += "\t Predecesor: "
 	chordNode.predecessor.RLock()
-	outputString += "\t Predecesor: " + chordNode.predecessor.node.Id + " ip: " + chordNode.predecessor.node.Ip + "\n"
+	if chordNode.predecessor.node != nil {
+		outputString += chordNode.predecessor.node.Id + " ip: " + chordNode.predecessor.node.Ip + "\n"
+	} else {
+		outputString += "nil\n"
+	}
 	chordNode.predecessor.RUnlock()
 
 	outputString += "\t Successors list: \n"
 	chordNode.successorsList.RLock()
 	for _, successor := range chordNode.successorsList.list {
-		outputString += "\t\t" + successor.Id + " " + successor.Ip + "\n"
+		// TODO add this
+		//if successor != nil {
+			outputString += "\t\t" + successor.Id + " " + successor.Ip + "\n"
+		//} else {
+		//	outputString += "\t\t" + "nil" + "\n"
+		//}
 	}
 	chordNode.successorsList.RUnlock()
 
