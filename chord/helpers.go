@@ -22,7 +22,7 @@ type successorsListWithMux struct {
 	sync.RWMutex
 }
 
-type ipToStubMap map[string]ChordClient
+type ipToStubMap map[ipAddr]ChordClient
 type stubsPoolWithMux struct {
 	pool ipToStubMap
 	sync.RWMutex

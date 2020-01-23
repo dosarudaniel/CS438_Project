@@ -147,7 +147,7 @@ func (chordNode *ChordNode) String() string {
 	outputString += "\t Connections: \n"
 	chordNode.stubsPool.RLock()
 	for ip,_ := range chordNode.stubsPool.pool {
-		outputString += "\t\t" + ip + "\n"
+		outputString += "\t\t" + string(ip) + "\n"
 	}
 	chordNode.stubsPool.RUnlock()
 

@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"github.com/dosarudaniel/CS438_Project/chord"
 	"github.com/dosarudaniel/CS438_Project/logger"
-	. "github.com/dosarudaniel/CS438_Project/services/chord_service"
 	"math/rand"
 	"net"
 	"os"
