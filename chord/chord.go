@@ -45,6 +45,7 @@ type ChordNode struct {
 	// Note: it must not be changed after initial definition in NewChordNode()
 	node Node
 
+	next    	   nextWithMux
 	predecessor    nodeWithMux
 	successorsList successorsListWithMux
 
@@ -59,7 +60,7 @@ type ChordNode struct {
 }
 
 // NewChordNode is a constructor for ChordNode struct
-func NewChordNode(listener net.Listener) (*ChordNode, error) {
+func NewChordNode(listener net.Listener, m int, r int) (*ChordNode, error) {
 	chordNode := &ChordNode{}
 
 	ip := listener.Addr().String()
@@ -70,6 +71,12 @@ func NewChordNode(listener net.Listener) (*ChordNode, error) {
 	chordNode.node = Node{
 		Id: id,
 		Ip: ip,
+		M: int32(m),
+		R: int32(r),
+	}
+	chordNode.next = nextWithMux{
+		value:    0,
+		RWMutex: sync.RWMutex{},
 	}
 	chordNode.predecessor = nodeWithMux{
 		nil,

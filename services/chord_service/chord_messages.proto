@@ -8,6 +8,8 @@ message ID {
 message Node {
     string id = 1;
     string ip = 2;
+    int32  m = 3;
+    int32  r = 4;
 }
 
 message Nodes {

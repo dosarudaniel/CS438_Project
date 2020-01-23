@@ -17,6 +17,11 @@ type nodeWithMux struct {
 	sync.RWMutex
 }
 
+type nextWithMux struct {
+	value int32
+	sync.RWMutex
+}
+
 type successorsListWithMux struct {
 	list []*Node
 	sync.RWMutex
@@ -37,3 +42,6 @@ func hashString(s string) (string, error) {
 	hash := sha256.Sum(nil)
 	return hex.EncodeToString(hash), nil
 }
+
+
+
