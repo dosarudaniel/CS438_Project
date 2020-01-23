@@ -112,5 +112,36 @@ func (chordNode *ChordNode) Join(n0 Node) {
 	// n.join(n0)
 	//   predecessor = nil;
 	//	 successor = n0.find successor(n);
+}
+
+func (chordNode *ChordNode) String() string {
+	outputString := "Node " + chordNode.node.Id + " ip: " + chordNode.node.Ip + "\n"
+	chordNode.predecessor.RLock()
+	outputString += "\t Predecesor: " + chordNode.predecessor.node.Id + " ip: " + chordNode.predecessor.node.Ip + "\n"
+	chordNode.predecessor.RUnlock()
+
+	outputString += "\t Successors list: \n"
+	chordNode.successorsList.RLock()
+	for _, successor := range chordNode.successorsList.list {
+		outputString += "\t\t" + successor.Id + " " + successor.Ip + "\n"
+	}
+	chordNode.successorsList.RUnlock()
+
+	outputString += "\t Finger table: \n"
+	chordNode.fingerTable.RLock()
+	for _, node := range chordNode.fingerTable.table {
+		outputString += "\t\t" + node.Id + " " + node.Ip + "\n"
+	}
+	chordNode.fingerTable.RUnlock()
+
+	// FIXME
+	//outputString += "\t Connections: \n"
+	//chordNode.stubsPool.RLock()
+	//for ip,_ := range chordNode.stubsPool.pool {
+	//	outputString += "\t\t" + ip + "\n"
+	//}
+	//chordNode.stubsPool.RUnlock()
+
+	return outputString
 
 }
