@@ -45,4 +45,9 @@ func hashString(s string, m int) (string, error) {
 	return hex.EncodeToString(hash)[(64 - m/4):], nil
 }
 
+// Used for testing
+func HashString(s string, m int) (string, error) {
+	return hashString(s, m)
+}
+
 

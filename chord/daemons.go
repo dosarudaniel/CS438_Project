@@ -4,6 +4,7 @@ import (
 	. "github.com/dosarudaniel/CS438_Project/services/chord_service"
 	"github.com/golang/protobuf/ptypes/empty"
 	"context"
+	"strconv"
 )
 
 // StabilizeDaemon() is called periodically.
@@ -70,21 +71,29 @@ func (chordNode *ChordNode) FixFingersDaemon() error {
 	if err != nil {
 		return err
 	}
+	id_int, _ := strconv.ParseUint(chordNode.node.Id, 16, int(chordNode.node.M))
+	id_int += 1 << nextCopy //  + 2^(next-1)
 
-	succ, err := succStub.FindSuccessor(context.Background(), &ID{Id: chordNode.node.Id  + 1 << nextCopy})
+	succ, err := succStub.FindSuccessor(context.Background(), &ID{Id: strconv.FormatUint(id_int, 16)})
 	if err != nil {
 		return err
 	}
 
 	chordNode.fingerTable.Lock()
-	// nextCopy - 1 because we start index counting from 0
+	// nextCopy - 1 because we start indexing fingerTable from 0
 	chordNode.fingerTable.table[nextCopy - 1] = *succ
 	chordNode.fingerTable.Unlock()
 
 	return nil
 }
 
-// to clear the node's predecessor pointer if the predecessor has failed
-func (chordNode *ChordNode) CheckPredecessorsDaemon() {
 
+// to clear the node's predecessor pointer if the predecessor has failed
+// Algorithm:
+// n.check predecessor()
+//	 if (predecessor has failed)
+//		predecessor = nil;
+func (chordNode *ChordNode) CheckPredecessorsDaemon() error{
+	// TODO
+	return nil
 }
