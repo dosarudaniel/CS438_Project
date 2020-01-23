@@ -33,6 +33,9 @@ type IChordNode interface {
 
 	// to clear the node's predecessor pointer if the predecessor has failed
 	CheckPredecessorsDaemon()
+
+	// Update successorsList if one successor fails
+	CheckSuccessorsDaemon()
 }
 
 // Chord node can be created using `NewChordNode`

@@ -104,3 +104,18 @@ func (chordNode *ChordNode) CheckPredecessorsDaemon() error{
 
 	return nil
 }
+
+func (chordNode *ChordNode) CheckSuccessorsDaemon() error{
+	// TODO
+	//  for each node from the chordNode.successorsList {
+	//  	send an RPC "areYouStillAlive?" wait for TIMEOUT seconds
+	//		if (timeout) {
+	//				chordNode.successorsList.Lock()
+	//				chordNode.successorsList.list = chordNode.successorsList.list - {failed successor}
+	//				chordNode.successorsList.Unlock()
+	// 		}
+	//  }
+
+
+	return nil
+}
