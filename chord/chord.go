@@ -106,3 +106,11 @@ func (chordNode *ChordNode) Create() {
 	chordNode.successorsList.list = []Node{chordNode.node}
 	chordNode.successorsList.Unlock()
 }
+
+func (chordNode *ChordNode) Join(n0 Node) {
+	// join a Chord ring containing node n0.
+	// n.join(n0)
+	//   predecessor = nil;
+	//	 successor = n0.find successor(n);
+
+}

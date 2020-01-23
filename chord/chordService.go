@@ -39,16 +39,21 @@ func (chordNode *ChordNode) GetPredecessor(ctx context.Context, e *empty.Empty) 
 }
 
 // FIXME implement functions below
-func (chordNode *ChordNode) FindSuccessor(ctx context.Context, in *ID) (*Nodes, error) {
+func (chordNode *ChordNode) FindSuccessor(ctx context.Context, in *ID) (*Node, error) {
+	return nil, nil
+}
+
+// FIXME implement functions below
+func (chordNode *ChordNode) GetSuccessorsList(ctx context.Context, in *empty.Empty) (*Nodes, error) {
 	return nil, nil
 }
 
 // Notify(n0) checks whether n0 needs to be my predecessor
+// Algorithm:
+// n.notify(n0)
+//	 if (predecessor is nil or n0 is_in (predecessor; n))
+//	 predecessor = n0;
 func (chordNode *ChordNode) Notify(ctx context.Context, n0 *Node) (*empty.Empty, error) {
-	// n0 thinks it might be our predecessor.
-	// n.notify(n0)
-	//	 if (predecessor is nil or n0 is_in (predecessor; n))
-	//	 predecessor = n0;
 	if n0 == nil {
 		return &empty.Empty{}, errors.New("trying to notify nil node")
 	}
