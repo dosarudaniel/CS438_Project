@@ -33,15 +33,16 @@ type stubsPoolWithMux struct {
 	sync.RWMutex
 }
 
-func hashString(s string) (string, error) {
+func hashString(s string, m int) (string, error) {
 	sha256 := crypto.SHA256.New()
 	_, err := sha256.Write([]byte(s))
 	if err != nil {
 		return "", err
 	}
 	hash := sha256.Sum(nil)
-	return hex.EncodeToString(hash), nil
+	// use the last m bits, m can an int from [0;256], multiple of 4
+	// hex.EncodeToString(hash) has 256 bits (64 hex chars) each hex char has 4 bits
+	return hex.EncodeToString(hash)[(64 - m/4):], nil
 }
-
 
 

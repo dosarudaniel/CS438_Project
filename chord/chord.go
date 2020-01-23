@@ -64,7 +64,7 @@ func NewChordNode(listener net.Listener, m int, r int) (*ChordNode, error) {
 	chordNode := &ChordNode{}
 
 	ip := listener.Addr().String()
-	id, err := hashString(ip)
+	id, err := hashString(ip, m)
 	if err != nil {
 		return chordNode, err
 	}
