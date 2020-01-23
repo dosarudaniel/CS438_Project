@@ -2,10 +2,7 @@
 package chord
 
 import (
-	"context"
-	"fmt"
 	. "github.com/dosarudaniel/CS438_Project/services/chord_service"
-	"github.com/golang/protobuf/ptypes/empty"
 	"google.golang.org/grpc"
 	"net"
 	"sync"
@@ -132,12 +129,11 @@ func (chordNode *ChordNode) String() string {
 	outputString += "\t Successors list: \n"
 	chordNode.successorsList.RLock()
 	for _, successor := range chordNode.successorsList.list {
-		// TODO add this
-		//if successor != nil {
+		if successor != nil {
 			outputString += "\t\t" + successor.Id + " " + successor.Ip + "\n"
-		//} else {
-		//	outputString += "\t\t" + "nil" + "\n"
-		//}
+		} else {
+			outputString += "\t\t" + "nil" + "\n"
+		}
 	}
 	chordNode.successorsList.RUnlock()
 
@@ -148,14 +144,12 @@ func (chordNode *ChordNode) String() string {
 	}
 	chordNode.fingerTable.RUnlock()
 
-	// FIXME
-	//outputString += "\t Connections: \n"
-	//chordNode.stubsPool.RLock()
-	//for ip,_ := range chordNode.stubsPool.pool {
-	//	outputString += "\t\t" + ip + "\n"
-	//}
-	//chordNode.stubsPool.RUnlock()
+	outputString += "\t Connections: \n"
+	chordNode.stubsPool.RLock()
+	for ip,_ := range chordNode.stubsPool.pool {
+		outputString += "\t\t" + ip + "\n"
+	}
+	chordNode.stubsPool.RUnlock()
 
 	return outputString
-
 }
