@@ -19,7 +19,6 @@ func (chordNode *ChordNode) FindSuccessor(ctx context.Context, in *ID) (*Node, e
 	return &Node{Ip: "localhost:5000", Id: "f98eeff24e2fced1a1336182a3e8775326262914cc4087066d9346431795ccdb"}, nil
 }
 
-// FIXME implement functions below
 func (chordNode *ChordNode) GetSuccessorsList(ctx context.Context, in *empty.Empty) (*Nodes, error) {
 	chordNode.successorsList.RLock()
 	defer chordNode.successorsList.RUnlock()

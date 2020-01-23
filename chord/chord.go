@@ -5,7 +5,6 @@ import (
 	"context"
 	"fmt"
 	. "github.com/dosarudaniel/CS438_Project/services/chord_service"
-	"github.com/golang/protobuf/ptypes/empty"
 	"google.golang.org/grpc"
 	"net"
 	"sync"
@@ -125,11 +124,7 @@ func (chordNode *ChordNode) Join(n0 Node) error {
 	chordNode.predecessor.node = nil
 	chordNode.predecessor.Unlock()
 
-	n0Stub, err := chordNode.getStubFor(ipAddr(n0.Ip))
-	if err != nil {
-		return err
-	}
-	succ, err := n0Stub.FindSuccessor(context.Background(), &ID{Id: chordNode.node.Id})
+	succ, err := chordNode.stubFindSuccessor(ipAddr(n0.Ip), context.Background(), &ID{Id: chordNode.node.Id})
 	if err != nil {
 		return err
 	}
@@ -138,11 +133,7 @@ func (chordNode *ChordNode) Join(n0 Node) error {
 	chordNode.fingerTable.table = []Node{*succ}
 	chordNode.fingerTable.Unlock()
 
-	succStub, err := chordNode.getStubFor(ipAddr(succ.Ip))
-	if err != nil {
-		return err
-	}
-	nodesPtr, err := succStub.GetSuccessorsList(context.Background(), &empty.Empty{})
+	nodesPtr, err := chordNode.stubGetSuccessorsList(ipAddr(succ.Ip), context.Background())
 	switch {
 	case err != nil:
 		return err
