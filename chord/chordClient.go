@@ -2,6 +2,8 @@
 package chord
 
 import (
+	"context"
+	"github.com/golang/protobuf/ptypes/empty"
 	"google.golang.org/grpc"
 )
 import . "github.com/dosarudaniel/CS438_Project/services/chord_service"
@@ -26,4 +28,42 @@ func (chordNode *ChordNode) getStubFor(ip ipAddr) (ChordClient, error) {
 	chordNode.stubsPool.pool[ip] = newStub
 	chordNode.stubsPool.Unlock()
 	return newStub, nil
+}
+
+func (chordNode *ChordNode) stubFindSuccessor(ip ipAddr, ctx context.Context, id *ID) (*Node, error) {
+	stub, err := chordNode.getStubFor(ip)
+	if err != nil {
+		return nil, err
+	}
+
+	return stub.FindSuccessor(ctx, id)
+}
+
+func (chordNode *ChordNode) stubNotify(ip ipAddr, ctx context.Context, node *Node) error {
+	stub, err := chordNode.getStubFor(ip)
+	if err != nil {
+		return err
+	}
+
+	_, err = stub.Notify(ctx, node)
+
+	return err
+}
+
+func (chordNode *ChordNode) stubGetPredecessor(ip ipAddr, ctx context.Context) (*Node, error) {
+	stub, err := chordNode.getStubFor(ip)
+	if err != nil {
+		return nil, err
+	}
+
+	return stub.GetPredecessor(ctx, &empty.Empty{})
+}
+
+func (chordNode *ChordNode) stubGetSuccessorsList(ip ipAddr, ctx context.Context) (*Nodes, error) {
+	stub, err := chordNode.getStubFor(ip)
+	if err != nil {
+		return nil, err
+	}
+
+	return stub.GetSuccessorsList(ctx, &empty.Empty{})
 }
