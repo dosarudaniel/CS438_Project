@@ -13,7 +13,7 @@ import (
 // n.stabilize()
 //   x = successor.predecessor;
 //	 if (x is_in (n; successor))
-//	 successor = x;
+//	 	successor = x;
 //	 successor.notify(n);
 func (chordNode *ChordNode) StabilizeDaemon() error {
 
@@ -95,5 +95,12 @@ func (chordNode *ChordNode) FixFingersDaemon() error {
 //		predecessor = nil;
 func (chordNode *ChordNode) CheckPredecessorsDaemon() error{
 	// TODO
+	// send an RPC "areYouStillAlive?", wait for TIMEOUT seconds
+	// if (timeout) {
+	//		chordNode.predecessor.Lock()
+	//		chordNode.predecessor.node = nil
+	//		chordNode.predecessor.Unlock()
+	// }
+
 	return nil
 }
