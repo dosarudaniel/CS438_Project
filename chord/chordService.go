@@ -20,7 +20,7 @@ func (chordNode *ChordNode) getStubFor(ip ipAddr) (ChordClient, error) {
 	}
 
 	// dial, memoize, return
-	conn, err := grpc.Dial(string(ip), grpc.WithBlock())
+	conn, err := grpc.Dial(string(ip), grpc.WithInsecure(), grpc.WithBlock())
 	if err != nil {
 		return stub, err
 	}
@@ -40,12 +40,16 @@ func (chordNode *ChordNode) GetPredecessor(ctx context.Context, e *empty.Empty) 
 
 // FIXME implement functions below
 func (chordNode *ChordNode) FindSuccessor(ctx context.Context, in *ID) (*Node, error) {
-	return nil, nil
+	return &Node{Ip: "localhost:5000", Id: "f98eeff24e2fced1a1336182a3e8775326262914cc4087066d9346431795ccdb"}, nil
 }
 
 // FIXME implement functions below
 func (chordNode *ChordNode) GetSuccessorsList(ctx context.Context, in *empty.Empty) (*Nodes, error) {
-	return nil, nil
+	chordNode.successorsList.RLock()
+	defer chordNode.successorsList.RUnlock()
+	return &Nodes{
+		NodeArray: chordNode.successorsList.list,
+	}, nil
 }
 
 // Notify(n0) checks whether n0 needs to be my predecessor

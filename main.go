@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/dosarudaniel/CS438_Project/chord"
 	"github.com/dosarudaniel/CS438_Project/logger"
+	. "github.com/dosarudaniel/CS438_Project/services/chord_service"
 	"math/rand"
 	"net"
 	"os"
@@ -57,6 +58,7 @@ func main() {
 	switch {
 	case *shouldCreateDHT && !*shouldJoinExistingDHT:
 		log.Info("creating a new Chord ring...")
+
 		chordNode.Create()
 
 	case *shouldJoinExistingDHT && !*shouldCreateDHT:
@@ -67,7 +69,6 @@ func main() {
 		if *existingNodeIp == *peersterAddr {
 			log.Fatal("'existingNodeIp' should not be the same as peersterAddr")
 		}
-		// TODO: This Node joins to a Chord DHT network using the existing Node with existingNodeIp
 		log.Info(fmt.Sprint("Joining to id: ", *existingNodeId))
 		log.Info(fmt.Sprint("Joining to existing node with IP: ", *existingNodeIp))
 

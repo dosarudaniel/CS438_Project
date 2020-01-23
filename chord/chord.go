@@ -2,7 +2,10 @@
 package chord
 
 import (
+	"context"
+	"fmt"
 	. "github.com/dosarudaniel/CS438_Project/services/chord_service"
+	"github.com/golang/protobuf/ptypes/empty"
 	"google.golang.org/grpc"
 	"net"
 	"sync"
@@ -17,7 +20,7 @@ type IChordNode interface {
 	Create()
 
 	// to join the Chord ring (network) knowing a single node already in the ring
-	Join(Node)
+	Join(Node) error
 
 	// to search the local finger table for the highest predecessor of id
 	ClosestPrecedingNode(ID) Node
@@ -56,8 +59,8 @@ type ChordNode struct {
 }
 
 // NewChordNode is a constructor for ChordNode struct
-func NewChordNode(listener net.Listener) (ChordNode, error) {
-	chordNode := ChordNode{}
+func NewChordNode(listener net.Listener) (*ChordNode, error) {
+	chordNode := &ChordNode{}
 
 	ip := listener.Addr().String()
 	id, err := hashString(ip)
@@ -73,7 +76,7 @@ func NewChordNode(listener net.Listener) (ChordNode, error) {
 		sync.RWMutex{},
 	}
 	chordNode.successorsList = successorsListWithMux{
-		make([]Node, 0),
+		make([]*Node, 0),
 		sync.RWMutex{},
 	}
 	chordNode.fingerTable = fingerTableWithMux{
@@ -86,7 +89,7 @@ func NewChordNode(listener net.Listener) (ChordNode, error) {
 	}
 
 	chordNode.chordServer = grpc.NewServer()
-	RegisterChordServer(chordNode.chordServer, &chordNode)
+	RegisterChordServer(chordNode.chordServer, chordNode)
 	go chordNode.chordServer.Serve(listener)
 
 	return chordNode, nil
@@ -103,7 +106,7 @@ func (chordNode *ChordNode) Create() {
 	chordNode.predecessor.Unlock()
 
 	chordNode.successorsList.Lock()
-	chordNode.successorsList.list = []Node{chordNode.node}
+	chordNode.successorsList.list = []*Node{&chordNode.node}
 	chordNode.successorsList.Unlock()
 }
 
