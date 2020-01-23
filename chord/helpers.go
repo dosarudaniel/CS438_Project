@@ -13,7 +13,7 @@ import . "github.com/dosarudaniel/CS438_Project/services/chord_service"
 type ipAddr string
 
 type nodeWithMux struct {
-	node *Node
+	nodePtr *Node
 	sync.RWMutex
 }
 

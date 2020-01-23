@@ -11,7 +11,7 @@ import (
 func (chordNode *ChordNode) GetPredecessor(ctx context.Context, e *empty.Empty) (*Node, error) {
 	chordNode.predecessor.RLock()
 	defer chordNode.predecessor.RUnlock()
-	return chordNode.predecessor.node, nil
+	return chordNode.predecessor.nodePtr, nil
 }
 
 // FIXME implement functions below
@@ -38,11 +38,11 @@ func (chordNode *ChordNode) Notify(ctx context.Context, n0 *Node) (*empty.Empty,
 	}
 	chordNode.predecessor.Lock()
 	defer chordNode.predecessor.Unlock()
-	predecessorID := chordNode.predecessor.node.Id
+	predecessorID := chordNode.predecessor.nodePtr.Id
 	n0ID := n0.Id
 	nID := chordNode.node.Id
-	if chordNode.predecessor.node == nil || (predecessorID < n0ID && n0ID < nID) {
-		chordNode.predecessor.node = n0
+	if chordNode.predecessor.nodePtr == nil || (predecessorID < n0ID && n0ID < nID) {
+		chordNode.predecessor.nodePtr = n0
 	}
 	return &empty.Empty{}, nil
 }

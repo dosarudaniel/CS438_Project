@@ -3,11 +3,13 @@ package chord
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	. "github.com/dosarudaniel/CS438_Project/services/chord_service"
 	"google.golang.org/grpc"
 	"net"
 	"sync"
+	"time"
 )
 
 // IChordNode interface defines all of the functions that Chord will have (which I know at this moment)
@@ -31,7 +33,7 @@ type IChordNode interface {
 	FixFingersDaemon()
 
 	// to clear the node's predecessor pointer if the predecessor has failed
-	CheckPredecessorsDaemon()
+	CheckPredecessorDaemon()
 }
 
 // Chord node can be created using `NewChordNode`
@@ -101,7 +103,7 @@ func (chordNode *ChordNode) Create() {
 	//   predecessor = nil;
 	//	 successor = [n];
 	chordNode.predecessor.Lock()
-	chordNode.predecessor.node = nil
+	chordNode.predecessor.nodePtr = nil
 	chordNode.predecessor.Unlock()
 
 	chordNode.successorsList.Lock()
@@ -121,7 +123,7 @@ func (chordNode *ChordNode) Join(n0 Node) error {
 	var err error
 
 	chordNode.predecessor.Lock()
-	chordNode.predecessor.node = nil
+	chordNode.predecessor.nodePtr = nil
 	chordNode.predecessor.Unlock()
 
 	succ, err := chordNode.stubFindSuccessor(ipAddr(n0.Ip), context.Background(), &ID{Id: chordNode.node.Id})
@@ -149,13 +151,34 @@ func (chordNode *ChordNode) Join(n0 Node) error {
 	return nil
 }
 
+// CheckPredecessorDaemon checks whether the node's predecessor has failed
+// n.check_predecessor()
+//	 if (predecessor has failed) <- in our case responds to a FindSuccessor rpc call within 3 seconds
+//	   predecessor = nil;
+func (chordNode *ChordNode) CheckPredecessorDaemon() {
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+	chordNode.predecessor.RLock()
+	predPtr := chordNode.predecessor.nodePtr
+	chordNode.predecessor.RUnlock()
+	if predPtr == nil {
+		return
+	}
+	_, err := chordNode.stubFindSuccessor(ipAddr(predPtr.Ip), ctx, &ID{Id: chordNode.node.Ip})
+	if errors.Is(err, context.DeadlineExceeded) {
+		chordNode.predecessor.Lock()
+		chordNode.predecessor.nodePtr = nil
+		chordNode.predecessor.Unlock()
+	}
+}
+
 func (chordNode *ChordNode) String() string {
 	outputString := "Node " + chordNode.node.Id + " ip: " + chordNode.node.Ip + "\n"
 
 	outputString += "\t Predecesor: "
 	chordNode.predecessor.RLock()
-	if chordNode.predecessor.node != nil {
-		outputString += chordNode.predecessor.node.Id + " ip: " + chordNode.predecessor.node.Ip + "\n"
+	if chordNode.predecessor.nodePtr != nil {
+		outputString += chordNode.predecessor.nodePtr.Id + " ip: " + chordNode.predecessor.nodePtr.Ip + "\n"
 	} else {
 		outputString += "nil\n"
 	}
