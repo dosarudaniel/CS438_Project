@@ -18,7 +18,7 @@ type nodeWithMux struct {
 }
 
 type successorsListWithMux struct {
-	list []Node
+	list []*Node
 	sync.RWMutex
 }
 
