@@ -20,6 +20,45 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
+type ID struct {
+	Id                   string   `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *ID) Reset()         { *m = ID{} }
+func (m *ID) String() string { return proto.CompactTextString(m) }
+func (*ID) ProtoMessage()    {}
+func (*ID) Descriptor() ([]byte, []int) {
+	return fileDescriptor_ec7364b073ade720, []int{0}
+}
+
+func (m *ID) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_ID.Unmarshal(m, b)
+}
+func (m *ID) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_ID.Marshal(b, m, deterministic)
+}
+func (m *ID) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ID.Merge(m, src)
+}
+func (m *ID) XXX_Size() int {
+	return xxx_messageInfo_ID.Size(m)
+}
+func (m *ID) XXX_DiscardUnknown() {
+	xxx_messageInfo_ID.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ID proto.InternalMessageInfo
+
+func (m *ID) GetId() string {
+	if m != nil {
+		return m.Id
+	}
+	return ""
+}
+
 type Node struct {
 	Id                   string   `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	Ip                   string   `protobuf:"bytes,2,opt,name=ip,proto3" json:"ip,omitempty"`
@@ -32,7 +71,7 @@ func (m *Node) Reset()         { *m = Node{} }
 func (m *Node) String() string { return proto.CompactTextString(m) }
 func (*Node) ProtoMessage()    {}
 func (*Node) Descriptor() ([]byte, []int) {
-	return fileDescriptor_ec7364b073ade720, []int{0}
+	return fileDescriptor_ec7364b073ade720, []int{1}
 }
 
 func (m *Node) XXX_Unmarshal(b []byte) error {
@@ -67,48 +106,49 @@ func (m *Node) GetIp() string {
 	return ""
 }
 
-type ID struct {
-	Id                   string   `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+type Nodes struct {
+	NodeArray            []*Node  `protobuf:"bytes,1,rep,name=nodeArray,proto3" json:"nodeArray,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *ID) Reset()         { *m = ID{} }
-func (m *ID) String() string { return proto.CompactTextString(m) }
-func (*ID) ProtoMessage()    {}
-func (*ID) Descriptor() ([]byte, []int) {
-	return fileDescriptor_ec7364b073ade720, []int{1}
+func (m *Nodes) Reset()         { *m = Nodes{} }
+func (m *Nodes) String() string { return proto.CompactTextString(m) }
+func (*Nodes) ProtoMessage()    {}
+func (*Nodes) Descriptor() ([]byte, []int) {
+	return fileDescriptor_ec7364b073ade720, []int{2}
 }
 
-func (m *ID) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_ID.Unmarshal(m, b)
+func (m *Nodes) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_Nodes.Unmarshal(m, b)
 }
-func (m *ID) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_ID.Marshal(b, m, deterministic)
+func (m *Nodes) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_Nodes.Marshal(b, m, deterministic)
 }
-func (m *ID) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_ID.Merge(m, src)
+func (m *Nodes) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Nodes.Merge(m, src)
 }
-func (m *ID) XXX_Size() int {
-	return xxx_messageInfo_ID.Size(m)
+func (m *Nodes) XXX_Size() int {
+	return xxx_messageInfo_Nodes.Size(m)
 }
-func (m *ID) XXX_DiscardUnknown() {
-	xxx_messageInfo_ID.DiscardUnknown(m)
+func (m *Nodes) XXX_DiscardUnknown() {
+	xxx_messageInfo_Nodes.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_ID proto.InternalMessageInfo
+var xxx_messageInfo_Nodes proto.InternalMessageInfo
 
-func (m *ID) GetId() string {
+func (m *Nodes) GetNodeArray() []*Node {
 	if m != nil {
-		return m.Id
+		return m.NodeArray
 	}
-	return ""
+	return nil
 }
 
 func init() {
-	proto.RegisterType((*Node)(nil), "chord.Node")
 	proto.RegisterType((*ID)(nil), "chord.ID")
+	proto.RegisterType((*Node)(nil), "chord.Node")
+	proto.RegisterType((*Nodes)(nil), "chord.Nodes")
 }
 
 func init() {
@@ -116,12 +156,14 @@ func init() {
 }
 
 var fileDescriptor_ec7364b073ade720 = []byte{
-	// 107 bytes of a gzipped FileDescriptorProto
+	// 144 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0xd2, 0x2e, 0x4e, 0x2d, 0x2a,
 	0xcb, 0x4c, 0x4e, 0x2d, 0xd6, 0x4f, 0xce, 0xc8, 0x2f, 0x4a, 0x89, 0x87, 0x72, 0xa1, 0xbc, 0xdc,
 	0xd4, 0xe2, 0xe2, 0xc4, 0xf4, 0xd4, 0x62, 0xbd, 0x82, 0xa2, 0xfc, 0x92, 0x7c, 0x21, 0x56, 0xb0,
-	0xa8, 0x92, 0x1a, 0x17, 0x8b, 0x5f, 0x7e, 0x4a, 0xaa, 0x10, 0x1f, 0x17, 0x53, 0x66, 0x8a, 0x04,
-	0xa3, 0x02, 0xa3, 0x06, 0x67, 0x10, 0x53, 0x66, 0x0a, 0x98, 0x5f, 0x20, 0xc1, 0x04, 0xe5, 0x17,
-	0x28, 0x89, 0x70, 0x31, 0x79, 0xba, 0xa0, 0xab, 0x4a, 0x62, 0x03, 0x9b, 0x65, 0x0c, 0x08, 0x00,
-	0x00, 0xff, 0xff, 0x24, 0x7f, 0xf8, 0x4d, 0x7a, 0x00, 0x00, 0x00,
+	0xa8, 0x92, 0x08, 0x17, 0x93, 0xa7, 0x8b, 0x10, 0x1f, 0x17, 0x53, 0x66, 0x8a, 0x04, 0xa3, 0x02,
+	0xa3, 0x06, 0x67, 0x10, 0x53, 0x66, 0x8a, 0x92, 0x1a, 0x17, 0x8b, 0x5f, 0x7e, 0x4a, 0x2a, 0xba,
+	0x38, 0x98, 0x5f, 0x20, 0xc1, 0x04, 0xe5, 0x17, 0x28, 0x19, 0x71, 0xb1, 0x82, 0xd4, 0x15, 0x0b,
+	0x69, 0x72, 0x71, 0xe6, 0xe5, 0xa7, 0xa4, 0x3a, 0x16, 0x15, 0x25, 0x56, 0x4a, 0x30, 0x2a, 0x30,
+	0x6b, 0x70, 0x1b, 0x71, 0xeb, 0x81, 0x6d, 0xd0, 0x03, 0x29, 0x08, 0x42, 0xc8, 0x26, 0xb1, 0x81,
+	0xed, 0x37, 0x06, 0x04, 0x00, 0x00, 0xff, 0xff, 0x53, 0xcc, 0xaa, 0x52, 0xae, 0x00, 0x00, 0x00,
 }
