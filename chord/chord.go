@@ -110,10 +110,90 @@ func (chordNode *ChordNode) Create() {
 	chordNode.successorsList.Unlock()
 }
 
-func (chordNode *ChordNode) Join(n0 Node) {
-	// join a Chord ring containing node n0.
-	// n.join(n0)
-	//   predecessor = nil;
-	//	 successor = n0.find successor(n);
+// Join lets the ChordNode to join a Chord ring containing node n0.
+// Algorithm:
+// n.join(n0)
+//   predecessor = nil;
+//   succ := n0.find_successor(n);
+//	 fingerTable[0] = succ
+//   succList := succ.getSuccessorsList();
+//   successorsList = succ :: succList[:len(succList) - 1]
+func (chordNode *ChordNode) Join(n0 Node) error {
+	var err error
 
+	chordNode.predecessor.Lock()
+	chordNode.predecessor.node = nil
+	chordNode.predecessor.Unlock()
+
+	n0Stub, err := chordNode.getStubFor(ipAddr(n0.Ip))
+	if err != nil {
+		return err
+	}
+	succ, err := n0Stub.FindSuccessor(context.Background(), &ID{Id: chordNode.node.Id})
+	if err != nil {
+		return err
+	}
+
+	chordNode.fingerTable.Lock()
+	chordNode.fingerTable.table = []Node{*succ}
+	chordNode.fingerTable.Unlock()
+
+	succStub, err := chordNode.getStubFor(ipAddr(succ.Ip))
+	if err != nil {
+		return err
+	}
+	nodesPtr, err := succStub.GetSuccessorsList(context.Background(), &empty.Empty{})
+	switch {
+	case err != nil:
+		return err
+	case nodesPtr == nil:
+		return fmt.Errorf("successors list from %s is nil", succ.Ip)
+	}
+	succList := nodesPtr.NodeArray
+
+	chordNode.successorsList.Lock()
+	defer chordNode.successorsList.Unlock()
+	chordNode.successorsList.list = append([]*Node{succ}, succList[:len(succList)-1]...)
+
+	return nil
+}
+
+func (chordNode *ChordNode) String() string {
+	outputString := "Node " + chordNode.node.Id + " ip: " + chordNode.node.Ip + "\n"
+
+	outputString += "\t Predecesor: "
+	chordNode.predecessor.RLock()
+	if chordNode.predecessor.node != nil {
+		outputString += chordNode.predecessor.node.Id + " ip: " + chordNode.predecessor.node.Ip + "\n"
+	} else {
+		outputString += "nil\n"
+	}
+	chordNode.predecessor.RUnlock()
+
+	outputString += "\t Successors list: \n"
+	chordNode.successorsList.RLock()
+	for _, successor := range chordNode.successorsList.list {
+		if successor != nil {
+			outputString += "\t\t" + successor.Id + " " + successor.Ip + "\n"
+		} else {
+			outputString += "\t\t" + "nil" + "\n"
+		}
+	}
+	chordNode.successorsList.RUnlock()
+
+	outputString += "\t Finger table: \n"
+	chordNode.fingerTable.RLock()
+	for i, node := range chordNode.fingerTable.table {
+		outputString += fmt.Sprintf("\t\t [%d] %s %s\n", i, node.Id, node.Ip)
+	}
+	chordNode.fingerTable.RUnlock()
+
+	outputString += "\t Connections: \n"
+	chordNode.stubsPool.RLock()
+	for ip := range chordNode.stubsPool.pool {
+		outputString += "\t\t" + string(ip) + "\n"
+	}
+	chordNode.stubsPool.RUnlock()
+
+	return outputString
 }

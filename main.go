@@ -60,6 +60,7 @@ func main() {
 		log.Info("creating a new Chord ring...")
 
 		chordNode.Create()
+		fmt.Println(chordNode)
 
 	case *shouldJoinExistingDHT && !*shouldCreateDHT:
 		if *existingNodeId == "" || *existingNodeIp == "" {
@@ -72,8 +73,18 @@ func main() {
 		log.Info(fmt.Sprint("Joining to id: ", *existingNodeId))
 		log.Info(fmt.Sprint("Joining to existing node with IP: ", *existingNodeIp))
 
+		err := chordNode.Join(Node{Id: *existingNodeId, Ip: *existingNodeIp})
+		if err != nil {
+			log.Fatal(fmt.Sprint(err))
+			os.Exit(-1)
+		}
+
+		fmt.Println(chordNode)
+
 	default:
 		log.Fatal(fmt.Sprintf("One of the following flags should be true: 'create' or 'join'"))
 		os.Exit(-1)
 	}
+
+	select {}
 }
