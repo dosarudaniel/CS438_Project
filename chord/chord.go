@@ -3,13 +3,11 @@ package chord
 
 import (
 	"context"
-	"errors"
 	"fmt"
 	. "github.com/dosarudaniel/CS438_Project/services/chord_service"
 	"google.golang.org/grpc"
 	"net"
 	"sync"
-	"time"
 )
 
 // IChordNode interface defines all of the functions that Chord will have (which I know at this moment)
@@ -158,27 +156,6 @@ func (chordNode *ChordNode) Join(n0 Node) error {
 	chordNode.setSuccessor(succ)
 
 	return nil
-}
-
-// CheckPredecessorDaemon checks whether the node's predecessor has failed
-// n.check_predecessor()
-//	 if (predecessor has failed) <- in our case responds to a FindSuccessor rpc call within 3 seconds
-//	   predecessor = nil;
-func (chordNode *ChordNode) CheckPredecessorDaemon() {
-	var err error
-
-	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
-	defer cancel()
-
-	pred, doesExist := chordNode.getPredecessor()
-	if !doesExist {
-		return
-	}
-
-	_, err = chordNode.stubFindSuccessor(ipAddr(pred.Ip), ctx, &ID{Id: chordNode.node.Ip})
-	if errors.Is(err, context.DeadlineExceeded) {
-		chordNode.setPredecessor(nil)
-	}
 }
 
 func (chordNode *ChordNode) String() string {
