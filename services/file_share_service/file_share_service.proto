@@ -1,0 +1,9 @@
+syntax = "proto3";
+import "services/file_share_service/file_share_messages.proto";
+package chord;
+
+service FileShare {
+    // It should return error if the File is not stored by FileInfo.id
+    // of the file itself if the it is
+    rpc Download (FileInfo) returns (File);
+}
