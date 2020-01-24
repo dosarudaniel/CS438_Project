@@ -58,12 +58,3 @@ func (chordNode *ChordNode) stubGetPredecessor(ip ipAddr, ctx context.Context) (
 
 	return stub.GetPredecessor(ctx, &empty.Empty{})
 }
-
-func (chordNode *ChordNode) stubGetSuccessorsList(ip ipAddr, ctx context.Context) (*Nodes, error) {
-	stub, err := chordNode.getStubFor(ip)
-	if err != nil {
-		return nil, err
-	}
-
-	return stub.GetSuccessorsList(ctx, &empty.Empty{})
-}
