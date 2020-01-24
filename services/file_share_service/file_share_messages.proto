@@ -2,8 +2,7 @@ syntax = "proto3";
 package chord;
 
 message FileInfo {
-    string id = 1;          // nodeID - where the file is stored, a.k.a owner of the file
-    string filename = 2;    // filename (unique in the Chord ring)
+    string filename = 1;    // filename (unique in the Chord ring)
 }
 
 message FileChunk {
