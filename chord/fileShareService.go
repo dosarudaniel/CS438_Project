@@ -1,21 +1,22 @@
 package chord
 
 import (
-	chord "github.com/dosarudaniel/CS438_Project/services/file_share_service"
+	. "github.com/dosarudaniel/CS438_Project/services/file_share_service"
 )
 
 // RPC implementation
-func (chordNode *ChordNode) TransferFile(fileInfo *chord.FileInfo, stream chord.FileChunk) error {
+func (chordNode *ChordNode) TransferFile(fileInfo *FileInfo, stream DownloadService_TransferFileServer) error {
 	// Find the file with filename == fileInfo.Filename
 
 	// Create an array of chunks named fileChunks
-	//fileChunks := make([]byte, 5)
-	//for _, chunk := range fileChunks {
-	//	if err := stream.Send(chunk); err != nil {  // FIXME : Implement Send
-	//		return err
-	//	}
-	//
-	//}
+	fileChunks := make([][]byte, 5)
+	for _, chunk := range fileChunks {
+		fileChunk := FileChunk{Content: chunk}
+		if err := stream.Send(&fileChunk); err != nil {
+			return err
+		}
+
+	}
 	return nil
 }
 
