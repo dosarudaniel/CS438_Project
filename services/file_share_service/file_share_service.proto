@@ -5,10 +5,5 @@ package chord;
 service DownloadService {
     // It should return error if the File is not stored by FileInfo.id
     // or a stream with FileChunks if it is
-    rpc Download (FileInfo) returns (stream FileChunk);
-}
-
-service UploadService {
-    // Send a stream of FileChunks
-    rpc Upload(stream FileChunk) returns (UploadStatus);
+    rpc TransferFile (FileInfo) returns (stream FileChunk);
 }

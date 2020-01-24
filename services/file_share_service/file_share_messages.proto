@@ -8,14 +8,3 @@ message FileInfo {
 message FileChunk {
     bytes content = 1;
 }
-
-enum StatusCode {
-    Unknown = 0;
-    Ok = 1;
-    Failed = 2;
-}
-
-message UploadStatus {
-    string Message = 1;
-    StatusCode Code = 2;
-}
