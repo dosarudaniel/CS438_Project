@@ -91,6 +91,10 @@ func NewChordNode(listener net.Listener, config ChordConfig) (*ChordNode, error)
 	RegisterChordServer(chordNode.chordServer, chordNode)
 	go chordNode.chordServer.Serve(listener)
 
+	go chordNode.StabilizeDaemon(10)        // TODO replace by a constant or config.fixFingerInterval
+	go chordNode.FixFingersDaemon(10)       // TODO replace by a constant or config.fixFingerInterval
+	go chordNode.CheckPredecessorDaemon(10) // TODO replace by a constant or config.checkPredecessorInterval
+
 	return chordNode, nil
 }
 
