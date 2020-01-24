@@ -9,22 +9,17 @@ import (
 
 // GetPredecessor (RPC) returns a pointer to the predecessor node
 func (chordNode *ChordNode) GetPredecessor(ctx context.Context, e *empty.Empty) (*Node, error) {
-	chordNode.predecessor.RLock()
-	defer chordNode.predecessor.RUnlock()
-	return chordNode.predecessor.nodePtr, nil
+	pred, doesExist := chordNode.getPredecessor()
+	if !doesExist {
+		return nil, errors.New("predecessor is nil")
+	}
+	return &pred, nil
 }
 
 // FIXME implement functions below
+// FIXME CheckPredecessor relies on use of ctx.Timeout
 func (chordNode *ChordNode) FindSuccessor(ctx context.Context, in *ID) (*Node, error) {
 	return &Node{Ip: "localhost:5000", Id: "f98eeff24e2fced1a1336182a3e8775326262914cc4087066d9346431795ccdb"}, nil
-}
-
-func (chordNode *ChordNode) GetSuccessorsList(ctx context.Context, in *empty.Empty) (*Nodes, error) {
-	chordNode.successorsList.RLock()
-	defer chordNode.successorsList.RUnlock()
-	return &Nodes{
-		NodeArray: chordNode.successorsList.list,
-	}, nil
 }
 
 // Notify(n0) checks whether n0 needs to be my predecessor
@@ -33,16 +28,15 @@ func (chordNode *ChordNode) GetSuccessorsList(ctx context.Context, in *empty.Emp
 //	 if (predecessor is nil or n0 is_in (predecessor; n))
 //	 predecessor = n0;
 func (chordNode *ChordNode) Notify(ctx context.Context, n0 *Node) (*empty.Empty, error) {
+	emptyPtr := &empty.Empty{}
+
 	if n0 == nil {
-		return &empty.Empty{}, errors.New("trying to notify nil node")
+		return emptyPtr, errors.New("trying to notify nil node")
 	}
-	chordNode.predecessor.Lock()
-	defer chordNode.predecessor.Unlock()
-	predecessorID := chordNode.predecessor.nodePtr.Id
-	n0ID := n0.Id
-	nID := chordNode.node.Id
-	if chordNode.predecessor.nodePtr == nil || (predecessorID < n0ID && n0ID < nID) {
-		chordNode.predecessor.nodePtr = n0
+	pred, doesExist := chordNode.getPredecessor()
+	if !doesExist || (pred.Id < n0.Id && n0.Id < chordNode.node.Id) {
+		chordNode.setPredecessor(n0)
 	}
-	return &empty.Empty{}, nil
+
+	return emptyPtr, nil
 }
