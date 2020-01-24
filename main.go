@@ -51,7 +51,6 @@ func main() {
 
 	chordNode, err := chord.NewChordNode(listener, chord.ChordConfig{
 		NumOfBitsInID: int32(*m),
-		LenOfSuccList: int32(*r),
 	})
 	if err != nil {
 		log.Fatal("creating new Chord node failed")
