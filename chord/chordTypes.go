@@ -38,5 +38,4 @@ type stubsPoolWithMux struct {
 
 type ChordConfig struct {
 	NumOfBitsInID int32 // number of bits in ID
-	LenOfSuccList int32 // number of successors in successors list
 }
