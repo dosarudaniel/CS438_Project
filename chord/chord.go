@@ -183,7 +183,9 @@ func (chordNode *ChordNode) ClosestPrecedingNode(nodeID nodeID) Node {
 }
 
 func (chordNode *ChordNode) String() string {
-	outputString := "Node " + chordNode.node.Id + " ip: " + chordNode.node.Ip + "\n"
+	outputString := "\nNODE INFO: "
+	outputString += fmt.Sprintf("ID (string %s) (int64 %d) IP %s\n",
+		chordNode.node.Id, idToInt(chordNode.node.Id), chordNode.node.Ip)
 
 	outputString += "\t Predecesor: "
 	chordNode.predecessor.RLock()

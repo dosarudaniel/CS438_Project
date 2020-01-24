@@ -28,7 +28,6 @@ func (chordNode *ChordNode) GetPredecessor(ctx context.Context, e *empty.Empty) 
  		return n'.find_successor(id);
 */
 func (chordNode *ChordNode) FindSuccessor(ctx context.Context, messageIDPtr *ID) (*Node, error) {
-	log.Println("running FindSuccessor")
 	if messageIDPtr == nil {
 		return nil, errors.New("id must not be nil")
 	}
@@ -56,16 +55,14 @@ func (chordNode *ChordNode) FindSuccessor(ctx context.Context, messageIDPtr *ID)
 // Algorithm:
 // n.notify(n0)
 //	 if (predecessor is nil or n0 is_in (predecessor; n))
-//	 predecessor = n0;
+//	 	predecessor = n0;
 func (chordNode *ChordNode) Notify(ctx context.Context, n0 *Node) (*empty.Empty, error) {
 	emptyPtr := &empty.Empty{}
-	log.Println("running notify")
 	if n0 == nil {
 		return emptyPtr, errors.New("trying to notify nil node")
 	}
-	log.Printf("running notify with n0 = %v", n0)
 	pred, doesExist := chordNode.getPredecessor()
-	if !doesExist || (pred.Id < n0.Id && n0.Id < chordNode.node.Id) {
+	if (!doesExist && n0.Id != chordNode.node.Id) || (pred.Id < n0.Id && n0.Id < chordNode.node.Id) {
 		chordNode.setPredecessor(n0)
 	}
 

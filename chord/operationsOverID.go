@@ -5,6 +5,16 @@ import (
 	"math/big"
 )
 
+func idToInt(id string) int64 {
+	y, err := hex.DecodeString(id)
+	if err != nil {
+		return 0
+	}
+	z := new(big.Int)
+	z.SetBytes(y)
+	return z.Int64()
+}
+
 func addIntToID(x int, id string) (string, error) {
 	y, err := hex.DecodeString(id)
 	if err != nil {

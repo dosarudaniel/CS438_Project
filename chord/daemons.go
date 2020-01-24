@@ -28,7 +28,6 @@ func (chordNode *ChordNode) RunAtInterval(daemon func(*ChordNode), intervalSecon
 
 */
 func StabilizeDaemon(chordNode *ChordNode) {
-	log.Println("running stabilize...")
 	succ, doesExist := chordNode.getSuccessor()
 	if !doesExist {
 		return
@@ -63,7 +62,6 @@ func FixFingersDaemon(chordNode *ChordNode) func(*ChordNode) {
 	n := chordNode.node.Id
 
 	return func(chordNode *ChordNode) {
-		log.Printf("running fix fingers: next = %d", next)
 		var err error
 
 		next++
