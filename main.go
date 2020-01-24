@@ -72,16 +72,14 @@ func main() {
 		if *existingNodeIp == *peersterAddr {
 			log.Fatal("'existingNodeIp' should not be the same as peersterAddr")
 		}
-		log.Info(fmt.Sprint("Joining to id: ", *existingNodeId))
-		log.Info(fmt.Sprint("Joining to existing node with IP: ", *existingNodeIp))
+
+		fmt.Println(chordNode)
 
 		err := chordNode.Join(Node{Id: *existingNodeId, Ip: *existingNodeIp})
 		if err != nil {
 			log.Fatal(fmt.Sprint(err))
 			os.Exit(-1)
 		}
-
-		fmt.Println(chordNode)
 
 	default:
 		log.Fatal(fmt.Sprintf("One of the following flags should be true: 'create' or 'join'"))

@@ -66,7 +66,7 @@ func NewChordNode(listener net.Listener, config ChordConfig) (*ChordNode, error)
 	chordNode.config = config
 
 	ip := listener.Addr().String()
-	id, err := hashString(ip)
+	id, err := hashString(ip, int(config.NumOfBitsInID))
 	if err != nil {
 		return chordNode, err
 	}
@@ -91,9 +91,10 @@ func NewChordNode(listener net.Listener, config ChordConfig) (*ChordNode, error)
 	RegisterChordServer(chordNode.chordServer, chordNode)
 	go chordNode.chordServer.Serve(listener)
 
-	go chordNode.StabilizeDaemon(10)        // TODO replace by a constant or config.fixFingerInterval
-	go chordNode.FixFingersDaemon(10)       // TODO replace by a constant or config.fixFingerInterval
-	go chordNode.CheckPredecessorDaemon(10) // TODO replace by a constant or config.checkPredecessorInterval
+	// TODO replace by a constant or config.fixFingerInterval
+	go chordNode.RunAtInterval(StabilizeDaemon, 5)
+	go chordNode.RunAtInterval(FixFingersDaemon(chordNode), 5)
+	go chordNode.RunAtInterval(CheckPredecessorDaemon, 5)
 
 	return chordNode, nil
 }
@@ -153,6 +154,7 @@ func (chordNode *ChordNode) Join(n0 Node) error {
 	chordNode.setPredecessor(nil)
 
 	succ, err := chordNode.stubFindSuccessor(ipAddr(n0.Ip), context.Background(), &ID{Id: chordNode.node.Id})
+	fmt.Printf("Im joining succ: %v", succ)
 	if err != nil {
 		return err
 	}
@@ -160,6 +162,24 @@ func (chordNode *ChordNode) Join(n0 Node) error {
 	chordNode.setSuccessor(succ)
 
 	return nil
+}
+
+func (chordNode *ChordNode) ClosestPrecedingNode(nodeID nodeID) Node {
+	id := string(nodeID)
+	n := chordNode.node.Id
+	chordNode.fingerTable.RLock()
+	defer chordNode.fingerTable.RUnlock()
+	fingerTable := chordNode.fingerTable.table
+	for i := len(chordNode.fingerTable.table) - 1; i >= 0; i-- {
+		finger := fingerTable[i]
+		if finger == nil {
+			continue
+		}
+		if n < finger.Id && finger.Id < id {
+			return *finger
+		}
+	}
+	return chordNode.node
 }
 
 func (chordNode *ChordNode) String() string {
