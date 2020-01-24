@@ -49,7 +49,10 @@ func main() {
 		log.Fatal(fmt.Sprintf("listening to %s failed: %v", *peersterAddr, err))
 	}
 
-	chordNode, err := chord.NewChordNode(listener)
+	chordNode, err := chord.NewChordNode(listener, chord.ChordConfig{
+		NumOfBitsInID: int32(*m),
+		LenOfSuccList: int32(*r),
+	})
 	if err != nil {
 		log.Fatal("creating new Chord node failed")
 		os.Exit(-1)
