@@ -10,6 +10,7 @@ import . "github.com/dosarudaniel/CS438_Project/services/chord_service"
 // In this file, we put all helper functions and types used by Chord package
 // "helper" can be defined as something that is not worth own file/package and has tiny role in the chord functionality
 
+type nodeID string
 type ipAddr string
 
 type nodeWithMux struct {

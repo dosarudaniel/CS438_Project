@@ -23,8 +23,8 @@ type IChordNode interface {
 	// to join the Chord ring (network) knowing a single node already in the ring
 	Join(Node) error
 
-	// to search the local finger table for the highest predecessor of id
-	ClosestPrecedingNode(ID) Node
+	// to search the local finger table for the highest predecessor of nodeID
+	ClosestPrecedingNode(nodeID) Node
 
 	// to learn about newly joined nodes
 	StabilizeDaemon()
