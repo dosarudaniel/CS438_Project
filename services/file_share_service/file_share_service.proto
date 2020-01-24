@@ -2,8 +2,13 @@ syntax = "proto3";
 import "services/file_share_service/file_share_messages.proto";
 package chord;
 
-service FileShare {
+service DownloadService {
     // It should return error if the File is not stored by FileInfo.id
-    // of the file itself if the it is
-    rpc Download (FileInfo) returns (File);
+    // or a stream with FileChunks if it is
+    rpc Download (FileInfo) returns (stream FileChunk);
+}
+
+service UploadService {
+    // Send a stream of FileChunks
+    rpc Upload(stream FileChunk) returns (UploadStatus);
 }
