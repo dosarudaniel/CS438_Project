@@ -9,7 +9,6 @@ import (
 
 // RPC implementation
 func (chordNode *ChordNode) RequestFile(ctx context.Context, fileMetadata *FileMetadata) (*Response, error) {
-
 	ownerNode, err := chordNode.FindSuccessor(ctx, &ID{Id: fileMetadata.OwnersID}) // FIXME
 	if err != nil {
 		return &Response{Text: "Could not find owner's IP for id " + fileMetadata.OwnersID}, err
