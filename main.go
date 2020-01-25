@@ -24,8 +24,6 @@ func main() {
 	m := flag.Int("m", 32, "Number of bits in one node's id")
 	r := flag.Int("r", 2, "Number of nodes in the successor list")
 
-	role := flag.Int("role", 1, "Role: 1 == sender, 2 == receiver")
-
 	flag.Parse()
 
 	log := logger.DefaultLogger()
@@ -86,10 +84,6 @@ func main() {
 	default:
 		log.Fatal(fmt.Sprintf("One of the following flags should be true: 'create' or 'join'"))
 		os.Exit(-1)
-	}
-
-	if *role == 2 {  // receiver
-		chordNode.RequestFileFromID("f1.txt", "id of the node")
 	}
 
 	select {}

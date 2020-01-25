@@ -10,9 +10,9 @@ import (
 
 func main() {
 
-	uiPort := flag.String("UIPort", "8080", "port for the UI client")
+	peersterAddress := flag.String("PeersterAddress", "127.0.0.1:5000", "Peerster address to connect to")
 	file := flag.String("file", "", "file to be indexed by the gossiper")
-	request := flag.String("request", "", "request a file with ID")
+	request := flag.String("nodeID", "", "request a file from a peerster with nodeID")
 	verbose := flag.Bool("v", false, "verbose mode")
 
 	flag.Parse()

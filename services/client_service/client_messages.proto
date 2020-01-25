@@ -1,0 +1,12 @@
+syntax = "proto3";
+package chord;
+
+message FileMetadata {
+    string filenameAtOwner = 1;    // filename (unique in the Chord ring)
+    string ownersID = 2;
+    string nameToStore = 3;
+}
+
+message Response {
+    string text = 1;
+}

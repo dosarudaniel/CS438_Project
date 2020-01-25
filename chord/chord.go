@@ -5,6 +5,7 @@ import (
 	"context"
 	"fmt"
 	. "github.com/dosarudaniel/CS438_Project/services/chord_service"
+	. "github.com/dosarudaniel/CS438_Project/services/client_service"
 	. "github.com/dosarudaniel/CS438_Project/services/file_share_service"
 	"github.com/golang/protobuf/ptypes/empty"
 	"google.golang.org/grpc"
@@ -92,6 +93,7 @@ func NewChordNode(listener net.Listener) (*ChordNode, error) {
 	chordNode.grpcServer = grpc.NewServer()
 	RegisterChordServer(chordNode.grpcServer, chordNode)
 	RegisterFileShareServiceServer(chordNode.grpcServer, chordNode)
+	RegisterClientServiceServer(chordNode.grpcServer, chordNode)
 	go chordNode.grpcServer.Serve(listener)
 
 	return chordNode, nil

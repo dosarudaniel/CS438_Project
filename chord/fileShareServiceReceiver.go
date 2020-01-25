@@ -11,13 +11,10 @@ import (
 
 // CLIENT part :  A node which request a file from another node
 
-// This function should be called whenever a node receives a  request from its local client (used for interaction)
-func (ChordNode * ChordNode) RequestFileFromID(filename string, id string) {
+// This function should be called whenever a node receives a request from its local client (used for interaction)
+func (ChordNode * ChordNode) RequestFileFromIp(filename string, ownersIp string) error {
 
-	// TODO: Step 1: get IP from ID using Chord
-	serverAddr := "127.0.0.1:5000"
-
-	conn, err := grpc.Dial(serverAddr, grpc.WithInsecure(), grpc.WithBlock())
+	conn, err := grpc.Dial(ownersIp, grpc.WithInsecure(), grpc.WithBlock())
 	if err != nil {
 		log.Fatalf("fail to dial: %v", err)
 	}
@@ -26,12 +23,18 @@ func (ChordNode * ChordNode) RequestFileFromID(filename string, id string) {
 
 	fileInfo := FileInfo{Filename: filename}
 
-	Download(client, &fileInfo)  // Or `go download(client, &fileInfo)`
+	err = Download(client, &fileInfo)  // Or `go download(client, &fileInfo)`
+	if err != nil {
+		log.Fatalf("%v.Download() failed, err = %v", client, err)
+		return err
+	}
+
+	return nil
 }
 
 
 
-func Download(client FileShareServiceClient, fileInfo *FileInfo) {
+func Download(client FileShareServiceClient, fileInfo *FileInfo) error {
 	log.Printf("Downloading %v", fileInfo)
 	ctx, cancel := context.WithTimeout(context.Background(), 10 * time.Second)
 	defer cancel()
@@ -39,6 +42,7 @@ func Download(client FileShareServiceClient, fileInfo *FileInfo) {
 	stream, err := client.TransferFile(ctx, fileInfo)
 	if err != nil {
 		log.Fatalf("%v.Download(_) = _, %v", client, err)
+		return err
 	}
 	for {
 		chunk, err := stream.Recv()
@@ -47,9 +51,12 @@ func Download(client FileShareServiceClient, fileInfo *FileInfo) {
 		}
 		if err != nil {
 			log.Fatalf("%v.Download(_) = _, %v", client, err)
+			return err
 		}
 		log.Println("Received one chunk: " + string(chunk.Content))
 	}
+
+	return nil
 }
 
 
