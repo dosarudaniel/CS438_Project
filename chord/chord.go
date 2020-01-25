@@ -5,6 +5,7 @@ import (
 	"context"
 	"fmt"
 	. "github.com/dosarudaniel/CS438_Project/services/chord_service"
+	. "github.com/dosarudaniel/CS438_Project/services/file_share_service"
 	"github.com/golang/protobuf/ptypes/empty"
 	"google.golang.org/grpc"
 	"net"
@@ -15,6 +16,9 @@ import (
 type IChordNode interface {
 	// interface created by the chord_service proto file for RPC methods
 	ChordServer
+
+	// interface created by the file_share_service proto file for RPC methods
+	FileShareServiceServer
 
 	// to create own Chord ring (network)
 	Create()
@@ -56,6 +60,9 @@ type ChordNode struct {
 
 	// for gRPC server functionality
 	chordServer *grpc.Server
+
+	// for gRPC file share server functionality
+	fileShareServer *grpc.Server
 }
 
 // NewChordNode is a constructor for ChordNode struct
@@ -91,6 +98,10 @@ func NewChordNode(listener net.Listener) (*ChordNode, error) {
 	chordNode.chordServer = grpc.NewServer()
 	RegisterChordServer(chordNode.chordServer, chordNode)
 	go chordNode.chordServer.Serve(listener)
+
+	chordNode.fileShareServer = grpc.NewServer()
+	RegisterFileShareServiceServer(chordNode.fileShareServer, chordNode)
+	go chordNode.fileShareServer.Serve(listener)
 
 	return chordNode, nil
 }

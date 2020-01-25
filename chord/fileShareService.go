@@ -5,7 +5,7 @@ import (
 )
 
 // RPC implementation
-func (chordNode *ChordNode) TransferFile(fileInfo *FileInfo, stream DownloadService_TransferFileServer) error {
+func (chordNode *ChordNode) TransferFile(fileInfo *FileInfo, stream FileShareService_TransferFileServer) error {
 	// Find the file with filename == fileInfo.Filename
 
 	// Create an array of chunks named fileChunks
