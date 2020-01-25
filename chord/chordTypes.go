@@ -24,11 +24,6 @@ type nodeWithMux struct {
 	sync.RWMutex
 }
 
-type successorsListWithMux struct {
-	list []*Node
-	sync.RWMutex
-}
-
 type ipToStubMap map[ipAddr]ChordClient
 
 type stubsPoolWithMux struct {
@@ -37,5 +32,5 @@ type stubsPoolWithMux struct {
 }
 
 type ChordConfig struct {
-	NumOfBitsInID int32 // number of bits in ID
+	NumOfBitsInID int // number of bits in ID
 }

@@ -5,7 +5,6 @@ import (
 	"errors"
 	. "github.com/dosarudaniel/CS438_Project/services/chord_service"
 	"github.com/golang/protobuf/ptypes/empty"
-	"log"
 )
 
 // GetPredecessor (RPC) returns a pointer to the predecessor node
@@ -33,7 +32,6 @@ func (chordNode *ChordNode) FindSuccessor(ctx context.Context, messageIDPtr *ID)
 	}
 
 	id := messageIDPtr.Id
-	log.Printf("id : %d", id)
 	n := chordNode.node
 	succ, doesExist := chordNode.getSuccessor()
 	if !doesExist {

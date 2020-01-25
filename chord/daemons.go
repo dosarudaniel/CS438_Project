@@ -41,7 +41,9 @@ func StabilizeDaemon(chordNode *ChordNode) {
 		}
 	}
 
-	err = chordNode.stubNotify(ipAddr(succ.Ip), context.Background(), &chordNode.node)
+	if succ.Id != chordNode.node.Id {
+		err = chordNode.stubNotify(ipAddr(succ.Ip), context.Background(), &chordNode.node)
+	}
 	log.Println(chordNode)
 }
 
@@ -64,13 +66,11 @@ func FixFingersDaemon(chordNode *ChordNode) func(*ChordNode) {
 	return func(chordNode *ChordNode) {
 		var err error
 
-		next++
-		if next >= int(m) {
-			next = 0
-		}
+		next = (next + 1) % m
 
-		// n + 2^next
-		id, err := addIntToID(1<<next, n)
+		// n + 2^next % 2^m
+		id, err := getIthFingerID(n, next, m)
+		log.Println(n, 1<<next, m, id)
 		if err != nil {
 			return
 		}

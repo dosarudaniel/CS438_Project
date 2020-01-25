@@ -190,7 +190,11 @@ func (chordNode *ChordNode) String() string {
 	outputString += "\t Predecesor: "
 	chordNode.predecessor.RLock()
 	if chordNode.predecessor.nodePtr != nil {
-		outputString += chordNode.predecessor.nodePtr.Id + " ip: " + chordNode.predecessor.nodePtr.Ip + "\n"
+		outputString +=
+			fmt.Sprintf("ID (string %s) (int64 %d) IP %s\n",
+				chordNode.predecessor.nodePtr.Id,
+				idToInt(chordNode.predecessor.nodePtr.Id),
+				chordNode.predecessor.nodePtr.Ip)
 	} else {
 		outputString += "nil\n"
 	}
@@ -202,7 +206,8 @@ func (chordNode *ChordNode) String() string {
 		if nodePtr == nil {
 			outputString += fmt.Sprintf("\t\t [%d] nil\n", i)
 		} else {
-			outputString += fmt.Sprintf("\t\t [%d] %s %s\n", i, nodePtr.Id, nodePtr.Ip)
+			outputString += fmt.Sprintf("\t\t [%d] (string %s) (int64 %d) %s\n",
+				i, nodePtr.Id, idToInt(nodePtr.Id), nodePtr.Ip)
 		}
 	}
 	chordNode.fingerTable.RUnlock()

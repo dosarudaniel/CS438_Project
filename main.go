@@ -48,7 +48,7 @@ func main() {
 	}
 
 	chordNode, err := chord.NewChordNode(listener, chord.ChordConfig{
-		NumOfBitsInID: int32(*m),
+		NumOfBitsInID: *m,
 	})
 	if err != nil {
 		log.Fatal("creating new Chord node failed")
