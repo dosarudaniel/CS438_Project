@@ -11,15 +11,13 @@ import (
 
 // CLIENT part :  A node which request a file from another node
 
+// This function should be called whenever a node receives a  request from its local client (used for interaction)
 func (ChordNode * ChordNode) RequestFileFromID(filename string, id string) {
 
 	// TODO: Step 1: get IP from ID using Chord
-	serverAddr := "127.0.0.123:5000"
+	serverAddr := "127.0.0.1:5000"
 
-	var opts []grpc.DialOption
-
-	opts = append(opts, grpc.WithBlock())
-	conn, err := grpc.Dial(serverAddr, opts...)
+	conn, err := grpc.Dial(serverAddr, grpc.WithInsecure(), grpc.WithBlock())
 	if err != nil {
 		log.Fatalf("fail to dial: %v", err)
 	}
@@ -32,15 +30,15 @@ func (ChordNode * ChordNode) RequestFileFromID(filename string, id string) {
 }
 
 
-//
+
 func Download(client FileShareServiceClient, fileInfo *FileInfo) {
 	log.Printf("Downloading %v", fileInfo)
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 10 * time.Second)
 	defer cancel()
 
 	stream, err := client.TransferFile(ctx, fileInfo)
 	if err != nil {
-		log.Fatalf("%v.ListFeatures(_) = _, %v", client, err)
+		log.Fatalf("%v.Download(_) = _, %v", client, err)
 	}
 	for {
 		chunk, err := stream.Recv()
@@ -50,7 +48,7 @@ func Download(client FileShareServiceClient, fileInfo *FileInfo) {
 		if err != nil {
 			log.Fatalf("%v.Download(_) = _, %v", client, err)
 		}
-		log.Println(chunk)
+		log.Println("Received one chunk: " + string(chunk.Content))
 	}
 }
 
