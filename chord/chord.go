@@ -56,10 +56,7 @@ type ChordNode struct {
 	stubsPool stubsPoolWithMux
 
 	// for gRPC server functionality
-	chordServer *grpc.Server
-
-	// for gRPC file share server functionality
-	fileShareServer *grpc.Server
+	grpcServer *grpc.Server
 }
 
 // NewChordNode is a constructor for ChordNode struct
@@ -92,10 +89,10 @@ func NewChordNode(listener net.Listener) (*ChordNode, error) {
 		sync.RWMutex{},
 	}
 
-	chordNode.chordServer = grpc.NewServer()
-	RegisterChordServer(chordNode.chordServer, chordNode)
-	RegisterFileShareServiceServer(chordNode.chordServer, chordNode)
-	go chordNode.chordServer.Serve(listener)
+	chordNode.grpcServer = grpc.NewServer()
+	RegisterChordServer(chordNode.grpcServer, chordNode)
+	RegisterFileShareServiceServer(chordNode.grpcServer, chordNode)
+	go chordNode.grpcServer.Serve(listener)
 
 	return chordNode, nil
 }
