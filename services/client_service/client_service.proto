@@ -1,0 +1,8 @@
+syntax = "proto3";
+import "services/client_service/client_messages.proto";
+package chord;
+
+service ClientService {
+    rpc RequestFile (FileMetadata) returns (Response);
+    // rpc UploadFile (FileMetadata) returns (Response);
+}

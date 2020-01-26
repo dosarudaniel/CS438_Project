@@ -1,0 +1,9 @@
+syntax = "proto3";
+import "services/file_share_service/file_share_messages.proto";
+package chord;
+
+service FileShareService {
+    // It should return error if the File is not stored by FileInfo.id
+    // or a stream with FileChunks if it is
+    rpc TransferFile (FileInfo) returns (stream FileChunk);
+}

@@ -6,6 +6,8 @@ import (
 	"errors"
 	"fmt"
 	. "github.com/dosarudaniel/CS438_Project/services/chord_service"
+	. "github.com/dosarudaniel/CS438_Project/services/client_service"
+	. "github.com/dosarudaniel/CS438_Project/services/file_share_service"
 	"google.golang.org/grpc"
 	"net"
 	"sync"
@@ -57,7 +59,7 @@ type ChordNode struct {
 	stubsPool stubsPoolWithMux
 
 	// for gRPC server functionality
-	chordServer *grpc.Server
+	grpcServer *grpc.Server
 }
 
 // NewChordNode is a constructor for ChordNode struct
@@ -88,9 +90,11 @@ func NewChordNode(listener net.Listener, config ChordConfig) (*ChordNode, error)
 		sync.RWMutex{},
 	}
 
-	chordNode.chordServer = grpc.NewServer()
-	RegisterChordServer(chordNode.chordServer, chordNode)
-	go chordNode.chordServer.Serve(listener)
+	chordNode.grpcServer = grpc.NewServer()
+	RegisterChordServer(chordNode.grpcServer, chordNode)
+	RegisterFileShareServiceServer(chordNode.grpcServer, chordNode)
+	RegisterClientServiceServer(chordNode.grpcServer, chordNode)
+	go chordNode.grpcServer.Serve(listener)
 
 	// TODO replace by a constant or config.fixFingerInterval
 	go chordNode.RunAtInterval(StabilizeDaemon, 4)

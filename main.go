@@ -49,6 +49,7 @@ func main() {
 
 	chordNode, err := chord.NewChordNode(listener, chord.ChordConfig{
 		NumOfBitsInID: *m,
+		ChunkSize: 1024,
 	})
 	if err != nil {
 		log.Fatal("creating new Chord node failed")
@@ -70,6 +71,8 @@ func main() {
 		if *existingNodeIp == *peersterAddr {
 			log.Fatal("'existingNodeIp' should not be the same as peersterAddr")
 		}
+		log.Info(fmt.Sprintf("Joining to id: %v ", *existingNodeId))
+		log.Info(fmt.Sprintf("Joining to existing node with IP: %v", *existingNodeIp))
 
 		fmt.Println(chordNode)
 

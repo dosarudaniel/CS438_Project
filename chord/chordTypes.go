@@ -33,4 +33,5 @@ type stubsPoolWithMux struct {
 
 type ChordConfig struct {
 	NumOfBitsInID int // number of bits in ID
+	ChunkSize int
 }

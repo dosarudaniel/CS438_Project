@@ -1,0 +1,10 @@
+syntax = "proto3";
+package chord;
+
+message FileInfo {
+    string filename = 1;    // filename (unique in the Chord ring)
+}
+
+message FileChunk {
+    bytes content = 1;
+}
