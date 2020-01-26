@@ -21,8 +21,7 @@ func main() {
 	existingNodeId := flag.String("existingNodeId", "", "The id to which this node should join")
 	existingNodeIp := flag.String("existingNodeIp", "", "ip:port for the existing Peerster in the Chord ring to join")
 	trace := flag.Bool("v", false, "more verbosity of the program")
-	m := flag.Int("m", 32, "Number of bits in one node's id")
-	r := flag.Int("r", 2, "Number of nodes in the successor list")
+	m := flag.Int("m", 8, "Number of bits in one node's id; max = 256, min = 8")
 
 	flag.Parse()
 
@@ -42,14 +41,15 @@ func main() {
 	log.Info(fmt.Sprint("Peerster IP Address: ", *peersterAddr))
 	log.Info(fmt.Sprint("Peerster Name: ", *name))
 	log.Info(fmt.Sprint("Number of bits in one node's id: ", *m))
-	log.Info(fmt.Sprint("Number of nodes in the successor list: ", *r))
 
 	listener, err := net.Listen("tcp", *peersterAddr)
 	if err != nil {
 		log.Fatal(fmt.Sprintf("listening to %s failed: %v", *peersterAddr, err))
 	}
 
-	chordNode, err := chord.NewChordNode(listener)
+	chordNode, err := chord.NewChordNode(listener, chord.ChordConfig{
+		NumOfBitsInID: *m,
+	})
 	if err != nil {
 		log.Fatal("creating new Chord node failed")
 		os.Exit(-1)
@@ -70,8 +70,8 @@ func main() {
 		if *existingNodeIp == *peersterAddr {
 			log.Fatal("'existingNodeIp' should not be the same as peersterAddr")
 		}
-		log.Info(fmt.Sprint("Joining to id: ", *existingNodeId))
-		log.Info(fmt.Sprint("Joining to existing node with IP: ", *existingNodeIp))
+
+		fmt.Println(chordNode)
 
 		err := chordNode.Join(Node{Id: *existingNodeId, Ip: *existingNodeIp})
 		if err != nil {
@@ -79,12 +79,11 @@ func main() {
 			os.Exit(-1)
 		}
 
-		fmt.Println(chordNode)
-
 	default:
 		log.Fatal(fmt.Sprintf("One of the following flags should be true: 'create' or 'join'"))
 		os.Exit(-1)
 	}
 
+	// infinite block from terminating
 	select {}
 }

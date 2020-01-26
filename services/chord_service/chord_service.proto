@@ -7,6 +7,5 @@ service Chord {
     rpc FindSuccessor (ID) returns (Node);
     rpc Notify (Node) returns (google.protobuf.Empty);
     rpc GetPredecessor (google.protobuf.Empty) returns (Node);
-    rpc GetSuccessorsList (google.protobuf.Empty) returns (Nodes);
 }
 

@@ -3,9 +3,9 @@ package chord
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	. "github.com/dosarudaniel/CS438_Project/services/chord_service"
-	"github.com/golang/protobuf/ptypes/empty"
 	"google.golang.org/grpc"
 	"net"
 	"sync"
@@ -22,8 +22,8 @@ type IChordNode interface {
 	// to join the Chord ring (network) knowing a single node already in the ring
 	Join(Node) error
 
-	// to search the local finger table for the highest predecessor of id
-	ClosestPrecedingNode(ID) Node
+	// to search the local finger table for the highest predecessor of nodeID
+	ClosestPrecedingFinger(nodeID) Node
 
 	// to learn about newly joined nodes
 	StabilizeDaemon()
@@ -32,7 +32,7 @@ type IChordNode interface {
 	FixFingersDaemon()
 
 	// to clear the node's predecessor pointer if the predecessor has failed
-	CheckPredecessorsDaemon()
+	CheckPredecessorDaemon()
 }
 
 // Chord node can be created using `NewChordNode`
@@ -41,12 +41,14 @@ type IChordNode interface {
 // or by joining an existing network using `join`
 // Both `create` and `join` must be followed by a call to `launchFingerTableDaemons`
 type ChordNode struct {
+	// constant; must not be changed after first initialization
+	config ChordConfig
+
 	// constant to keep own IP and ID
-	// Note: it must not be changed after initial definition in NewChordNode()
+	// Note: it must not be changed after initialization in NewChordNode()
 	node Node
 
-	predecessor    nodeWithMux
-	successorsList successorsListWithMux
+	predecessor nodeWithMux
 
 	fingerTable fingerTableWithMux
 
@@ -59,11 +61,13 @@ type ChordNode struct {
 }
 
 // NewChordNode is a constructor for ChordNode struct
-func NewChordNode(listener net.Listener) (*ChordNode, error) {
+func NewChordNode(listener net.Listener, config ChordConfig) (*ChordNode, error) {
 	chordNode := &ChordNode{}
 
+	chordNode.config = config
+
 	ip := listener.Addr().String()
-	id, err := hashString(ip)
+	id, err := hashString(ip, int(config.NumOfBitsInID))
 	if err != nil {
 		return chordNode, err
 	}
@@ -75,12 +79,8 @@ func NewChordNode(listener net.Listener) (*ChordNode, error) {
 		nil,
 		sync.RWMutex{},
 	}
-	chordNode.successorsList = successorsListWithMux{
-		make([]*Node, 0),
-		sync.RWMutex{},
-	}
 	chordNode.fingerTable = fingerTableWithMux{
-		make(fingerTable, 0),
+		make(fingerTable, chordNode.config.NumOfBitsInID),
 		sync.RWMutex{},
 	}
 	chordNode.stubsPool = stubsPoolWithMux{
@@ -92,7 +92,46 @@ func NewChordNode(listener net.Listener) (*ChordNode, error) {
 	RegisterChordServer(chordNode.chordServer, chordNode)
 	go chordNode.chordServer.Serve(listener)
 
+	// TODO replace by a constant or config.fixFingerInterval
+	go chordNode.RunAtInterval(StabilizeDaemon, 4)
+	go chordNode.RunAtInterval(FixFingersDaemon(chordNode), 6)
+	go chordNode.RunAtInterval(CheckPredecessorDaemon, 5)
+
 	return chordNode, nil
+}
+
+func (chordNode *ChordNode) setSuccessor(nodePtr *Node) {
+	chordNode.fingerTable.Lock()
+	defer chordNode.fingerTable.Unlock()
+	chordNode.fingerTable.table[0] = nodePtr
+}
+
+// returns Node, doesExist
+func (chordNode *ChordNode) getSuccessor() (Node, bool) {
+	chordNode.fingerTable.RLock()
+	defer chordNode.fingerTable.RUnlock()
+	if chordNode.fingerTable.table[0] == nil {
+		return Node{}, false
+	} else {
+		return *chordNode.fingerTable.table[0], true
+	}
+}
+
+func (chordNode *ChordNode) setPredecessor(nodePtr *Node) {
+	chordNode.predecessor.Lock()
+	defer chordNode.predecessor.Unlock()
+	chordNode.predecessor.nodePtr = nodePtr
+}
+
+// returns Node, doesExist
+func (chordNode *ChordNode) getPredecessor() (Node, bool) {
+	chordNode.predecessor.RLock()
+	defer chordNode.predecessor.RUnlock()
+	if chordNode.predecessor.nodePtr == nil {
+		return Node{}, false
+	} else {
+		return *chordNode.predecessor.nodePtr, true
+	}
 }
 
 // Create creates a Chord ring
@@ -100,91 +139,80 @@ func (chordNode *ChordNode) Create() {
 	// create a new Chord ring.
 	// n.create()
 	//   predecessor = nil;
-	//	 successor = [n];
-	chordNode.predecessor.Lock()
-	chordNode.predecessor.node = nil
-	chordNode.predecessor.Unlock()
-
-	chordNode.successorsList.Lock()
-	chordNode.successorsList.list = []*Node{&chordNode.node}
-	chordNode.successorsList.Unlock()
+	//   successor = n;
+	chordNode.setPredecessor(nil)
+	chordNode.setSuccessor(&chordNode.node)
 }
 
 // Join lets the ChordNode to join a Chord ring containing node n0.
 // Algorithm:
 // n.join(n0)
-//   predecessor = nil;
-//   succ := n0.find_successor(n);
-//	 fingerTable[0] = succ
-//   succList := succ.getSuccessorsList();
-//   successorsList = succ :: succList[:len(succList) - 1]
+//	 predecessor = nil;
+//	 successor = n0.find_successor(n);
 func (chordNode *ChordNode) Join(n0 Node) error {
 	var err error
 
-	chordNode.predecessor.Lock()
-	chordNode.predecessor.node = nil
-	chordNode.predecessor.Unlock()
+	chordNode.setPredecessor(nil)
 
-	n0Stub, err := chordNode.getStubFor(ipAddr(n0.Ip))
-	if err != nil {
-		return err
-	}
-	succ, err := n0Stub.FindSuccessor(context.Background(), &ID{Id: chordNode.node.Id})
-	if err != nil {
-		return err
-	}
-
-	chordNode.fingerTable.Lock()
-	chordNode.fingerTable.table = []Node{*succ}
-	chordNode.fingerTable.Unlock()
-
-	succStub, err := chordNode.getStubFor(ipAddr(succ.Ip))
-	if err != nil {
-		return err
-	}
-	nodesPtr, err := succStub.GetSuccessorsList(context.Background(), &empty.Empty{})
+	succ, err := chordNode.stubFindSuccessor(ipAddr(n0.Ip), context.Background(), &ID{Id: chordNode.node.Id})
 	switch {
 	case err != nil:
 		return err
-	case nodesPtr == nil:
-		return fmt.Errorf("successors list from %s is nil", succ.Ip)
+	case succ == nil:
+		return &nilSuccessor{}
+	case chordNode.node.Id == succ.Id:
+		return errors.New("node with such ID already exists in the Chord ring")
 	}
-	succList := nodesPtr.NodeArray
 
-	chordNode.successorsList.Lock()
-	defer chordNode.successorsList.Unlock()
-	chordNode.successorsList.list = append([]*Node{succ}, succList[:len(succList)-1]...)
+	chordNode.setSuccessor(succ)
 
 	return nil
 }
 
+func (chordNode *ChordNode) ClosestPrecedingFinger(nodeID nodeID) Node {
+	id := string(nodeID)
+	chordNode.fingerTable.RLock()
+	defer chordNode.fingerTable.RUnlock()
+	fingerTable := chordNode.fingerTable.table
+	for i := len(chordNode.fingerTable.table) - 1; i >= 0; i-- {
+		finger := fingerTable[i]
+		if finger == nil {
+			continue
+		}
+		if isBetweenTwoNodesExclusive(chordNode.node, *finger, Node{Id: id}) {
+			return *finger
+		}
+	}
+	return chordNode.node
+}
+
 func (chordNode *ChordNode) String() string {
-	outputString := "Node " + chordNode.node.Id + " ip: " + chordNode.node.Ip + "\n"
+	outputString := "\nNODE INFO: "
+	outputString += fmt.Sprintf("ID (string %s) (uint64 %d) IP %s\n",
+		chordNode.node.Id, idToInt(chordNode.node.Id), chordNode.node.Ip)
 
 	outputString += "\t Predecesor: "
 	chordNode.predecessor.RLock()
-	if chordNode.predecessor.node != nil {
-		outputString += chordNode.predecessor.node.Id + " ip: " + chordNode.predecessor.node.Ip + "\n"
+	if chordNode.predecessor.nodePtr != nil {
+		outputString +=
+			fmt.Sprintf("ID (string %s) (uint64 %d) IP %s\n",
+				chordNode.predecessor.nodePtr.Id,
+				idToInt(chordNode.predecessor.nodePtr.Id),
+				chordNode.predecessor.nodePtr.Ip)
 	} else {
 		outputString += "nil\n"
 	}
 	chordNode.predecessor.RUnlock()
 
-	outputString += "\t Successors list: \n"
-	chordNode.successorsList.RLock()
-	for _, successor := range chordNode.successorsList.list {
-		if successor != nil {
-			outputString += "\t\t" + successor.Id + " " + successor.Ip + "\n"
-		} else {
-			outputString += "\t\t" + "nil" + "\n"
-		}
-	}
-	chordNode.successorsList.RUnlock()
-
 	outputString += "\t Finger table: \n"
 	chordNode.fingerTable.RLock()
-	for i, node := range chordNode.fingerTable.table {
-		outputString += fmt.Sprintf("\t\t [%d] %s %s\n", i, node.Id, node.Ip)
+	for i, nodePtr := range chordNode.fingerTable.table {
+		if nodePtr == nil {
+			outputString += fmt.Sprintf("\t\t [%d] nil\n", i)
+		} else {
+			outputString += fmt.Sprintf("\t\t [%d] (string %s) (uint64 %d) %s\n",
+				i, nodePtr.Id, idToInt(nodePtr.Id), nodePtr.Ip)
+		}
 	}
 	chordNode.fingerTable.RUnlock()
 
