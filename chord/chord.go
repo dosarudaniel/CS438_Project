@@ -23,7 +23,7 @@ type IChordNode interface {
 	Join(Node) error
 
 	// to search the local finger table for the highest predecessor of nodeID
-	ClosestPrecedingNode(nodeID) Node
+	ClosestPrecedingFinger(nodeID) Node
 
 	// to learn about newly joined nodes
 	StabilizeDaemon()
@@ -169,7 +169,7 @@ func (chordNode *ChordNode) Join(n0 Node) error {
 	return nil
 }
 
-func (chordNode *ChordNode) ClosestPrecedingNode(nodeID nodeID) Node {
+func (chordNode *ChordNode) ClosestPrecedingFinger(nodeID nodeID) Node {
 	id := string(nodeID)
 	n := chordNode.node.Id
 	chordNode.fingerTable.RLock()

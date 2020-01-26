@@ -41,7 +41,7 @@ func (chordNode *ChordNode) FindSuccessor(ctx context.Context, messageIDPtr *ID)
 	if n.Id < id && id <= succ.Id {
 		return &succ, nil
 	} else {
-		n0 := chordNode.ClosestPrecedingNode(nodeID(id))
+		n0 := chordNode.ClosestPrecedingFinger(nodeID(id))
 		if n0.Id == n.Id {
 			return &n, nil
 		}
