@@ -36,7 +36,7 @@ func StabilizeDaemon(chordNode *ChordNode) {
 	// TODO what if successor is down
 	x, err := chordNode.stubGetPredecessor(ipAddr(succ.Ip), context.Background())
 	if err == nil && x != nil {
-		if chordNode.node.Id < x.Id && x.Id < succ.Id {
+		if isBetweenTwoNodesExclusive(chordNode.node, *x, succ) || chordNode.node.Id == succ.Id {
 			chordNode.setSuccessor(x)
 		}
 	}
@@ -70,7 +70,6 @@ func FixFingersDaemon(chordNode *ChordNode) func(*ChordNode) {
 
 		// n + 2^next % 2^m
 		id, err := getIthFingerID(n, next, m)
-		log.Println(n, 1<<next, m, id)
 		if err != nil {
 			return
 		}

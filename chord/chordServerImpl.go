@@ -11,7 +11,7 @@ import (
 func (chordNode *ChordNode) GetPredecessor(ctx context.Context, e *empty.Empty) (*Node, error) {
 	pred, doesExist := chordNode.getPredecessor()
 	if !doesExist {
-		return nil, errors.New("predecessor is nil")
+		return nil, &nilPredecessor{}
 	}
 	return &pred, nil
 }
@@ -38,7 +38,7 @@ func (chordNode *ChordNode) FindSuccessor(ctx context.Context, messageIDPtr *ID)
 		return nil, errors.New("successor does not exist")
 	}
 
-	if n.Id < id && id <= succ.Id {
+	if isBetweenTwoNodesRightInclusive(n, Node{Id: id}, succ) {
 		return &succ, nil
 	} else {
 		n0 := chordNode.ClosestPrecedingFinger(nodeID(id))
@@ -60,7 +60,7 @@ func (chordNode *ChordNode) Notify(ctx context.Context, n0 *Node) (*empty.Empty,
 		return emptyPtr, errors.New("trying to notify nil node")
 	}
 	pred, doesExist := chordNode.getPredecessor()
-	if (!doesExist && n0.Id != chordNode.node.Id) || (pred.Id < n0.Id && n0.Id < chordNode.node.Id) {
+	if (!doesExist && n0.Id != chordNode.node.Id) || isBetweenTwoNodesExclusive(pred, *n0, chordNode.node) {
 		chordNode.setPredecessor(n0)
 	}
 

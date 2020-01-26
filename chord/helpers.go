@@ -92,8 +92,8 @@ func (m *nilPredecessor) Error() string {
 	return "predecessor is nil"
 }
 
-type knodeIsNil struct{}
+type nilNode struct{}
 
-func (m *nodeIsNil) Error() string {
+func (m *nilNode) Error() string {
 	return "nodeIsNil"
 }

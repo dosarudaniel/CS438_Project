@@ -93,8 +93,8 @@ func NewChordNode(listener net.Listener, config ChordConfig) (*ChordNode, error)
 	go chordNode.chordServer.Serve(listener)
 
 	// TODO replace by a constant or config.fixFingerInterval
-	go chordNode.RunAtInterval(StabilizeDaemon, 5)
-	go chordNode.RunAtInterval(FixFingersDaemon(chordNode), 5)
+	go chordNode.RunAtInterval(StabilizeDaemon, 4)
+	go chordNode.RunAtInterval(FixFingersDaemon(chordNode), 6)
 	go chordNode.RunAtInterval(CheckPredecessorDaemon, 5)
 
 	return chordNode, nil
@@ -159,7 +159,7 @@ func (chordNode *ChordNode) Join(n0 Node) error {
 	case err != nil:
 		return err
 	case succ == nil:
-		return errors.New("found successor node is nil")
+		return &nilSuccessor{}
 	case chordNode.node.Id == succ.Id:
 		return errors.New("node with such ID already exists in the Chord ring")
 	}
@@ -171,7 +171,6 @@ func (chordNode *ChordNode) Join(n0 Node) error {
 
 func (chordNode *ChordNode) ClosestPrecedingFinger(nodeID nodeID) Node {
 	id := string(nodeID)
-	n := chordNode.node.Id
 	chordNode.fingerTable.RLock()
 	defer chordNode.fingerTable.RUnlock()
 	fingerTable := chordNode.fingerTable.table
@@ -180,7 +179,7 @@ func (chordNode *ChordNode) ClosestPrecedingFinger(nodeID nodeID) Node {
 		if finger == nil {
 			continue
 		}
-		if n < finger.Id && finger.Id < id {
+		if isBetweenTwoNodesExclusive(chordNode.node, *finger, Node{Id: id}) {
 			return *finger
 		}
 	}
