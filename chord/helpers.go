@@ -3,6 +3,7 @@ package chord
 import (
 	"crypto"
 	"encoding/hex"
+	"errors"
 	. "github.com/dosarudaniel/CS438_Project/services/chord_service"
 )
 
@@ -21,8 +22,14 @@ func hashString(s string, numOfBitsInID int) (string, error) {
 
 /*
   For the Chord ring:
-	m is_in (l, r) means l < m & m < r when r > l
-	m is_in (l, r) means l < m         when r < l
+	m is_in (l, r) is equivalent to
+		when r == l
+			empty interval => false
+		when r > l
+			l < m && m < r => true
+		when r < l
+			l < m || m < r => true
+		else => false
 */
 func isBetweenTwoNodesExclusive(leftmostNode, nodeBetween, rightmostNode Node) bool {
 	l := leftmostNode.Id
@@ -32,11 +39,61 @@ func isBetweenTwoNodesExclusive(leftmostNode, nodeBetween, rightmostNode Node) b
 	switch {
 	case l == r: // because interval is exclusive, for which l == r means, it's essentially empty
 		return false
-	case r > l && l < m && m < r:
+	case r > l && (l < m && m < r):
 		return true
-	case r < l && l < m:
+	case r < l && (l < m || m < r):
 		return true
 	default:
 		return false
 	}
+}
+
+/*
+  For the Chord ring:
+	m is_in (l, r) is equivalent to
+		when r == l
+			m == r => true
+		when r > l
+			l < m && m <= r => true
+		when r < l
+			l < m || m <= r => true
+		else => false
+*/
+func isBetweenTwoNodesRightInclusive(leftmostNode, nodeBetween, rightmostNode Node) bool {
+	l := leftmostNode.Id
+	m := nodeBetween.Id
+	r := rightmostNode.Id
+
+	switch {
+	case l == r && m == r: // because interval is exclusive, for which l == r means, it's essentially empty
+		return true
+	case r > l && (l < m && m <= r):
+		return true
+	case r < l && (l < m || m <= r):
+		return true
+	default:
+		return false
+	}
+}
+
+func nilError(s string) error {
+	return errors.New(s + " is nil")
+}
+
+type nilSuccessor struct{}
+
+func (m *nilSuccessor) Error() string {
+	return "successor is nil"
+}
+
+type nilPredecessor struct{}
+
+func (m *nilPredecessor) Error() string {
+	return "predecessor is nil"
+}
+
+type knodeIsNil struct{}
+
+func (m *nodeIsNil) Error() string {
+	return "nodeIsNil"
 }
