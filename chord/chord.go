@@ -188,14 +188,14 @@ func (chordNode *ChordNode) ClosestPrecedingFinger(nodeID nodeID) Node {
 
 func (chordNode *ChordNode) String() string {
 	outputString := "\nNODE INFO: "
-	outputString += fmt.Sprintf("ID (string %s) (int64 %d) IP %s\n",
+	outputString += fmt.Sprintf("ID (string %s) (uint64 %d) IP %s\n",
 		chordNode.node.Id, idToInt(chordNode.node.Id), chordNode.node.Ip)
 
 	outputString += "\t Predecesor: "
 	chordNode.predecessor.RLock()
 	if chordNode.predecessor.nodePtr != nil {
 		outputString +=
-			fmt.Sprintf("ID (string %s) (int64 %d) IP %s\n",
+			fmt.Sprintf("ID (string %s) (uint64 %d) IP %s\n",
 				chordNode.predecessor.nodePtr.Id,
 				idToInt(chordNode.predecessor.nodePtr.Id),
 				chordNode.predecessor.nodePtr.Ip)
@@ -210,7 +210,7 @@ func (chordNode *ChordNode) String() string {
 		if nodePtr == nil {
 			outputString += fmt.Sprintf("\t\t [%d] nil\n", i)
 		} else {
-			outputString += fmt.Sprintf("\t\t [%d] (string %s) (int64 %d) %s\n",
+			outputString += fmt.Sprintf("\t\t [%d] (string %s) (uint64 %d) %s\n",
 				i, nodePtr.Id, idToInt(nodePtr.Id), nodePtr.Ip)
 		}
 	}

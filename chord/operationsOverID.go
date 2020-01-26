@@ -5,14 +5,14 @@ import (
 	"math/big"
 )
 
-func idToInt(id string) int64 {
+func idToInt(id string) uint64 {
 	y, err := hex.DecodeString(id)
 	if err != nil {
 		return 0
 	}
 	z := new(big.Int)
 	z.SetBytes(y)
-	return z.Int64()
+	return z.Uint64()
 }
 
 func getIthFingerID(id string, ithFinger, numOfBitsInID int) (string, error) {
