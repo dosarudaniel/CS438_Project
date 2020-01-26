@@ -13,12 +13,12 @@ import (
 // printFeature gets the feature for the given point.
 func requestFile(client clientService.ClientServiceClient, fileMetadata *clientService.FileMetadata, log *logger.Logger) error {
 	log.Info(fmt.Sprintf("Request file %v from %v", fileMetadata.FilenameAtOwner, fileMetadata.OwnersID))
-	ctx, cancel := context.WithTimeout(context.Background(), 10 * time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
 	response, err := client.RequestFile(ctx, fileMetadata)
 	if err != nil {
-		log.Fatal(fmt.Sprintf("%v.RequestFile(_) = _, %v: ", client, err))
+		fmt.Println(fmt.Sprintf("%v.RequestFile(_) = _, %v: ", client, err))
 		return err
 	}
 
@@ -44,24 +44,22 @@ func main() {
 
 	// Safety checks
 	if *peersterAddress == "" {
-		log.Fatal("No PeersterAddress given")
+		fmt.Println("No PeersterAddress given")
 	}
 	// TODO Add more safety checks in a future PR
 
-
 	fileMetadata := &clientService.FileMetadata{FilenameAtOwner: *file, OwnersID: *ownersID, NameToStore: *nameToStore}
 
-	conn, err := grpc.Dial(*peersterAddress, grpc.WithBlock(),  grpc.WithInsecure(),)
+	conn, err := grpc.Dial(*peersterAddress, grpc.WithBlock(), grpc.WithInsecure())
 	if err != nil {
-		log.Fatal(fmt.Sprint("Fail to dial: %v", err))
+		fmt.Println(fmt.Sprint("Fail to dial: %v", err))
 	}
 	defer conn.Close()
-
 
 	client := clientService.NewClientServiceClient(conn)
 
 	err = requestFile(client, fileMetadata, log)
 	if err != nil {
-		log.Fatal(fmt.Sprint("Fail to requestFile: %v", err))
+		fmt.Println(fmt.Sprint("Fail to requestFile: %v", err))
 	}
 }

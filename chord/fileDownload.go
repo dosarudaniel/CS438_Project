@@ -2,6 +2,7 @@ package chord
 
 import (
 	"context"
+	"fmt"
 	. "github.com/dosarudaniel/CS438_Project/services/file_share_service"
 	"google.golang.org/grpc"
 	"io"
@@ -17,7 +18,7 @@ func (chordNode *ChordNode) RequestFileFromIP(filename string, nameToStore strin
 
 	conn, err := grpc.Dial(ownersIp, grpc.WithInsecure(), grpc.WithBlock())
 	if err != nil {
-		log.Fatalf("fail to dial: %v", err)
+		fmt.Println(fmt.Sprintf("fail to dial: %v", err))
 	}
 	defer conn.Close()
 	client := NewFileShareServiceClient(conn)
@@ -26,7 +27,7 @@ func (chordNode *ChordNode) RequestFileFromIP(filename string, nameToStore strin
 
 	err = Download(client, &fileInfo, nameToStore) // Or `go download(client, &fileInfo)`
 	if err != nil {
-		log.Fatalf("%v.Download() failed, err = %v", client, err)
+		fmt.Println(fmt.Sprintf("%v.Download() failed, err = %v", client, err))
 		return err
 	}
 
@@ -41,12 +42,12 @@ func Download(client FileShareServiceClient, fileInfo *FileInfo, nameToStore str
 
 	stream, err := client.TransferFile(ctx, fileInfo)
 	if err != nil {
-		log.Fatalf("%v.Download(_) = _, %v", client, err)
+		fmt.Println(fmt.Sprintf("%v.Download(_) = _, %v", client, err))
 		return err
 	}
 	f, err := os.Create("_Download/" + nameToStore)
 	if err != nil {
-		log.Fatalf("%v.Download(_): Could not create file %v", client, nameToStore)
+		fmt.Println(fmt.Sprintf("%v.Download(_): Could not create file %v", client, nameToStore))
 		return err
 	}
 	defer f.Close()
@@ -57,12 +58,12 @@ func Download(client FileShareServiceClient, fileInfo *FileInfo, nameToStore str
 			break
 		}
 		if err != nil {
-			log.Fatalf("%v.Download(_) = _, %v", client, err)
+			fmt.Println(fmt.Sprintf("%v.Download(_) = _, %v", client, err))
 			return err
 		}
 		n, err := f.Write(chunk.Content)
 		if err != nil {
-			log.Fatalf("%v.Download(_): Could not write %v bytes into file %v", client, n, nameToStore)
+			fmt.Println(fmt.Sprintf("%v.Download(_): Could not write %v bytes into file %v", client, n, nameToStore))
 			return err
 		}
 		log.Println("Received one chunk: " + string(chunk.Content))
