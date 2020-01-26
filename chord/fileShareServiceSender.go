@@ -3,6 +3,7 @@ package chord
 import (
 	"fmt"
 	. "github.com/dosarudaniel/CS438_Project/services/file_share_service"
+	"io"
 	"os"
 )
 
@@ -19,37 +20,43 @@ func fileExist(fileName string) bool {
 // RPC implementation
 func (chordNode *ChordNode) TransferFile(fileInfo *FileInfo, stream FileShareService_TransferFileServer) error {
 
-	// Create an array of chunks named fileChunks
-	//fileChunks := make([][]byte, 5)
-	//for _, chunk := range fileChunks {
-	//	fileChunk := FileChunk{Content: chunk}
-	//	if err := stream.Send(&fileChunk); err != nil {
-	//		return err
-	//	}
-	//
-	//}
+	fmt.Println("TransferFile was called")
 
 	filePath := "_Upload/" + fileInfo.Filename
 
 	if !fileExist(filePath) {
 		fmt.Println(fmt.Sprintf("File [%v] does not exist", filePath))
-		return nil //errors.New(fmt.Sprintf("File [%v] does not exist", fileInfo.Filename))
+		return nil // Do not stop the server
 	} else {
 		fmt.Println(fmt.Sprintf("File [%v] does exist", filePath))
 	}
 
-	fmt.Println("TransferFile was called")
-	chunk1 := []byte("Hello, ")
-	fileChunk1 := FileChunk{Content: chunk1}
-	chunk2 := []byte("World!")
-	fileChunk2 := FileChunk{Content: chunk2}
-
-	if err := stream.Send(&fileChunk1); err != nil {
-		return err
+	file, err := os.Open(filePath)
+	if err != nil {
+		fmt.Println(err)
+		return nil // Do not stop the server
 	}
+	defer file.Close()
 
-	if err := stream.Send(&fileChunk2); err != nil {
-		return err
+	buffer := make([]byte, chordNode.chunkSize)
+
+	for {
+		bytesRead, err := file.Read(buffer)
+
+		if err != nil {
+			if err != io.EOF {
+				fmt.Println(err)
+			}
+			fmt.Println(">>>>>>>>>> End of the file ")
+			break  // end of the file
+		}
+
+		fmt.Println("Bytes read from the file to string: ", string(buffer[:bytesRead]))
+
+		fileChunk := FileChunk{Content: buffer}
+		if err := stream.Send(&fileChunk); err != nil {		// send the chunk to the client (a node who request this file)
+			return err
+		}
 	}
 
 	return nil
