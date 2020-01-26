@@ -45,6 +45,7 @@ func Download(client FileShareServiceClient, fileInfo *FileInfo) error {
 		return err
 	}
 	for {
+		// TODO: Save the chunks into nameToStore file
 		chunk, err := stream.Recv()
 		if err == io.EOF {
 			break
