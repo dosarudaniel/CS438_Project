@@ -3,6 +3,7 @@ package chord
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	. "github.com/dosarudaniel/CS438_Project/services/chord_service"
 	"google.golang.org/grpc"
@@ -154,9 +155,13 @@ func (chordNode *ChordNode) Join(n0 Node) error {
 	chordNode.setPredecessor(nil)
 
 	succ, err := chordNode.stubFindSuccessor(ipAddr(n0.Ip), context.Background(), &ID{Id: chordNode.node.Id})
-	fmt.Printf("Im joining succ: %v", succ)
-	if err != nil {
+	switch {
+	case err != nil:
 		return err
+	case succ == nil:
+		return errors.New("found successor node is nil")
+	case chordNode.node.Id == succ.Id:
+		return errors.New("node with such ID already exists in the Chord ring")
 	}
 
 	chordNode.setSuccessor(succ)
