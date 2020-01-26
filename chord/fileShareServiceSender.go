@@ -3,13 +3,21 @@ package chord
 import (
 	"fmt"
 	. "github.com/dosarudaniel/CS438_Project/services/file_share_service"
+	"os"
 )
+
+
+func fileExist(fileName string) bool {
+	info, err := os.Stat(fileName)
+	if os.IsNotExist(err) {
+		return false
+	}
+	return !info.IsDir()
+}
+
 
 // RPC implementation
 func (chordNode *ChordNode) TransferFile(fileInfo *FileInfo, stream FileShareService_TransferFileServer) error {
-	// Find the file with filename == fileInfo.Filename
-
-	//
 
 	// Create an array of chunks named fileChunks
 	//fileChunks := make([][]byte, 5)
@@ -20,6 +28,16 @@ func (chordNode *ChordNode) TransferFile(fileInfo *FileInfo, stream FileShareSer
 	//	}
 	//
 	//}
+
+	filePath := "_Upload/" + fileInfo.Filename
+
+	if !fileExist(filePath) {
+		fmt.Println(fmt.Sprintf("File [%v] does not exist", filePath))
+		return nil //errors.New(fmt.Sprintf("File [%v] does not exist", fileInfo.Filename))
+	} else {
+		fmt.Println(fmt.Sprintf("File [%v] does exist", filePath))
+	}
+
 	fmt.Println("TransferFile was called")
 	chunk1 := []byte("Hello, ")
 	fileChunk1 := FileChunk{Content: chunk1}
