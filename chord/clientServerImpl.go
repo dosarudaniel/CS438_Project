@@ -1,10 +1,9 @@
 package chord
 
-
 import (
 	"context"
-	. "github.com/dosarudaniel/CS438_Project/services/client_service"
 	. "github.com/dosarudaniel/CS438_Project/services/chord_service"
+	. "github.com/dosarudaniel/CS438_Project/services/client_service"
 )
 
 // RPC implementation
@@ -14,7 +13,7 @@ func (chordNode *ChordNode) RequestFile(ctx context.Context, fileMetadata *FileM
 		return &Response{Text: "Could not find owner's IP for id " + fileMetadata.OwnersID}, err
 	}
 
-	err = chordNode.RequestFileFromIp(fileMetadata.FilenameAtOwner, fileMetadata.NameToStore, ownerNode.Ip)
+	err = chordNode.RequestFileFromIP(fileMetadata.FilenameAtOwner, fileMetadata.NameToStore, ownerNode.Ip)
 	if err != nil {
 		return &Response{Text: "Could not download file from IP: " + ownerNode.Ip}, err
 	}
