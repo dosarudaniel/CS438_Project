@@ -53,7 +53,7 @@ func (chordNode *ChordNode) TransferFile(fileInfo *FileInfo, stream FileShareSer
 
 		fmt.Println("Bytes read from the file to string: ", string(buffer[:bytesRead]))
 
-		fileChunk := FileChunk{Content: buffer}
+		fileChunk := FileChunk{Content: buffer[:bytesRead]}
 		if err := stream.Send(&fileChunk); err != nil {		// send the chunk to the client (a node who request this file)
 			return err
 		}
