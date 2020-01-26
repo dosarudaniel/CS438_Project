@@ -60,8 +60,6 @@ type ChordNode struct {
 
 	// for gRPC server functionality
 	grpcServer *grpc.Server
-
-	chunkSize int
 }
 
 // NewChordNode is a constructor for ChordNode struct
@@ -75,7 +73,6 @@ func NewChordNode(listener net.Listener, config ChordConfig) (*ChordNode, error)
 	if err != nil {
 		return chordNode, err
 	}
-	chordNode.chunkSize = config.ChunkSize
 	chordNode.node = Node{
 		Id: id,
 		Ip: ip,

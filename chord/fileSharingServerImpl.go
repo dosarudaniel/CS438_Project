@@ -7,7 +7,7 @@ import (
 	"os"
 )
 
-
+// Returns true if a file exist at path fileName
 func fileExist(fileName string) bool {
 	info, err := os.Stat(fileName)
 	if os.IsNotExist(err) {
@@ -38,7 +38,7 @@ func (chordNode *ChordNode) TransferFile(fileInfo *FileInfo, stream FileShareSer
 	}
 	defer file.Close()
 
-	buffer := make([]byte, chordNode.chunkSize)
+	buffer := make([]byte, chordNode.config.ChunkSize)
 
 	for {
 		bytesRead, err := file.Read(buffer)
