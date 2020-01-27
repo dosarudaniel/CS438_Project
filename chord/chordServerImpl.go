@@ -3,12 +3,13 @@ package chord
 import (
 	"context"
 	"errors"
+	"fmt"
 	. "github.com/dosarudaniel/CS438_Project/services/chord_service"
 	"github.com/golang/protobuf/ptypes/empty"
 )
 
 // GetPredecessor (RPC) returns a pointer to the predecessor node
-func (chordNode *ChordNode) GetPredecessor(ctx context.Context, e *empty.Empty) (*Node, error) {
+func (chordNode *ChordNode) GetPredecessor(ctx context.Context, _ *empty.Empty) (*Node, error) {
 	pred, doesExist := chordNode.getPredecessor()
 	if !doesExist {
 		return nil, &nilPredecessor{}
@@ -56,11 +57,16 @@ func (chordNode *ChordNode) FindSuccessor(ctx context.Context, messageIDPtr *ID)
 //	 	predecessor = n0;
 func (chordNode *ChordNode) Notify(ctx context.Context, n0 *Node) (*empty.Empty, error) {
 	emptyPtr := &empty.Empty{}
-	if n0 == nil {
+
+	switch {
+	case n0 == nil:
 		return emptyPtr, errors.New("trying to notify nil node")
+	case n0.Id == chordNode.node.Id:
+		return emptyPtr, errors.New(fmt.Sprintf("node %s is notifying itself", chordNode.node.Id))
 	}
-	pred, doesExist := chordNode.getPredecessor()
-	if (!doesExist && n0.Id != chordNode.node.Id) || isBetweenTwoNodesExclusive(pred, *n0, chordNode.node) {
+
+	pred, doesPredExist := chordNode.getPredecessor()
+	if !doesPredExist || isBetweenTwoNodesExclusive(pred, *n0, chordNode.node) {
 		chordNode.setPredecessor(n0)
 	}
 
