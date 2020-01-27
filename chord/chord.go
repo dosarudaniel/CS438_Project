@@ -56,6 +56,8 @@ type ChordNode struct {
 
 	fingerTable fingerTableWithMux
 
+	hashTable HashTableWithMux
+
 	// to keep ChordClients, which allows avoiding creation of connections to other nodes every time
 	// we want to communicate with them: connections are memoized upon creation
 	stubsPool stubsPoolWithMux
@@ -87,6 +89,7 @@ func NewChordNode(listener net.Listener, config ChordConfig) (*ChordNode, error)
 		make(fingerTable, chordNode.config.NumOfBitsInID),
 		sync.RWMutex{},
 	}
+	chordNode.hashTable = NewHashTable()
 	chordNode.stubsPool = stubsPoolWithMux{
 		make(ipToStubMap),
 		sync.RWMutex{},
@@ -192,6 +195,24 @@ func (chordNode *ChordNode) ClosestPrecedingFinger(nodeID nodeID) Node {
 	return chordNode.node
 }
 
+// Lookup takes in a key, returns the ip address of the node that should store that chord pair
+// return err is failure
+func (chordNode *ChordNode) Lookup(key string) (string, error) {
+	var err error
+
+	hashedKey, err := hashString(key, chordNode.config.NumOfBitsInID)
+	if err != nil {
+		return "", err
+	}
+
+	succ, err := chordNode.FindSuccessor(context.Background(), &ID{Id: hashedKey})
+	if err != nil {
+		return "", err
+	}
+
+	return succ.Ip, nil
+}
+
 func (chordNode *ChordNode) String() string {
 	outputString := "\nNODE INFO: "
 	outputString += fmt.Sprintf("ID (string %s) (uint64 %d) IP %s\n",
@@ -221,6 +242,13 @@ func (chordNode *ChordNode) String() string {
 		}
 	}
 	chordNode.fingerTable.RUnlock()
+
+	outputString += "\t Hash table: \n"
+	chordNode.hashTable.RLock()
+	for key, addr := range chordNode.hashTable.table {
+		outputString += fmt.Sprintf("\t\t %s %s\n", key, addr)
+	}
+	chordNode.hashTable.RUnlock()
 
 	outputString += "\t Connections: \n"
 	chordNode.stubsPool.RLock()
