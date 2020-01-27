@@ -26,21 +26,22 @@ func (chordNode *ChordNode) RequestFile(ctx context.Context, fileMetadata *FileM
 
 // RPC used by the CLI and Web client for communication with one Node from the Chord ring
 func (chordNode *ChordNode) FindSuccessorClient(ctx context.Context, id *Identifier) (*Response, error) {
-	var ownerNode *Node
+	var node *Node
 	var err error
 	responseIp := "nil"
 
 	if chordNode.node.Id == id.Id { // Client asked about this node's IP
 		responseIp = chordNode.node.Ip
-		fmt.Println("heeeeeeeeeeeeeeeeeere")
+		fmt.Println(">>>>>>>>>>>> heeeeeeeeeeeeeeeeeere")
 	} else {
+		fmt.Println(">>>>>>>>>>>> heeeeeeeeeeeeeeeeeere2 " + id.Id)
 		// Having an ID, get the Node and its IP
-		ownerNode, err = chordNode.FindSuccessor(ctx, &ID{Id: id.Id})
+		node, err = chordNode.FindSuccessor(ctx, &ID{Id: id.Id})
 		if err != nil {
 			return &Response{Text: "Could not find IP for id given.", Info: responseIp}, err
 		}
-		responseIp = ownerNode.Ip
+		responseIp = node.Ip
 	}
-
+	fmt.Println(">>>>>>>>>>>> heeeeeeeeeeeeeeeeeere3 " + responseIp)
 	return &Response{Text: "Success! IP found for id given:", Info: responseIp}, nil
 }
