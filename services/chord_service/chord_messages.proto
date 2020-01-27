@@ -1,6 +1,8 @@
 syntax = "proto3";
 package chord;
 
+// For Chord ring (overlay network)
+
 message ID {
     string id = 1;
 }
@@ -12,4 +14,24 @@ message Node {
 
 message Nodes {
     repeated Node nodeArray = 1;
+}
+
+// For DHT
+
+message Key {
+    string key = 1;
+}
+
+message Val {
+    string val = 1;
+}
+
+message KeyVal {
+    string key = 1;
+    string val = 2;
+}
+
+message TransferKeysRequest {
+    string from_id = 1;
+    Node to_node = 2;
 }

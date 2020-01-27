@@ -7,5 +7,9 @@ service Chord {
     rpc FindSuccessor (ID) returns (Node);
     rpc Notify (Node) returns (google.protobuf.Empty);
     rpc GetPredecessor (google.protobuf.Empty) returns (Node);
+
+    rpc GetKey (Key) returns (Val);
+    rpc PutKeyVal (KeyVal) returns (google.protobuf.Empty);
+    rpc TransferKeys (TransferKeysRequest) returns (google.protobuf.Empty);
 }
 
