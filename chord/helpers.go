@@ -25,9 +25,9 @@ func hashString(s string, numOfBitsInID int) (string, error) {
 	m is_in (l, r) is equivalent to
 		when r == l
 			empty interval => false
-		when r > l
+		when l < r
 			l < m && m < r => true
-		when r < l
+		when l > r
 			l < m || m < r => true
 		else => false
 */
@@ -50,12 +50,12 @@ func isBetweenTwoNodesExclusive(leftmostNode, nodeBetween, rightmostNode Node) b
 
 /*
   For the Chord ring:
-	m is_in (l, r) is equivalent to
+	m is_in (l, r] is equivalent to
 		when r == l
 			m == r => true
-		when r > l
+		when l < r
 			l < m && m <= r => true
-		when r < l
+		when l > r
 			l < m || m <= r => true
 		else => false
 */
