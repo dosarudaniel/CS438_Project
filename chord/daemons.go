@@ -9,6 +9,7 @@ import (
 )
 
 func (chordNode *ChordNode) RunAtInterval(daemon func(*ChordNode), intervalSeconds int) {
+	daemon(chordNode)
 	for {
 		select {
 		case <-time.Tick(time.Duration(intervalSeconds) * time.Second):
