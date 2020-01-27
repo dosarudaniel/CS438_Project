@@ -188,7 +188,7 @@ func (chordNode *ChordNode) ClosestPrecedingFinger(nodeID nodeID) Node {
 		if finger == nil {
 			continue
 		}
-		if isBetweenTwoNodesExclusive(chordNode.node, *finger, Node{Id: id}) {
+		if isBetweenTwoNodesExclusive(chordNode.node.Id, finger.Id, id) {
 			return *finger
 		}
 	}

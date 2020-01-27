@@ -36,7 +36,7 @@ func StabilizeDaemon(chordNode *ChordNode) {
 	// TODO what if successor is down
 	x, err := chordNode.stubGetPredecessor(ipAddr(succ.Ip), context.Background())
 	if err == nil && x != nil {
-		if isBetweenTwoNodesExclusive(chordNode.node, *x, succ) || chordNode.node.Id == succ.Id {
+		if isBetweenTwoNodesExclusive(chordNode.node.Id, x.Id, succ.Id) || chordNode.node.Id == succ.Id {
 			chordNode.setSuccessor(x)
 		}
 	}

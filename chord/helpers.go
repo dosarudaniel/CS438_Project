@@ -4,7 +4,6 @@ import (
 	"crypto"
 	"encoding/hex"
 	"errors"
-	. "github.com/dosarudaniel/CS438_Project/services/chord_service"
 )
 
 // In this file, we put all helper functions and types used by Chord package
@@ -31,10 +30,10 @@ func hashString(s string, numOfBitsInID int) (string, error) {
 			l < m || m < r => true
 		else => false
 */
-func isBetweenTwoNodesExclusive(leftmostNode, nodeBetween, rightmostNode Node) bool {
-	l := leftmostNode.Id
-	m := nodeBetween.Id
-	r := rightmostNode.Id
+func isBetweenTwoNodesExclusive(leftmostID, middleID, rightmostID string) bool {
+	l := leftmostID
+	m := middleID
+	r := rightmostID
 
 	switch {
 	case l == r: // because interval is exclusive, for which l == r means, it's essentially empty
@@ -59,10 +58,10 @@ func isBetweenTwoNodesExclusive(leftmostNode, nodeBetween, rightmostNode Node) b
 			l < m || m <= r => true
 		else => false
 */
-func isBetweenTwoNodesRightInclusive(leftmostNode, nodeBetween, rightmostNode Node) bool {
-	l := leftmostNode.Id
-	m := nodeBetween.Id
-	r := rightmostNode.Id
+func isBetweenTwoNodesRightInclusive(leftmostID, middleID, rightmostID string) bool {
+	l := leftmostID
+	m := middleID
+	r := rightmostID
 
 	switch {
 	case l == r && m == r: // because interval is exclusive, for which l == r means, it's essentially empty
