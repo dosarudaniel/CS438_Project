@@ -6,12 +6,13 @@ import (
 	"fmt"
 	"github.com/dosarudaniel/CS438_Project/logger"
 	clientService "github.com/dosarudaniel/CS438_Project/services/client_service"
+	chordService "github.com/dosarudaniel/CS438_Project/services/chord_service"
 	"google.golang.org/grpc"
 	"os"
 	"time"
 )
 
-// printFeature gets the feature for the given point.
+// RequestFile RPC caller function
 func requestFile(client clientService.ClientServiceClient, fileMetadata *clientService.FileMetadata, log *logger.Logger) error {
 	log.Info(fmt.Sprintf("Request file %v from %v", fileMetadata.FilenameAtOwner, fileMetadata.OwnersID))
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
@@ -27,13 +28,30 @@ func requestFile(client clientService.ClientServiceClient, fileMetadata *clientS
 	return nil
 }
 
+// FindSuccessorClient RPC caller function
+func findSuccessorClient(client clientService.ClientServiceClient, ID *chordService.ID, log *logger.Logger) (clientService.Response, error) {
+	log.Info(fmt.Sprintf("FindSuccessor for ID = %v", ID.Id))
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+
+
+	response, err := client.FindSuccessorClient(ctx, &clientService.Identifier{Id: ID.Id} )
+	if err != nil {
+		fmt.Println(fmt.Sprintf("%v.FindSuccessorClient(_) = _, %v: ", client, err))
+		return *response, err
+	}
+
+	log.Info(response.Text + response.Info)
+	return *response, nil
+}
+
 func main() {
 
 	peersterAddress := flag.String("PeersterAddress", "", "Peerster address to connect to")
 	command := flag.String("command", "" , "Command to be sent to Peerster: download/upload/findSuccessor")
 	file := flag.String("file", "", "file name at owner")
-	ownersID := flag.String("ownersID", "", "File owner's ID")
-	nameToStore := flag.String("nameToStore", "", "Name used to store the download file")
+	ID := flag.String("ID", "", "Download: File owner's ID / FindSuccessor: ID for which the IP is requested ")
+	nameToStore := flag.String("nameToStore", "", "Name used to store the downloaded file")
 	verbose := flag.Bool("v", false, "verbose mode")
 
 	flag.Parse()
@@ -55,7 +73,7 @@ func main() {
 		if *file == "" { 			// mandatory
 			log.Fatal("Download: No file name given. Specify which file do you request.")
 		}
-		if *ownersID == "" { 		// mandatory
+		if *ID == "" { 		// mandatory
 			log.Fatal("Download: No ID given. Specify the file owner's ID.")
 		}
 		if *nameToStore == "" {  	// optional
@@ -65,7 +83,7 @@ func main() {
 
 		log.Info("Sending a download request to " + *peersterAddress)
 
-		fileMetadata := &clientService.FileMetadata{FilenameAtOwner: *file, OwnersID: *ownersID, NameToStore: *nameToStore}
+		fileMetadata := &clientService.FileMetadata{FilenameAtOwner: *file, OwnersID: *ID, NameToStore: *nameToStore}
 
 		conn, err := grpc.Dial(*peersterAddress, grpc.WithBlock(), grpc.WithInsecure())
 		if err != nil {
@@ -82,15 +100,33 @@ func main() {
 
 	case *command == "upload":
 		log.Info("Sending an upload request to " + *peersterAddress)
+		if *file == "" { 			// mandatory
+			log.Fatal("Upload: No file name given. Specify which file do you upload.")
+		}
+		// TODO
 
 	case *command == "findSuccessor":
 		log.Info("Sending a findSuccessor request to " + *peersterAddress)
+		if *ID == "" { 		// mandatory
+			log.Fatal("FindSuccessor: No ID given. Specify an ID to find the corresponding IP.")
+		}
 
+		conn, err := grpc.Dial(*peersterAddress, grpc.WithBlock(), grpc.WithInsecure())
+		if err != nil {
+			log.Fatal(fmt.Sprint("Fail to dial: %v", err))
+		}
+		defer conn.Close()
+
+		client := clientService.NewClientServiceClient(conn)
+		id := &chordService.ID{Id: *ID}
+		response, err := findSuccessorClient(client, id, log)
+		if err != nil {
+			log.Fatal(fmt.Sprint("Fail to findSuccessorClient: %v", err))
+		}
+		fmt.Println(response.Text + response.Info)  // Print the IP
 	default:
 		log.Fatal(fmt.Sprintf("No correct command given, try one of the following download/upload/findSuccessor"))
 		os.Exit(-1)
 	}
-
-	// TODO Add more safety checks in a future PR
 
 }

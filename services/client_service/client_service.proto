@@ -5,4 +5,5 @@ package chord;
 service ClientService {
     rpc RequestFile (FileMetadata) returns (Response);
     // rpc UploadFile (FileMetadata) returns (Response);
+    rpc FindSuccessorClient (Identifier) returns (Response);
 }
