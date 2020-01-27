@@ -4,11 +4,10 @@ import (
 	"flag"
 	"fmt"
 	"github.com/dosarudaniel/CS438_Project/chord"
-	"github.com/dosarudaniel/CS438_Project/logger"
 	. "github.com/dosarudaniel/CS438_Project/services/chord_service"
+	"github.com/sirupsen/logrus"
 	"math/rand"
 	"net"
-	"os"
 	"strconv"
 	"time"
 )
@@ -25,9 +24,9 @@ func main() {
 
 	flag.Parse()
 
-	log := logger.DefaultLogger()
+	log := logrus.New()
 	if *trace {
-		log.Level = logger.TraceLevel
+		log.SetLevel(logrus.TraceLevel)
 	}
 
 	// Setup the random seed
@@ -49,11 +48,11 @@ func main() {
 
 	chordNode, err := chord.NewChordNode(listener, chord.ChordConfig{
 		NumOfBitsInID: *m,
-		ChunkSize: 1024,
+		ChunkSize:     1024,
 	})
-	if err != nil {
+	if err != nil || chordNode == nil {
 		log.Fatal("creating new Chord node failed")
-		os.Exit(-1)
+		return // log.Fatal terminates the program; this return is for IDE not to complain that chordNode may be non-nil
 	}
 
 	switch {
@@ -66,7 +65,6 @@ func main() {
 	case *shouldJoinExistingDHT && !*shouldCreateDHT:
 		if *existingNodeId == "" || *existingNodeIp == "" {
 			log.Fatal("With flag 'join' you also need to provide arguments 'existingNodeIp' and 'existingNodeId'")
-			os.Exit(-1)
 		}
 		if *existingNodeIp == *peersterAddr {
 			log.Fatal("'existingNodeIp' should not be the same as peersterAddr")
@@ -79,14 +77,12 @@ func main() {
 		err := chordNode.Join(Node{Id: *existingNodeId, Ip: *existingNodeIp})
 		if err != nil {
 			log.Fatal(fmt.Sprint(err))
-			os.Exit(-1)
 		}
 
 	default:
 		log.Fatal(fmt.Sprintf("One of the following flags should be true: 'create' or 'join'"))
-		os.Exit(-1)
 	}
 
-	// infinite block from terminating
+	// runs infinitely
 	select {}
 }

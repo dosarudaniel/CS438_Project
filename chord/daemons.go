@@ -4,7 +4,6 @@ import (
 	"context"
 	"errors"
 	. "github.com/dosarudaniel/CS438_Project/services/chord_service"
-	"log"
 	"time"
 )
 

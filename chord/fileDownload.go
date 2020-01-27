@@ -6,7 +6,6 @@ import (
 	. "github.com/dosarudaniel/CS438_Project/services/file_share_service"
 	"google.golang.org/grpc"
 	"io"
-	"log"
 	"os"
 	"time"
 )

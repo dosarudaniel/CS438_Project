@@ -8,10 +8,13 @@ import (
 	. "github.com/dosarudaniel/CS438_Project/services/chord_service"
 	. "github.com/dosarudaniel/CS438_Project/services/client_service"
 	. "github.com/dosarudaniel/CS438_Project/services/file_share_service"
+	"github.com/sirupsen/logrus"
 	"google.golang.org/grpc"
 	"net"
 	"sync"
 )
+
+var log = logrus.New()
 
 // IChordNode interface defines all of the functions that Chord will have (which I know at this moment)
 type IChordNode interface {
