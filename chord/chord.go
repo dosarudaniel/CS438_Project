@@ -41,7 +41,6 @@ type IChordNode interface {
 // However, it must be followed
 // either by creating own Chord network using `create`
 // or by joining an existing network using `join`
-// Both `create` and `join` must be followed by a call to `launchFingerTableDaemons`
 type ChordNode struct {
 	// constant; must not be changed after first initialization
 	config ChordConfig
@@ -69,7 +68,7 @@ func NewChordNode(listener net.Listener, config ChordConfig) (*ChordNode, error)
 	chordNode.config = config
 
 	ip := listener.Addr().String()
-	id, err := hashString(ip, int(config.NumOfBitsInID))
+	id, err := hashString(ip, config.NumOfBitsInID)
 	if err != nil {
 		return chordNode, err
 	}
