@@ -8,8 +8,8 @@ service Chord {
     rpc Notify (Node) returns (google.protobuf.Empty);
     rpc GetPredecessor (google.protobuf.Empty) returns (Node);
 
-    rpc GetKey (Key) returns (Val);
-    rpc PutKeyVal (KeyVal) returns (google.protobuf.Empty);
+    rpc Get (Key) returns (Val);
+    rpc Put (KeyVal) returns (google.protobuf.Empty);
     rpc TransferKeys (TransferKeysRequest) returns (google.protobuf.Empty);
 }
 
