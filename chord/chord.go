@@ -67,13 +67,17 @@ type ChordNode struct {
 }
 
 // NewChordNode is a constructor for ChordNode struct
-func NewChordNode(listener net.Listener, config ChordConfig) (*ChordNode, error) {
+func NewChordNode(listener net.Listener, config ChordConfig, verbose bool) (*ChordNode, error) {
+	if verbose {
+		log.SetLevel(logrus.TraceLevel)
+	}
+
 	chordNode := &ChordNode{}
 
 	chordNode.config = config
 
 	ip := listener.Addr().String()
-	id, err := hashString(ip, config.NumOfBitsInID)
+	id, err := chordNode.hashString(ip)
 	if err != nil {
 		return chordNode, err
 	}
@@ -195,12 +199,12 @@ func (chordNode *ChordNode) ClosestPrecedingFinger(nodeID nodeID) Node {
 	return chordNode.node
 }
 
-// Lookup takes in a key, returns the ip address of the node that should store that chord pair
+// lookup takes in a key, returns the ip address of the node that should store that chord pair
 // return err is failure
-func (chordNode *ChordNode) Lookup(key string) (string, error) {
+func (chordNode *ChordNode) lookup(key string) (ipAddr, error) {
 	var err error
 
-	hashedKey, err := hashString(key, chordNode.config.NumOfBitsInID)
+	hashedKey, err := chordNode.hashString(key)
 	if err != nil {
 		return "", err
 	}
@@ -210,21 +214,60 @@ func (chordNode *ChordNode) Lookup(key string) (string, error) {
 		return "", err
 	}
 
-	return succ.Ip, nil
+	return ipAddr(succ.Ip), nil
+}
+
+// PutInDHT stores the key in the Chord ring (some other node who's responsible for that key)
+func (chordNode *ChordNode) PutInDHT(key string, val ipAddr) error {
+	ip, err := chordNode.lookup(key)
+	if err != nil {
+		return err
+	}
+
+	if string(ip) == chordNode.node.Ip {
+		chordNode.hashTable.Put(key, val)
+		return nil
+	}
+
+	return chordNode.stubPut(ip, context.Background(), key, val)
+}
+
+// FindInDHT finds the key from the Chord ring, i.e., gets it from other node
+func (chordNode *ChordNode) FindInDHT(key string) (ipAddr, error) {
+	ip, err := chordNode.lookup(key) // ip of the node to store key
+	if err != nil {
+		return "", err
+	}
+
+	if string(ip) == chordNode.node.Ip {
+		val, doesExist := chordNode.hashTable.Get(key)
+		if doesExist {
+			return val, nil
+		} else {
+			return "", errors.New("key does not exist")
+		}
+	}
+
+	val, err := chordNode.stubGet(ip, context.Background(), key)
+	if err != nil {
+		return "", err
+	}
+
+	return ipAddr(val.Val), nil
 }
 
 func (chordNode *ChordNode) String() string {
 	outputString := "\nNODE INFO: "
-	outputString += fmt.Sprintf("ID (string %s) (uint64 %d) IP %s\n",
-		chordNode.node.Id, idToInt(chordNode.node.Id), chordNode.node.Ip)
+	outputString += fmt.Sprintf("ID (string %s) (big.int %s) IP %s\n",
+		chordNode.node.Id, idToBigIntString(chordNode.node.Id), chordNode.node.Ip)
 
 	outputString += "\t Predecesor: "
 	chordNode.predecessor.RLock()
 	if chordNode.predecessor.nodePtr != nil {
 		outputString +=
-			fmt.Sprintf("ID (string %s) (uint64 %d) IP %s\n",
+			fmt.Sprintf("ID (string %s) (big.int %s) IP %s\n",
 				chordNode.predecessor.nodePtr.Id,
-				idToInt(chordNode.predecessor.nodePtr.Id),
+				idToBigIntString(chordNode.predecessor.nodePtr.Id),
 				chordNode.predecessor.nodePtr.Ip)
 	} else {
 		outputString += "nil\n"
@@ -237,8 +280,9 @@ func (chordNode *ChordNode) String() string {
 		if nodePtr == nil {
 			outputString += fmt.Sprintf("\t\t [%d] nil\n", i)
 		} else {
-			outputString += fmt.Sprintf("\t\t [%d] (string %s) (uint64 %d) %s\n",
-				i, nodePtr.Id, idToInt(nodePtr.Id), nodePtr.Ip)
+			fingerStart, _ := getFingerStart(chordNode.node.Id, i, chordNode.config.NumOfBitsInID)
+			outputString += fmt.Sprintf("\t\t [%d] [start: %s] (string %s) (big.int %s) %s\n",
+				i, idToBigIntString(fingerStart), nodePtr.Id, idToBigIntString(nodePtr.Id), nodePtr.Ip)
 		}
 	}
 	chordNode.fingerTable.RUnlock()
@@ -246,7 +290,9 @@ func (chordNode *ChordNode) String() string {
 	outputString += "\t Hash table: \n"
 	chordNode.hashTable.RLock()
 	for key, addr := range chordNode.hashTable.table {
-		outputString += fmt.Sprintf("\t\t %s %s\n", key, addr)
+		hashKey, _ := chordNode.hashString(key)
+		outputString += fmt.Sprintf("\t\t (hashKey string %s) (hashKey big.int %s) (key %s) (val %s)\n",
+			hashKey, idToBigIntString(hashKey), key, addr)
 	}
 	chordNode.hashTable.RUnlock()
 

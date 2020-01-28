@@ -49,7 +49,7 @@ func main() {
 	chordNode, err := chord.NewChordNode(listener, chord.ChordConfig{
 		NumOfBitsInID: *m,
 		ChunkSize:     1024,
-	})
+	}, *trace)
 	if err != nil || chordNode == nil {
 		log.Fatal("creating new Chord node failed")
 		return // log.Fatal terminates the program; this return is for IDE not to complain that chordNode may be non-nil
