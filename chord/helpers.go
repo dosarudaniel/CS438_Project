@@ -17,7 +17,7 @@ func hashString(s string, numOfBitsInID int) (string, error) {
 		return "", err
 	}
 	hash := sha256.Sum(nil)
-	return hex.EncodeToString(hash[len(hash)-(numOfBitsInID/8):]), nil
+	return hex.EncodeToString(hash)[64-(numOfBitsInID/4):], nil
 }
 
 /*

@@ -9,4 +9,9 @@ message FileMetadata {
 
 message Response {
     string text = 1;
+    string info = 2;     // used to send additional information to client s.a. IP
+}
+
+message Identifier {
+    string id = 1;
 }
