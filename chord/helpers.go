@@ -4,7 +4,6 @@ import (
 	"crypto"
 	"encoding/hex"
 	"errors"
-	"fmt"
 	. "github.com/dosarudaniel/CS438_Project/services/chord_service"
 )
 
@@ -18,7 +17,6 @@ func hashString(s string, numOfBitsInID int) (string, error) {
 		return "", err
 	}
 	hash := sha256.Sum(nil)
-	fmt.Println("ID===", hex.EncodeToString(hash))
 	return hex.EncodeToString(hash)[64-(numOfBitsInID/4):], nil
 }
 
