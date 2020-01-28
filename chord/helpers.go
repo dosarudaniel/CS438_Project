@@ -20,62 +20,6 @@ func (chordNode *ChordNode) hashString(s string) (string, error) {
 	return hex.EncodeToString(hash)[64-(numOfBitsInID/4):], nil
 }
 
-/*
-  For the Chord ring:
-	m is_in (l, r) is equivalent to
-		when r == l
-			empty interval => false
-		when l < r
-			l < m && m < r => true
-		when l > r
-			l < m || m < r => true
-		else => false
-*/
-func isBetweenTwoNodesExclusive(leftmostID, middleID, rightmostID string) bool {
-	l := leftmostID
-	m := middleID
-	r := rightmostID
-
-	switch {
-	case l == r: // because interval is exclusive, for which l == r means, it's essentially empty
-		return false
-	case r > l && (l < m && m < r):
-		return true
-	case r < l && (l < m || m < r):
-		return true
-	default:
-		return false
-	}
-}
-
-/*
-  For the Chord ring:
-	m is_in (l, r] is equivalent to
-		when r == l
-			m == r => true
-		when l < r
-			l < m && m <= r => true
-		when l > r
-			l < m || m <= r => true
-		else => false
-*/
-func isBetweenTwoNodesRightInclusive(leftmostID, middleID, rightmostID string) bool {
-	l := leftmostID
-	m := middleID
-	r := rightmostID
-
-	switch {
-	case l == r && m == r: // because interval is exclusive, for which l == r means, it's essentially empty
-		return true
-	case r > l && (l < m && m <= r):
-		return true
-	case r < l && (l < m || m <= r):
-		return true
-	default:
-		return false
-	}
-}
-
 func nilError(s string) error {
 	return errors.New(s + " is nil")
 }
