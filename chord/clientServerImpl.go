@@ -2,7 +2,6 @@ package chord
 
 import (
 	"context"
-	"fmt"
 	. "github.com/dosarudaniel/CS438_Project/services/chord_service"
 	. "github.com/dosarudaniel/CS438_Project/services/client_service"
 )
@@ -32,9 +31,7 @@ func (chordNode *ChordNode) FindSuccessorClient(ctx context.Context, id *Identif
 
 	if chordNode.node.Id == id.Id { // Client asked about this node's IP
 		responseIp = chordNode.node.Ip
-		fmt.Println(">>>>>>>>>>>> heeeeeeeeeeeeeeeeeere")
 	} else {
-		fmt.Println(">>>>>>>>>>>> heeeeeeeeeeeeeeeeeere2 " + id.Id)
 		// Having an ID, get the Node and its IP
 		node, err = chordNode.FindSuccessor(ctx, &ID{Id: id.Id})
 		if err != nil {
@@ -42,6 +39,5 @@ func (chordNode *ChordNode) FindSuccessorClient(ctx context.Context, id *Identif
 		}
 		responseIp = node.Ip
 	}
-	fmt.Println(">>>>>>>>>>>> heeeeeeeeeeeeeeeeeere3 " + responseIp)
 	return &Response{Text: "Success! IP found for id given:", Info: responseIp}, nil
 }
