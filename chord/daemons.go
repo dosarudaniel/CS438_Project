@@ -2,9 +2,7 @@ package chord
 
 import (
 	"context"
-	"errors"
 	. "github.com/dosarudaniel/CS438_Project/services/chord_service"
-	"log"
 	"time"
 )
 
@@ -37,7 +35,7 @@ func StabilizeDaemon(chordNode *ChordNode) {
 	// TODO what if successor is down
 	x, err := chordNode.stubGetPredecessor(ipAddr(succ.Ip), context.Background())
 	if err == nil && x != nil {
-		if isBetweenTwoNodesExclusive(chordNode.node, *x, succ) || chordNode.node.Id == succ.Id {
+		if isBetweenTwoNodesExclusive(chordNode.node.Id, x.Id, succ.Id) || chordNode.node.Id == succ.Id {
 			chordNode.setSuccessor(x)
 		}
 	}
@@ -70,7 +68,7 @@ func FixFingersDaemon(chordNode *ChordNode) func(*ChordNode) {
 		next = (next + 1) % m
 
 		// n + 2^next % 2^m
-		id, err := getIthFingerID(n, next, m)
+		id, err := getFingerStart(n, next, m)
 		if err != nil {
 			return
 		}
@@ -94,6 +92,7 @@ func FixFingersDaemon(chordNode *ChordNode) func(*ChordNode) {
  n.check_predecessor()
  	if (predecessor has failed) <- in our case responds to a FindSuccessor rpc call within 3 seconds
 		predecessor = nil;
+ FIXME: implement correctly
 */
 func CheckPredecessorDaemon(chordNode *ChordNode) {
 	var err error
@@ -106,8 +105,9 @@ func CheckPredecessorDaemon(chordNode *ChordNode) {
 		return
 	}
 
-	_, err = chordNode.stubFindSuccessor(ipAddr(pred.Ip), ctx, &ID{Id: chordNode.node.Ip})
-	if errors.Is(err, context.DeadlineExceeded) {
-		chordNode.setPredecessor(nil)
-	}
+	// transfer keys from the predecessor that have ID higher than
+	// predecessor's ID
+	err = chordNode.stubTransferKeys(ipAddr(pred.Id), ctx, pred.Id, chordNode.node)
+
+	log.WithField("err", err).Info("check predecessor daemon failed")
 }

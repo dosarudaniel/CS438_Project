@@ -145,10 +145,234 @@ func (m *Nodes) GetNodeArray() []*Node {
 	return nil
 }
 
+type Key struct {
+	Keyword              string   `protobuf:"bytes,1,opt,name=keyword,proto3" json:"keyword,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *Key) Reset()         { *m = Key{} }
+func (m *Key) String() string { return proto.CompactTextString(m) }
+func (*Key) ProtoMessage()    {}
+func (*Key) Descriptor() ([]byte, []int) {
+	return fileDescriptor_ec7364b073ade720, []int{3}
+}
+
+func (m *Key) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_Key.Unmarshal(m, b)
+}
+func (m *Key) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_Key.Marshal(b, m, deterministic)
+}
+func (m *Key) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Key.Merge(m, src)
+}
+func (m *Key) XXX_Size() int {
+	return xxx_messageInfo_Key.Size(m)
+}
+func (m *Key) XXX_DiscardUnknown() {
+	xxx_messageInfo_Key.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_Key proto.InternalMessageInfo
+
+func (m *Key) GetKeyword() string {
+	if m != nil {
+		return m.Keyword
+	}
+	return ""
+}
+
+type FileRecord struct {
+	Filename             string   `protobuf:"bytes,1,opt,name=filename,proto3" json:"filename,omitempty"`
+	OwnerIp              string   `protobuf:"bytes,2,opt,name=owner_ip,json=ownerIp,proto3" json:"owner_ip,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *FileRecord) Reset()         { *m = FileRecord{} }
+func (m *FileRecord) String() string { return proto.CompactTextString(m) }
+func (*FileRecord) ProtoMessage()    {}
+func (*FileRecord) Descriptor() ([]byte, []int) {
+	return fileDescriptor_ec7364b073ade720, []int{4}
+}
+
+func (m *FileRecord) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_FileRecord.Unmarshal(m, b)
+}
+func (m *FileRecord) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_FileRecord.Marshal(b, m, deterministic)
+}
+func (m *FileRecord) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_FileRecord.Merge(m, src)
+}
+func (m *FileRecord) XXX_Size() int {
+	return xxx_messageInfo_FileRecord.Size(m)
+}
+func (m *FileRecord) XXX_DiscardUnknown() {
+	xxx_messageInfo_FileRecord.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_FileRecord proto.InternalMessageInfo
+
+func (m *FileRecord) GetFilename() string {
+	if m != nil {
+		return m.Filename
+	}
+	return ""
+}
+
+func (m *FileRecord) GetOwnerIp() string {
+	if m != nil {
+		return m.OwnerIp
+	}
+	return ""
+}
+
+type Val struct {
+	FileRecords          []*FileRecord `protobuf:"bytes,1,rep,name=fileRecords,proto3" json:"fileRecords,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}      `json:"-"`
+	XXX_unrecognized     []byte        `json:"-"`
+	XXX_sizecache        int32         `json:"-"`
+}
+
+func (m *Val) Reset()         { *m = Val{} }
+func (m *Val) String() string { return proto.CompactTextString(m) }
+func (*Val) ProtoMessage()    {}
+func (*Val) Descriptor() ([]byte, []int) {
+	return fileDescriptor_ec7364b073ade720, []int{5}
+}
+
+func (m *Val) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_Val.Unmarshal(m, b)
+}
+func (m *Val) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_Val.Marshal(b, m, deterministic)
+}
+func (m *Val) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Val.Merge(m, src)
+}
+func (m *Val) XXX_Size() int {
+	return xxx_messageInfo_Val.Size(m)
+}
+func (m *Val) XXX_DiscardUnknown() {
+	xxx_messageInfo_Val.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_Val proto.InternalMessageInfo
+
+func (m *Val) GetFileRecords() []*FileRecord {
+	if m != nil {
+		return m.FileRecords
+	}
+	return nil
+}
+
+type FileRecordWithKeyword struct {
+	Keyword              string      `protobuf:"bytes,1,opt,name=keyword,proto3" json:"keyword,omitempty"`
+	Val                  *FileRecord `protobuf:"bytes,2,opt,name=val,proto3" json:"val,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}    `json:"-"`
+	XXX_unrecognized     []byte      `json:"-"`
+	XXX_sizecache        int32       `json:"-"`
+}
+
+func (m *FileRecordWithKeyword) Reset()         { *m = FileRecordWithKeyword{} }
+func (m *FileRecordWithKeyword) String() string { return proto.CompactTextString(m) }
+func (*FileRecordWithKeyword) ProtoMessage()    {}
+func (*FileRecordWithKeyword) Descriptor() ([]byte, []int) {
+	return fileDescriptor_ec7364b073ade720, []int{6}
+}
+
+func (m *FileRecordWithKeyword) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_FileRecordWithKeyword.Unmarshal(m, b)
+}
+func (m *FileRecordWithKeyword) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_FileRecordWithKeyword.Marshal(b, m, deterministic)
+}
+func (m *FileRecordWithKeyword) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_FileRecordWithKeyword.Merge(m, src)
+}
+func (m *FileRecordWithKeyword) XXX_Size() int {
+	return xxx_messageInfo_FileRecordWithKeyword.Size(m)
+}
+func (m *FileRecordWithKeyword) XXX_DiscardUnknown() {
+	xxx_messageInfo_FileRecordWithKeyword.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_FileRecordWithKeyword proto.InternalMessageInfo
+
+func (m *FileRecordWithKeyword) GetKeyword() string {
+	if m != nil {
+		return m.Keyword
+	}
+	return ""
+}
+
+func (m *FileRecordWithKeyword) GetVal() *FileRecord {
+	if m != nil {
+		return m.Val
+	}
+	return nil
+}
+
+type TransferKeysRequest struct {
+	FromId               string   `protobuf:"bytes,1,opt,name=from_id,json=fromId,proto3" json:"from_id,omitempty"`
+	ToNode               *Node    `protobuf:"bytes,2,opt,name=to_node,json=toNode,proto3" json:"to_node,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *TransferKeysRequest) Reset()         { *m = TransferKeysRequest{} }
+func (m *TransferKeysRequest) String() string { return proto.CompactTextString(m) }
+func (*TransferKeysRequest) ProtoMessage()    {}
+func (*TransferKeysRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_ec7364b073ade720, []int{7}
+}
+
+func (m *TransferKeysRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_TransferKeysRequest.Unmarshal(m, b)
+}
+func (m *TransferKeysRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_TransferKeysRequest.Marshal(b, m, deterministic)
+}
+func (m *TransferKeysRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_TransferKeysRequest.Merge(m, src)
+}
+func (m *TransferKeysRequest) XXX_Size() int {
+	return xxx_messageInfo_TransferKeysRequest.Size(m)
+}
+func (m *TransferKeysRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_TransferKeysRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_TransferKeysRequest proto.InternalMessageInfo
+
+func (m *TransferKeysRequest) GetFromId() string {
+	if m != nil {
+		return m.FromId
+	}
+	return ""
+}
+
+func (m *TransferKeysRequest) GetToNode() *Node {
+	if m != nil {
+		return m.ToNode
+	}
+	return nil
+}
+
 func init() {
 	proto.RegisterType((*ID)(nil), "chord.ID")
 	proto.RegisterType((*Node)(nil), "chord.Node")
 	proto.RegisterType((*Nodes)(nil), "chord.Nodes")
+	proto.RegisterType((*Key)(nil), "chord.Key")
+	proto.RegisterType((*FileRecord)(nil), "chord.FileRecord")
+	proto.RegisterType((*Val)(nil), "chord.Val")
+	proto.RegisterType((*FileRecordWithKeyword)(nil), "chord.FileRecordWithKeyword")
+	proto.RegisterType((*TransferKeysRequest)(nil), "chord.TransferKeysRequest")
 }
 
 func init() {
@@ -156,14 +380,25 @@ func init() {
 }
 
 var fileDescriptor_ec7364b073ade720 = []byte{
-	// 144 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0xd2, 0x2e, 0x4e, 0x2d, 0x2a,
-	0xcb, 0x4c, 0x4e, 0x2d, 0xd6, 0x4f, 0xce, 0xc8, 0x2f, 0x4a, 0x89, 0x87, 0x72, 0xa1, 0xbc, 0xdc,
-	0xd4, 0xe2, 0xe2, 0xc4, 0xf4, 0xd4, 0x62, 0xbd, 0x82, 0xa2, 0xfc, 0x92, 0x7c, 0x21, 0x56, 0xb0,
-	0xa8, 0x92, 0x08, 0x17, 0x93, 0xa7, 0x8b, 0x10, 0x1f, 0x17, 0x53, 0x66, 0x8a, 0x04, 0xa3, 0x02,
-	0xa3, 0x06, 0x67, 0x10, 0x53, 0x66, 0x8a, 0x92, 0x1a, 0x17, 0x8b, 0x5f, 0x7e, 0x4a, 0x2a, 0xba,
-	0x38, 0x98, 0x5f, 0x20, 0xc1, 0x04, 0xe5, 0x17, 0x28, 0x19, 0x71, 0xb1, 0x82, 0xd4, 0x15, 0x0b,
-	0x69, 0x72, 0x71, 0xe6, 0xe5, 0xa7, 0xa4, 0x3a, 0x16, 0x15, 0x25, 0x56, 0x4a, 0x30, 0x2a, 0x30,
-	0x6b, 0x70, 0x1b, 0x71, 0xeb, 0x81, 0x6d, 0xd0, 0x03, 0x29, 0x08, 0x42, 0xc8, 0x26, 0xb1, 0x81,
-	0xed, 0x37, 0x06, 0x04, 0x00, 0x00, 0xff, 0xff, 0x53, 0xcc, 0xaa, 0x52, 0xae, 0x00, 0x00, 0x00,
+	// 306 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x74, 0x91, 0xd1, 0x4b, 0xf3, 0x30,
+	0x14, 0xc5, 0x59, 0xfb, 0x6d, 0xdd, 0xee, 0xe0, 0x03, 0xa3, 0x62, 0xf5, 0xc5, 0x11, 0x45, 0x26,
+	0xc2, 0x84, 0xed, 0xcd, 0x37, 0x51, 0x84, 0x31, 0xf0, 0xa1, 0x8c, 0xf9, 0x58, 0x62, 0x73, 0xeb,
+	0x82, 0x6d, 0x53, 0x93, 0xba, 0xd1, 0xff, 0x5e, 0x12, 0xb3, 0x56, 0x45, 0x9f, 0xc2, 0xef, 0xde,
+	0xc3, 0xb9, 0x87, 0x13, 0xb8, 0xd2, 0xa8, 0x36, 0x22, 0x41, 0x7d, 0x9d, 0xac, 0xa5, 0xe2, 0xb1,
+	0x43, 0x47, 0x39, 0x6a, 0xcd, 0x5e, 0x50, 0x4f, 0x4a, 0x25, 0x2b, 0x49, 0xba, 0x76, 0x4a, 0x0f,
+	0xc0, 0x9b, 0xdf, 0x93, 0xff, 0xe0, 0x09, 0x1e, 0x76, 0x46, 0x9d, 0xf1, 0x20, 0xf2, 0x04, 0xa7,
+	0x17, 0xf0, 0xef, 0x51, 0x72, 0xfc, 0x39, 0xb7, 0x5c, 0x86, 0x9e, 0xe3, 0x92, 0x4e, 0xa1, 0x6b,
+	0x74, 0x9a, 0x5c, 0xc2, 0xa0, 0x90, 0x1c, 0x6f, 0x95, 0x62, 0x75, 0xd8, 0x19, 0xf9, 0xe3, 0xe1,
+	0x74, 0x38, 0xb1, 0x17, 0x26, 0x46, 0x10, 0xb5, 0x5b, 0x7a, 0x0a, 0xfe, 0x02, 0x6b, 0x12, 0x42,
+	0xf0, 0x8a, 0xf5, 0x56, 0xaa, 0x9d, 0xff, 0x0e, 0xe9, 0x1d, 0xc0, 0x83, 0xc8, 0x30, 0xc2, 0x44,
+	0x2a, 0x4e, 0x4e, 0xa0, 0x9f, 0x8a, 0x0c, 0x0b, 0x96, 0xa3, 0x13, 0x36, 0x4c, 0x8e, 0xa1, 0x2f,
+	0xb7, 0x05, 0xaa, 0xb8, 0x09, 0x15, 0x58, 0x9e, 0x97, 0xf4, 0x06, 0xfc, 0x15, 0xcb, 0xc8, 0x0c,
+	0x86, 0x69, 0xe3, 0xa5, 0x5d, 0xb2, 0x3d, 0x97, 0xac, 0xbd, 0x12, 0x7d, 0x55, 0xd1, 0x15, 0x1c,
+	0xb6, 0xab, 0x27, 0x51, 0xad, 0x17, 0x9f, 0xc9, 0xfe, 0xce, 0x4c, 0xce, 0xc0, 0xdf, 0xb0, 0xcc,
+	0x86, 0xf8, 0xd5, 0xdf, 0x6c, 0xe9, 0x12, 0xf6, 0x97, 0x8a, 0x15, 0x3a, 0x45, 0xb5, 0xc0, 0x5a,
+	0x47, 0xf8, 0xf6, 0x8e, 0xba, 0x22, 0x47, 0x10, 0xa4, 0x4a, 0xe6, 0x71, 0xd3, 0x74, 0xcf, 0xe0,
+	0x9c, 0x93, 0x73, 0x08, 0x2a, 0x19, 0x9b, 0xe6, 0x9c, 0xf1, 0xb7, 0x4a, 0x7b, 0x95, 0x34, 0xef,
+	0x73, 0xcf, 0xfe, 0xe7, 0xec, 0x23, 0x00, 0x00, 0xff, 0xff, 0xfb, 0xa1, 0x7b, 0x53, 0xfe, 0x01,
+	0x00, 0x00,
 }

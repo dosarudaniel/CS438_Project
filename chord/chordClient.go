@@ -58,3 +58,45 @@ func (chordNode *ChordNode) stubGetPredecessor(ip ipAddr, ctx context.Context) (
 
 	return stub.GetPredecessor(ctx, &empty.Empty{})
 }
+
+func (chordNode *ChordNode) stubGet(ip ipAddr, ctx context.Context, key string) (*Val, error) {
+	stub, err := chordNode.getStubFor(ip)
+	if err != nil {
+		return nil, err
+	}
+
+	return stub.Get(ctx, &Key{Keyword: key})
+}
+
+func (chordNode *ChordNode) stubPut(ip ipAddr, ctx context.Context, keyword, filename, ownersIP string) error {
+	stub, err := chordNode.getStubFor(ip)
+	if err != nil {
+		return err
+	}
+
+	fileRecord := &FileRecord{
+		Filename: filename,
+		OwnerIp:  ownersIP,
+	}
+
+	_, err = stub.Put(ctx, &FileRecordWithKeyword{
+		Keyword: keyword,
+		Val:     fileRecord,
+	})
+
+	return err
+}
+
+func (chordNode *ChordNode) stubTransferKeys(ip ipAddr, ctx context.Context, fromID string, toNode Node) error {
+	stub, err := chordNode.getStubFor(ip)
+	if err != nil {
+		return err
+	}
+
+	_, err = stub.TransferKeys(ctx, &TransferKeysRequest{FromId: fromID, ToNode: &Node{
+		Id: toNode.Id,
+		Ip: toNode.Ip,
+	}})
+
+	return err
+}
