@@ -115,7 +115,7 @@ func (chordNode *ChordNode) Get(ctx context.Context, messageKeyPtr *Key) (*Val, 
 		return &Val{FileRecords: fileRecords}, nil
 	} else {
 		return nil, errors.New(
-			fmt.Sprintf("such key does not exist at node IP %s ID %s", chordNode.node.Ip, chordNode.node.Ip))
+			fmt.Sprintf("such key does not exist at node IP %s ID %s", chordNode.node.Ip, chordNode.node.Id))
 	}
 }
 
