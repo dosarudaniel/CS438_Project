@@ -9,7 +9,7 @@ service Chord {
     rpc GetPredecessor (google.protobuf.Empty) returns (Node);
 
     rpc Get (Key) returns (Val);
-    rpc Put (KeyVal) returns (google.protobuf.Empty);
+    rpc Put (FileRecordWithKeyword) returns (google.protobuf.Empty);
     rpc TransferKeys (TransferKeysRequest) returns (google.protobuf.Empty);
 }
 

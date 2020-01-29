@@ -87,27 +87,32 @@ func (chordNode *ChordNode) Notify(ctx context.Context, n0Ptr *Node) (*empty.Emp
 	return emptyPtr, nil
 }
 
-func (chordNode *ChordNode) Put(ctx context.Context, keyValPtr *KeyVal) (*empty.Empty, error) {
+func (chordNode *ChordNode) Put(ctx context.Context, keyValPtr *FileRecordWithKeyword) (*empty.Empty, error) {
 	emptyPtr := &empty.Empty{}
 
 	if keyValPtr == nil {
-		return emptyPtr, nilError("KeyVal")
+		return emptyPtr, nilError("FileRecordWithKeyword")
 	}
 
-	chordNode.hashTable.Put(keyValPtr.Key, ipAddr(keyValPtr.Val))
+	err := chordNode.hashTable.PutOrAppendOne(keyValPtr.Keyword, keyValPtr.Val)
 
-	return emptyPtr, nil
+	return emptyPtr, err
 }
 
+// Get implements RPC method Get (Key) returns (Val);
+// It returns a list of documents that were stored under this keyword
 func (chordNode *ChordNode) Get(ctx context.Context, messageKeyPtr *Key) (*Val, error) {
 	if messageKeyPtr == nil {
 		return nil, nilError("Key")
 	}
 
-	ipAddr, doesExist := chordNode.hashTable.Get(messageKeyPtr.Key)
+	chordNode.hashTable.RLock()
+	defer chordNode.hashTable.RUnlock() //TODO can using array of pointers create a data race here?
+
+	fileRecords, doesExist := chordNode.hashTable.table[messageKeyPtr.Keyword]
 
 	if doesExist {
-		return &Val{Val: string(ipAddr)}, nil
+		return &Val{FileRecords: fileRecords}, nil
 	} else {
 		return nil, errors.New(
 			fmt.Sprintf("such key does not exist at node IP %s ID %s", chordNode.node.Ip, chordNode.node.Ip))
@@ -137,12 +142,17 @@ func (chordNode *ChordNode) TransferKeys(ctx context.Context, req *TransferKeysR
 		if err != nil {
 			return emptyPtr, err
 		}
-		log.Info(key)
 		// Check that the hashed key lies in the correct range before putting the value in our predecessor
 		if isBetweenTwoNodesRightInclusive(fromID, hashedKey, toNode.Id) {
-			//if fromID < hashedKey {
-			if err := chordNode.stubPut(ipAddr(toNode.Ip), context.Background(), key, val); err != nil {
-				return emptyPtr, err
+			// TODO potential improvement: enable PutManyFileRecords rpc to put several file records at once
+			for _, fileRecordPtr := range val {
+				if fileRecordPtr == nil {
+					continue
+				}
+				if err := chordNode.stubPut(ipAddr(toNode.Ip), context.Background(),
+					key, fileRecordPtr.Filename, fileRecordPtr.OwnerIp); err != nil {
+					return emptyPtr, err
+				}
 			}
 
 			keysToRemove = append(keysToRemove, key)

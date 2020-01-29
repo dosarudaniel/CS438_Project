@@ -1,10 +1,16 @@
+/*
+	Important notice:
+	Read access must be RLocked and RUnlocked. HashTableWithMux only provides thread-safe write access.
+*/
+
 package chord
 
 import (
+	chord "github.com/dosarudaniel/CS438_Project/services/chord_service"
 	"sync"
 )
 
-type hashTable map[string]ipAddr
+type hashTable map[string][]*chord.FileRecord
 
 type HashTableWithMux struct {
 	table hashTable
@@ -18,39 +24,31 @@ func NewHashTable() HashTableWithMux {
 	}
 }
 
-// Get returns the IP address, which the key is mapped to, and doesExist
-func (tableWithMux *HashTableWithMux) Get(key string) (ipAddr, bool) {
-	tableWithMux.RLock()
-	defer tableWithMux.RUnlock()
-
-	addr, ok := tableWithMux.table[key]
-	if ok {
-		return addr, true
-	} else {
-		return "", false
-	}
-}
-
-func (tableWithMux *HashTableWithMux) Put(key string, addr ipAddr) {
+// PutOrReplacePair puts or replace a key-value pair
+func (tableWithMux *HashTableWithMux) PutOrReplacePair(keyword string, fileRecords []*chord.FileRecord) {
 	tableWithMux.Lock()
 	defer tableWithMux.Unlock()
 
-	tableWithMux.table[key] = addr
+	tableWithMux.table[keyword] = fileRecords
 }
 
-// Retrieve deletes key-value pair from the hash table and returns the deleted value and if such pair existed
-// returns ipAddr, didSuchPairExist
-func (tableWithMux *HashTableWithMux) Retrieve(key string) (ipAddr, bool) {
+// PutOrAppendOne appends an existing value in key-value pair or creates a new pair with single-element value
+func (tableWithMux *HashTableWithMux) PutOrAppendOne(keyword string, fileRecord *chord.FileRecord) error {
+	if fileRecord == nil {
+		return nilError("fileRecord")
+	}
+
 	tableWithMux.Lock()
 	defer tableWithMux.Unlock()
 
-	addr, present := tableWithMux.table[key]
-	if present {
-		delete(tableWithMux.table, key)
-		return addr, true
+	fileRecords, doExist := tableWithMux.table[keyword]
+	if doExist {
+		tableWithMux.table[keyword] = append(fileRecords, fileRecord)
 	} else {
-		return "", false
+		tableWithMux.table[keyword] = []*chord.FileRecord{fileRecord}
 	}
+
+	return nil
 }
 
 func (tableWithMux *HashTableWithMux) NumOfPairs() int {

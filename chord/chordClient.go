@@ -65,16 +65,24 @@ func (chordNode *ChordNode) stubGet(ip ipAddr, ctx context.Context, key string) 
 		return nil, err
 	}
 
-	return stub.Get(ctx, &Key{Key: key})
+	return stub.Get(ctx, &Key{Keyword: key})
 }
 
-func (chordNode *ChordNode) stubPut(ip ipAddr, ctx context.Context, key string, val ipAddr) error {
+func (chordNode *ChordNode) stubPut(ip ipAddr, ctx context.Context, keyword, filename, ownersIP string) error {
 	stub, err := chordNode.getStubFor(ip)
 	if err != nil {
 		return err
 	}
 
-	_, err = stub.Put(ctx, &KeyVal{Key: key, Val: string(val)})
+	fileRecord := &FileRecord{
+		Filename: filename,
+		OwnerIp:  ownersIP,
+	}
+
+	_, err = stub.Put(ctx, &FileRecordWithKeyword{
+		Keyword: keyword,
+		Val:     fileRecord,
+	})
 
 	return err
 }

@@ -19,16 +19,21 @@ message Nodes {
 // For DHT
 
 message Key {
-    string key = 1;
+    string keyword = 1;
+}
+
+message FileRecord {
+    string filename = 1;
+    string owner_ip = 2;
 }
 
 message Val {
-    string val = 1;
+    repeated FileRecord fileRecords = 1;
 }
 
-message KeyVal {
-    string key = 1;
-    string val = 2;
+message FileRecordWithKeyword {
+    string keyword = 1;
+    FileRecord val = 2;
 }
 
 message TransferKeysRequest {

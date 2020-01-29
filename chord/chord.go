@@ -218,42 +218,49 @@ func (chordNode *ChordNode) lookup(key string) (ipAddr, error) {
 }
 
 // PutInDHT stores the key in the Chord ring (some other node who's responsible for that key)
-func (chordNode *ChordNode) PutInDHT(key string, val ipAddr) error {
-	ip, err := chordNode.lookup(key)
+func (chordNode *ChordNode) PutInDHT(keyword, filename string) error {
+	ip, err := chordNode.lookup(keyword)
 	if err != nil {
 		return err
 	}
 
 	if string(ip) == chordNode.node.Ip {
-		chordNode.hashTable.Put(key, val)
-		return nil
+		return chordNode.hashTable.PutOrAppendOne(keyword, &FileRecord{
+			Filename: filename,
+			OwnerIp:  chordNode.node.Ip,
+		})
 	}
 
-	return chordNode.stubPut(ip, context.Background(), key, val)
+	return chordNode.stubPut(ip, context.Background(), keyword, filename, chordNode.node.Ip)
 }
 
 // FindInDHT finds the key from the Chord ring, i.e., gets it from other node
-func (chordNode *ChordNode) FindInDHT(key string) (ipAddr, error) {
-	ip, err := chordNode.lookup(key) // ip of the node to store key
+func (chordNode *ChordNode) FindInDHT(keyword string) ([]*FileRecord, error) {
+	emptyFileRecords := make([]*FileRecord, 0)
+
+	ip, err := chordNode.lookup(keyword) // ip of the node to store keyword
 	if err != nil {
-		return "", err
+		return emptyFileRecords, err
 	}
 
 	if string(ip) == chordNode.node.Ip {
-		val, doesExist := chordNode.hashTable.Get(key)
+		chordNode.hashTable.RLock()
+		fileRecords, doesExist := chordNode.hashTable.table[keyword]
+		chordNode.hashTable.RUnlock()
+
 		if doesExist {
-			return val, nil
+			return fileRecords, nil
 		} else {
-			return "", errors.New("key does not exist")
+			return emptyFileRecords, errors.New("keyword does not exist")
 		}
 	}
 
-	val, err := chordNode.stubGet(ip, context.Background(), key)
+	val, err := chordNode.stubGet(ip, context.Background(), keyword)
 	if err != nil {
-		return "", err
+		return emptyFileRecords, err
 	}
 
-	return ipAddr(val.Val), nil
+	return val.FileRecords, nil
 }
 
 func (chordNode *ChordNode) String() string {
@@ -287,12 +294,20 @@ func (chordNode *ChordNode) String() string {
 	}
 	chordNode.fingerTable.RUnlock()
 
-	outputString += "\t Hash table: \n"
+	outputString += "\t Inverted index tree: \n"
 	chordNode.hashTable.RLock()
-	for key, addr := range chordNode.hashTable.table {
+	for key, fileRecords := range chordNode.hashTable.table {
 		hashKey, _ := chordNode.hashString(key)
-		outputString += fmt.Sprintf("\t\t (hashKey string %s) (hashKey big.int %s) (key %s) (val %s)\n",
-			hashKey, idToBigIntString(hashKey), key, addr)
+		outputString += fmt.Sprintf("\t\t (key %s) (hashKey string %s) (hashKey big.int %s)\n",
+			key, hashKey, idToBigIntString(hashKey))
+		for _, fileRecordPtr := range fileRecords {
+			if fileRecordPtr == nil {
+				outputString += "\t\t\t<nil>\n"
+			} else {
+				outputString += fmt.Sprintf("\t\t\t\"%s\" \tin %s\n",
+					fileRecordPtr.Filename, fileRecordPtr.OwnerIp)
+			}
+		}
 	}
 	chordNode.hashTable.RUnlock()
 
