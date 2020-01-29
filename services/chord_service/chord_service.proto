@@ -1,4 +1,7 @@
 syntax = "proto3";
+
+option go_package = "github.com/dosarudaniel/CS438_Project/services/chord_service";
+
 import "services/chord_service/chord_messages.proto";
 import "google/protobuf/empty.proto";
 package chord;
@@ -8,7 +11,7 @@ service Chord {
     rpc Notify (Node) returns (google.protobuf.Empty);
     rpc GetPredecessor (google.protobuf.Empty) returns (Node);
 
-    rpc Get (Key) returns (Val);
+    rpc Get (Key) returns (FileRecords);
     rpc Put (FileRecordWithKeyword) returns (google.protobuf.Empty);
     rpc TransferKeys (TransferKeysRequest) returns (google.protobuf.Empty);
 }

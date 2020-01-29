@@ -9,7 +9,9 @@ go 1.13
 //    go mod tidy removes unused dependencies.
 
 require (
+	github.com/deckarep/golang-set v1.7.1 // indirect
 	github.com/golang/protobuf v1.3.2
+	github.com/masatana/go-textdistance v0.0.0-20191005053614-738b0edac985
 	github.com/sirupsen/logrus v1.4.2
 	golang.org/x/net v0.0.0-20200114155413-6afb5195e5aa // indirect
 	golang.org/x/sys v0.0.0-20200121082415-34d275377bf9 // indirect

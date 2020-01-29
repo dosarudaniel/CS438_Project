@@ -1,4 +1,7 @@
 syntax = "proto3";
+
+option go_package = "github.com/dosarudaniel/CS438_Project/services/client_service";
+
 package chord;
 
 message FileMetadata {
@@ -18,4 +21,8 @@ message Identifier {
 
 message Filename {
     string filename = 1;
+}
+
+message Query {
+    string query = 1;
 }

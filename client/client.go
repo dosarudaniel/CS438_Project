@@ -62,6 +62,10 @@ func main() {
 		}
 
 	case "upload":
+		/*
+			How to use:
+			client/client -PeersterAddress 127.0.0.1:5000 -command upload -file="hello world"
+		*/
 		log.Info("Sending an upload request to " + *peersterAddress)
 
 		if *file == "" { // required field
@@ -108,11 +112,29 @@ func main() {
 		fmt.Println(response.Text + response.Info) // Print the IP
 
 	case "search":
+		/*
+			How to use:
+			client/client -PeersterAddress 127.0.0.1:5000 -command search -query="hello"
+		*/
 		if *query == "" {
 			log.Fatal("-query is required but not given")
 		}
 
 		log.Info("Search query is being processed...")
+
+		conn, err := grpc.Dial(*peersterAddress, grpc.WithBlock(), grpc.WithInsecure())
+		if err != nil {
+			log.WithField("err", err).Fatal("Failed to dial")
+		}
+		defer conn.Close()
+
+		log.Info("hi")
+
+		client := clientService.NewClientServiceClient(conn)
+
+		fmt.Println(client.SearchFile(context.Background(), &clientService.Query{
+			Query: *query,
+		}))
 
 	default:
 		log.Fatal(fmt.Sprintf("No correct command given, try one of the following download/upload/findSuccessor"))

@@ -1,8 +1,6 @@
-generate_from_chord_proto:
-	protoc services/chord_service/*.proto --go_out=plugins=grpc:.
-	protoc services/file_share_service/*.proto --go_out=plugins=grpc:.
-	protoc services/client_service/*.proto --go_out=plugins=grpc:.
-
-.PHONY: client
+.PHONY: go_of_proto client
 client:
 	cd client && go build
+
+go_of_proto:
+	./go_of_proto.sh # putting the content of go_of_proto.sh directly here messed with $GOPATH

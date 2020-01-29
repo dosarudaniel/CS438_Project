@@ -1,4 +1,8 @@
 syntax = "proto3";
+
+option go_package = "github.com/dosarudaniel/CS438_Project/services/client_service";
+
+import "services/chord_service/chord_messages.proto";
 import "services/client_service/client_messages.proto";
 import "google/protobuf/empty.proto";
 package chord;
@@ -6,5 +10,6 @@ package chord;
 service ClientService {
     rpc RequestFile (FileMetadata) returns (Response);
     rpc UploadFile (Filename) returns (google.protobuf.Empty);
+    rpc SearchFile (Query) returns (FileRecords);
     rpc FindSuccessorClient (Identifier) returns (Response);
 }

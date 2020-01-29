@@ -101,7 +101,7 @@ func (chordNode *ChordNode) Put(ctx context.Context, keyValPtr *FileRecordWithKe
 
 // Get implements RPC method Get (Key) returns (Val);
 // It returns a list of documents that were stored under this keyword
-func (chordNode *ChordNode) Get(ctx context.Context, messageKeyPtr *Key) (*Val, error) {
+func (chordNode *ChordNode) Get(ctx context.Context, messageKeyPtr *Key) (*FileRecords, error) {
 	if messageKeyPtr == nil {
 		return nil, nilError("Key")
 	}
@@ -112,7 +112,7 @@ func (chordNode *ChordNode) Get(ctx context.Context, messageKeyPtr *Key) (*Val, 
 	fileRecords, doesExist := chordNode.hashTable.table[messageKeyPtr.Keyword]
 
 	if doesExist {
-		return &Val{FileRecords: fileRecords}, nil
+		return &FileRecords{FileRecords: fileRecords}, nil
 	} else {
 		return nil, errors.New(
 			fmt.Sprintf("such key does not exist at node IP %s ID %s", chordNode.node.Ip, chordNode.node.Id))

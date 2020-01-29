@@ -59,7 +59,7 @@ func (chordNode *ChordNode) stubGetPredecessor(ip ipAddr, ctx context.Context) (
 	return stub.GetPredecessor(ctx, &empty.Empty{})
 }
 
-func (chordNode *ChordNode) stubGet(ip ipAddr, ctx context.Context, key string) (*Val, error) {
+func (chordNode *ChordNode) stubGet(ip ipAddr, ctx context.Context, key string) (*FileRecords, error) {
 	stub, err := chordNode.getStubFor(ip)
 	if err != nil {
 		return nil, err
