@@ -97,7 +97,6 @@ func main() {
 		}
 
 	case "findSuccessor":
-
 		log.Debug("Sending a findSuccessor request to " + *peersterAddress)
 
 		if *ID == "" { // required
