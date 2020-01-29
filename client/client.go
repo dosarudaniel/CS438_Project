@@ -67,7 +67,24 @@ func main() {
 		if *file == "" { // required field
 			log.Fatal("Upload: No file name given. Specify which file do you upload.")
 		}
-		// TODO
+
+		conn, err := grpc.Dial(*peersterAddress, grpc.WithBlock(), grpc.WithInsecure())
+		if err != nil {
+			log.WithField("err", err).Fatal("Failed to dial")
+		}
+		defer conn.Close()
+
+		client := clientService.NewClientServiceClient(conn)
+		_, err = client.UploadFile(context.Background(), &clientService.Filename{
+			Filename: *file,
+		})
+
+		if err != nil {
+			log.WithFields(logrus.Fields{
+				"filename": *file,
+				"err":      err,
+			}).Warn("uploading a file failed...")
+		}
 
 	case "findSuccessor":
 		log.Info("Sending a findSuccessor request to " + *peersterAddress)

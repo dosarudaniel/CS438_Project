@@ -4,6 +4,9 @@ import (
 	"context"
 	. "github.com/dosarudaniel/CS438_Project/services/chord_service"
 	. "github.com/dosarudaniel/CS438_Project/services/client_service"
+	"github.com/golang/protobuf/ptypes/empty"
+	"github.com/sirupsen/logrus"
+	"strings"
 )
 
 // RPC used by the CLI and Web client for communication with one Node from the Chord ring
@@ -22,6 +25,29 @@ func (chordNode *ChordNode) RequestFile(ctx context.Context, fileMetadata *FileM
 	return &Response{Text: "Success! File downloaded at _download/" + fileMetadata.NameToStore}, nil
 }
 
+func (chordNode *ChordNode) UploadFile(ctx context.Context, msgFilenamePtr *Filename) (*empty.Empty, error) {
+	if msgFilenamePtr == nil {
+		return nil, nilError("message Filename")
+	}
+
+	filename := msgFilenamePtr.Filename
+
+	// TODO remove file extension
+
+	keywords := strings.Split(filename, " ")
+
+	for _, keyword := range keywords {
+		err := chordNode.PutInDHT(keyword, filename) //TODO impl proper error handling
+		log.WithFields(logrus.Fields{
+			"filename": filename,
+			"keyword":  keyword,
+			"err":      err,
+		}).Warn("putting keyword-fileRecord failed")
+	}
+	log.Info("Uploading a file has finished :-)")
+
+	return &empty.Empty{}, nil
+}
 
 // RPC used by the CLI and Web client for communication with one Node from the Chord ring
 func (chordNode *ChordNode) FindSuccessorClient(ctx context.Context, id *Identifier) (*Response, error) {

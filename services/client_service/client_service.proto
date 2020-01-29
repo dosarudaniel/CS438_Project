@@ -1,9 +1,10 @@
 syntax = "proto3";
 import "services/client_service/client_messages.proto";
+import "google/protobuf/empty.proto";
 package chord;
 
 service ClientService {
     rpc RequestFile (FileMetadata) returns (Response);
-    // rpc UploadFile (FileMetadata) returns (Response);
+    rpc UploadFile (Filename) returns (google.protobuf.Empty);
     rpc FindSuccessorClient (Identifier) returns (Response);
 }
