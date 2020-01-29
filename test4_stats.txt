@@ -1,0 +1,5 @@
+------   findSuccessor latency test (N = 5)   ------
+550
+544
+928
+909

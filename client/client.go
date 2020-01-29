@@ -120,7 +120,7 @@ func main() {
 		}
 		elapsed := time.Since(start)
 
-		fmt.Println("Time spent with request:" + *ID + "," + string(elapsed.Microseconds()))
+		fmt.Println("Time spent with request:" +  *ID + ",", elapsed.Microseconds())
 		fmt.Println(response.Text + response.Info) // Print the IP
 
 	case "search":

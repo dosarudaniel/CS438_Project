@@ -1,81 +1,81 @@
-
-Time spent with request:0000,ু
+------   findSuccessor latency test (N = 5)   ------
+Time spent with request:0000, 571
 Success! IP found for id given:127.0.0.1:10001
-Time spent with request:4000,߷
+Time spent with request:4000, 500
 Success! IP found for id given:127.0.0.1:10001
-Time spent with request:8000,വ
+Time spent with request:8000, 785
 Success! IP found for id given:127.0.0.1:10003
-Time spent with request:c000,ධ
+Time spent with request:c000, 925
 Success! IP found for id given:127.0.0.1:5000
-Time spent with request:0000,੷
+Time spent with request:0000, 528
 Success! IP found for id given:127.0.0.1:10001
-Time spent with request:4000,ࠡ
+Time spent with request:4000, 572
 Success! IP found for id given:127.0.0.1:10001
-Time spent with request:8000,์
+Time spent with request:8000, 906
 Success! IP found for id given:127.0.0.1:10003
-Time spent with request:c000,ฎ
+Time spent with request:c000, 883
 Success! IP found for id given:127.0.0.1:5000
-Time spent with request:0000,૛
+Time spent with request:0000, 558
 Success! IP found for id given:127.0.0.1:10001
-Time spent with request:4000,ࣗ
+Time spent with request:4000, 572
 Success! IP found for id given:127.0.0.1:10001
-Time spent with request:8000,ใ
+Time spent with request:8000, 887
 Success! IP found for id given:127.0.0.1:10003
-Time spent with request:c000,๗
+Time spent with request:c000, 943
 Success! IP found for id given:127.0.0.1:5000
-Time spent with request:0000,৥
+Time spent with request:0000, 533
 Success! IP found for id given:127.0.0.1:10001
-Time spent with request:4000,࠻
+Time spent with request:4000, 547
 Success! IP found for id given:127.0.0.1:10001
-Time spent with request:8000,ഈ
+Time spent with request:8000, 1000
 Success! IP found for id given:127.0.0.1:10003
-Time spent with request:c000,෤
+Time spent with request:c000, 881
 Success! IP found for id given:127.0.0.1:5000
-Time spent with request:0000,௶
+Time spent with request:0000, 586
 Success! IP found for id given:127.0.0.1:10001
-Time spent with request:4000,ࠋ
+Time spent with request:4000, 540
 Success! IP found for id given:127.0.0.1:10001
-Time spent with request:8000,ษ
+Time spent with request:8000, 930
 Success! IP found for id given:127.0.0.1:10003
-Time spent with request:c000,ൕ
+Time spent with request:c000, 923
 Success! IP found for id given:127.0.0.1:5000
-Time spent with request:0000,ਙ
+Time spent with request:0000, 545
 Success! IP found for id given:127.0.0.1:10001
-Time spent with request:4000,߮
+Time spent with request:4000, 564
 Success! IP found for id given:127.0.0.1:10001
-Time spent with request:8000,ഓ
+Time spent with request:8000, 1034
 Success! IP found for id given:127.0.0.1:10003
-Time spent with request:c000,ල
+Time spent with request:c000, 938
 Success! IP found for id given:127.0.0.1:5000
-Time spent with request:0000,ࣚ
+Time spent with request:0000, 509
 Success! IP found for id given:127.0.0.1:10001
-Time spent with request:4000,ࡿ
+Time spent with request:4000, 543
 Success! IP found for id given:127.0.0.1:10001
-Time spent with request:8000,ච
+Time spent with request:8000, 945
 Success! IP found for id given:127.0.0.1:10003
-Time spent with request:c000,฽
+Time spent with request:c000, 910
 Success! IP found for id given:127.0.0.1:5000
-Time spent with request:0000,ਉ
+Time spent with request:0000, 566
 Success! IP found for id given:127.0.0.1:10001
-Time spent with request:4000,ޭ
+Time spent with request:4000, 554
 Success! IP found for id given:127.0.0.1:10001
-Time spent with request:8000,෌
+Time spent with request:8000, 1007
 Success! IP found for id given:127.0.0.1:10003
-Time spent with request:c000,࣬
+Time spent with request:c000, 859
 Success! IP found for id given:127.0.0.1:5000
-Time spent with request:0000,ౄ
+Time spent with request:0000, 572
 Success! IP found for id given:127.0.0.1:10001
-Time spent with request:4000,࠭
+Time spent with request:4000, 549
 Success! IP found for id given:127.0.0.1:10001
-Time spent with request:8000,ࡊ
+Time spent with request:8000, 898
 Success! IP found for id given:127.0.0.1:10003
-Time spent with request:c000,ԩ
+Time spent with request:c000, 968
 Success! IP found for id given:127.0.0.1:5000
-Time spent with request:0000,ल
+Time spent with request:0000, 532
 Success! IP found for id given:127.0.0.1:10001
-Time spent with request:4000,ߣ
+Time spent with request:4000, 508
 Success! IP found for id given:127.0.0.1:10001
-Time spent with request:8000,໘
+Time spent with request:8000, 889
 Success! IP found for id given:127.0.0.1:10003
-Time spent with request:c000,ณ
+Time spent with request:c000, 865
 Success! IP found for id given:127.0.0.1:5000
