@@ -12,4 +12,5 @@ service ClientService {
     rpc UploadFile (Filename) returns (google.protobuf.Empty);
     rpc SearchFile (Query) returns (FileRecords);
     rpc FindSuccessorClient (Identifier) returns (Response);
+    rpc KeyToID (Key) returns (ID);
 }

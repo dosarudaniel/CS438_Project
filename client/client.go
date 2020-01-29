@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bufio"
 	"context"
 	"flag"
 	"fmt"
@@ -8,6 +9,9 @@ import (
 	clientService "github.com/dosarudaniel/CS438_Project/services/client_service"
 	"github.com/sirupsen/logrus"
 	"google.golang.org/grpc"
+	"os"
+	"strconv"
+	"strings"
 )
 
 var log = logrus.New()
@@ -19,6 +23,7 @@ func main() {
 	ID := flag.String("ID", "", "Download: File owner's ID / FindSuccessor: ID for which the IP is requested ")
 	nameToStore := flag.String("nameToStore", "", "Name used to store the downloaded file")
 	query := flag.String("query", "", "Search query (required for search command)")
+	isWithDownload := flag.Bool("withDownload", false, "Used with search command if you want to download one of the found results")
 	verbose := flag.Bool("v", false, "verbose mode")
 
 	flag.Parse()
@@ -115,12 +120,14 @@ func main() {
 		/*
 			How to use:
 			client/client -PeersterAddress 127.0.0.1:5000 -command search -query="hello"
+			client/client -PeersterAddress 127.0.0.1:5000 -command search -query="hello" -withDownload
+			client/client -PeersterAddress 127.0.0.1:5000 -command search -query="hello" -withDownload -file newfilename
 		*/
 		if *query == "" {
 			log.Fatal("-query is required but not given")
 		}
 
-		log.Info("Search query is being processed...")
+		fmt.Println("Search query is being processed...")
 
 		conn, err := grpc.Dial(*peersterAddress, grpc.WithBlock(), grpc.WithInsecure())
 		if err != nil {
@@ -128,13 +135,61 @@ func main() {
 		}
 		defer conn.Close()
 
-		log.Info("hi")
-
 		client := clientService.NewClientServiceClient(conn)
 
-		fmt.Println(client.SearchFile(context.Background(), &clientService.Query{
+		msgFileRecords, err := client.SearchFile(context.Background(), &clientService.Query{
 			Query: *query,
-		}))
+		})
+
+		if err != nil {
+			log.Error(err)
+			return
+		}
+
+		fileRecords := msgFileRecords.FileRecords
+
+		for i, fileRecord := range fileRecords {
+			if fileRecord != nil {
+				fmt.Printf("\t[%d] %s at %s\n", i, fileRecord.Filename, fileRecord.OwnerIp)
+			}
+		}
+
+		if !*isWithDownload {
+			return
+		}
+
+		reader := bufio.NewReader(os.Stdin)
+		fmt.Println("Enter index of a file you want to download, e.g., 0: ")
+		indexString, _ := reader.ReadString('\n')
+		index, err := strconv.Atoi(strings.TrimRight(indexString, "\n"))
+		if err != nil {
+			log.Error(err)
+			fmt.Println("Should've entered an integer. Crashing...")
+			os.Exit(1)
+		}
+
+		ownersID, err := client.KeyToID(context.Background(), &chordService.Key{
+			Keyword: fileRecords[index].OwnerIp,
+		})
+		if err != nil || ownersID == nil {
+			fmt.Println("Problem with getting ID from IP. Crashing...")
+			os.Exit(1)
+		}
+
+		if *file == "" {
+			*file = fileRecords[index].Filename
+		}
+
+		fileMetadata := &clientService.FileMetadata{
+			FilenameAtOwner: fileRecords[index].Filename,
+			OwnersID:        ownersID.Id,
+			NameToStore:     *file,
+		}
+
+		err = requestFile(client, fileMetadata)
+		if err != nil {
+			fmt.Printf("Fail to requestFile: %v", err)
+		}
 
 	default:
 		log.Fatal(fmt.Sprintf("No correct command given, try one of the following download/upload/findSuccessor"))

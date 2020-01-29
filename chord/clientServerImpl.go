@@ -60,7 +60,12 @@ func (chordNode *ChordNode) SearchFile(ctx context.Context, msgQueryPtr *Query) 
 
 	keywords := strings.Split(query, " ")
 
-	allFileRecordsPtrArray := make([]*FileRecord, 0)
+	type uniqueFileRecord struct {
+		Filename string
+		OwnerIP  string
+	}
+
+	unionOfFileRecords := make(map[uniqueFileRecord]*FileRecord)
 	for _, keyword := range keywords {
 		fileRecords, err := chordNode.FindInDHT(keyword)
 		if err != nil {
@@ -70,14 +75,18 @@ func (chordNode *ChordNode) SearchFile(ctx context.Context, msgQueryPtr *Query) 
 				"err":     err,
 			}).Warn("couldn't search for a keyword...")
 			continue
-		} else {
-			allFileRecordsPtrArray = append(allFileRecordsPtrArray, fileRecords...)
+		}
+
+		for _, fileRecord := range fileRecords {
+			if fileRecord == nil {
+				continue
+			}
+			unionOfFileRecords[uniqueFileRecord{fileRecord.Filename, fileRecord.OwnerIp}] = fileRecord
 		}
 	}
 
-	//clean from nil
 	allFileRecords := make([]*FileRecord, 0)
-	for _, fileRecord := range allFileRecordsPtrArray {
+	for _, fileRecord := range unionOfFileRecords {
 		if fileRecord != nil {
 			allFileRecords = append(allFileRecords, fileRecord)
 		}
@@ -110,4 +119,21 @@ func (chordNode *ChordNode) FindSuccessorClient(ctx context.Context, id *Identif
 		responseIp = node.Ip
 	}
 	return &Response{Text: "Success! IP found for id given:", Info: responseIp}, nil
+}
+
+func (chordNode *ChordNode) KeyToID(ctx context.Context, msgKeyPtr *Key) (*ID, error) {
+	if msgKeyPtr == nil {
+		return nil, nilError("message Key")
+	}
+
+	key := msgKeyPtr.Keyword
+
+	id, err := chordNode.hashString(key)
+	if err != nil {
+		return nil, err
+	}
+
+	return &ID{
+		Id: id,
+	}, nil
 }

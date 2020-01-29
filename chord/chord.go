@@ -40,7 +40,7 @@ type IChordNode interface {
 	CheckPredecessorDaemon()
 }
 
-// Chord node can be created using `NewChordNode`
+// ChordNode can be created using `NewChordNode`
 // However, it must be followed
 // either by creating own Chord network using `create`
 // or by joining an existing network using `join`
