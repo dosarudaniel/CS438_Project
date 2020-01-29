@@ -12,6 +12,7 @@ import (
 	"os"
 	"strconv"
 	"strings"
+	"time"
 )
 
 var log = logrus.New()
@@ -29,7 +30,7 @@ func main() {
 	flag.Parse()
 
 	if *verbose {
-		log.SetLevel(logrus.TraceLevel)
+		log.SetLevel(logrus.DebugLevel)
 	}
 
 	// Safety checks
@@ -45,11 +46,11 @@ func main() {
 		}
 
 		if *nameToStore == "" { // optional field
-			log.Info("Download: No nameToStore given. Using " + *file + " name to store it.")
+			log.Debug("Download: No nameToStore given. Using " + *file + " name to store it.")
 			*nameToStore = *file
 		}
 
-		log.Info("Sending a download request to " + *peersterAddress)
+		log.Debug("Sending a download request to " + *peersterAddress)
 
 		fileMetadata := &clientService.FileMetadata{FilenameAtOwner: *file, OwnersID: *ID, NameToStore: *nameToStore}
 
@@ -71,7 +72,7 @@ func main() {
 			How to use:
 			client/client -PeersterAddress 127.0.0.1:5000 -command upload -file="hello world"
 		*/
-		log.Info("Sending an upload request to " + *peersterAddress)
+		log.Debug("Sending an upload request to " + *peersterAddress)
 
 		if *file == "" { // required field
 			log.Fatal("Upload: No file name given. Specify which file do you upload.")
@@ -96,7 +97,8 @@ func main() {
 		}
 
 	case "findSuccessor":
-		log.Info("Sending a findSuccessor request to " + *peersterAddress)
+
+		log.Debug("Sending a findSuccessor request to " + *peersterAddress)
 
 		if *ID == "" { // required
 			log.Fatal("FindSuccessor: No ID given. Specify an ID to find the corresponding IP.")
@@ -110,10 +112,15 @@ func main() {
 
 		client := clientService.NewClientServiceClient(conn)
 		id := &chordService.ID{Id: *ID}
+
+		start := time.Now()
 		response, err := findSuccessorClient(client, id)
 		if err != nil {
 			log.WithField("err", err).Fatal("Fail to findSuccessorClient")
 		}
+		elapsed := time.Since(start)
+
+		fmt.Println("Time spent with request:" + *ID + "," + string(elapsed.Microseconds()))
 		fmt.Println(response.Text + response.Info) // Print the IP
 
 	case "search":
@@ -194,5 +201,4 @@ func main() {
 	default:
 		log.Fatal(fmt.Sprintf("No correct command given, try one of the following download/upload/findSuccessor"))
 	}
-
 }

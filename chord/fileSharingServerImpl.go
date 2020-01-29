@@ -46,7 +46,6 @@ func (chordNode *ChordNode) TransferFile(fileInfo *FileInfo, stream FileShareSer
 			if err != io.EOF {
 				fmt.Println(err)
 			}
-			fmt.Println(">>>>>>>>>> End of the file ")
 			break // end of the file
 		}
 

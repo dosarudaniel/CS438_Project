@@ -1,0 +1,381 @@
+
+time="2020-01-29T18:03:17+01:00" level=info msg="Sending a findSuccessor request to 127.0.0.1:5000"
+time="2020-01-29T18:03:17+01:00" level=info msg="Finding a successor..." ID=0000
+time="2020-01-29T18:03:17+01:00" level=info msg="Success! IP found for id given:127.0.0.1:10014"
+time="2020-01-29T18:03:17+01:00" level=info msg="Time spent with request: 0000 885"
+Success! IP found for id given:127.0.0.1:10014
+time="2020-01-29T18:03:17+01:00" level=info msg="Sending a findSuccessor request to 127.0.0.1:5000"
+time="2020-01-29T18:03:17+01:00" level=info msg="Finding a successor..." ID=4000
+time="2020-01-29T18:03:17+01:00" level=info msg="Success! IP found for id given:127.0.0.1:10007"
+time="2020-01-29T18:03:17+01:00" level=info msg="Time spent with request: 4000 1058"
+Success! IP found for id given:127.0.0.1:10007
+time="2020-01-29T18:03:17+01:00" level=info msg="Sending a findSuccessor request to 127.0.0.1:5000"
+time="2020-01-29T18:03:17+01:00" level=info msg="Finding a successor..." ID=8000
+time="2020-01-29T18:03:17+01:00" level=info msg="Success! IP found for id given:127.0.0.1:10003"
+time="2020-01-29T18:03:17+01:00" level=info msg="Time spent with request: 8000 1092"
+Success! IP found for id given:127.0.0.1:10003
+time="2020-01-29T18:03:17+01:00" level=info msg="Sending a findSuccessor request to 127.0.0.1:5000"
+time="2020-01-29T18:03:17+01:00" level=info msg="Finding a successor..." ID=c000
+time="2020-01-29T18:03:17+01:00" level=info msg="Success! IP found for id given:127.0.0.1:5000"
+time="2020-01-29T18:03:17+01:00" level=info msg="Time spent with request: c000 1058"
+Success! IP found for id given:127.0.0.1:5000
+time="2020-01-29T18:03:17+01:00" level=info msg="Sending a findSuccessor request to 127.0.0.1:5000"
+time="2020-01-29T18:03:17+01:00" level=info msg="Finding a successor..." ID=0000
+time="2020-01-29T18:03:17+01:00" level=info msg="Success! IP found for id given:127.0.0.1:10014"
+time="2020-01-29T18:03:17+01:00" level=info msg="Time spent with request: 0000 718"
+Success! IP found for id given:127.0.0.1:10014
+time="2020-01-29T18:03:17+01:00" level=info msg="Sending a findSuccessor request to 127.0.0.1:5000"
+time="2020-01-29T18:03:17+01:00" level=info msg="Finding a successor..." ID=4000
+time="2020-01-29T18:03:17+01:00" level=info msg="Success! IP found for id given:127.0.0.1:10007"
+time="2020-01-29T18:03:17+01:00" level=info msg="Time spent with request: 4000 1051"
+Success! IP found for id given:127.0.0.1:10007
+time="2020-01-29T18:03:17+01:00" level=info msg="Sending a findSuccessor request to 127.0.0.1:5000"
+time="2020-01-29T18:03:17+01:00" level=info msg="Finding a successor..." ID=8000
+time="2020-01-29T18:03:17+01:00" level=info msg="Success! IP found for id given:127.0.0.1:10003"
+time="2020-01-29T18:03:17+01:00" level=info msg="Time spent with request: 8000 1054"
+Success! IP found for id given:127.0.0.1:10003
+time="2020-01-29T18:03:17+01:00" level=info msg="Sending a findSuccessor request to 127.0.0.1:5000"
+time="2020-01-29T18:03:17+01:00" level=info msg="Finding a successor..." ID=c000
+time="2020-01-29T18:03:17+01:00" level=info msg="Success! IP found for id given:127.0.0.1:5000"
+time="2020-01-29T18:03:17+01:00" level=info msg="Time spent with request: c000 1011"
+Success! IP found for id given:127.0.0.1:5000
+time="2020-01-29T18:03:17+01:00" level=info msg="Sending a findSuccessor request to 127.0.0.1:5000"
+time="2020-01-29T18:03:17+01:00" level=info msg="Finding a successor..." ID=0000
+time="2020-01-29T18:03:17+01:00" level=info msg="Success! IP found for id given:127.0.0.1:10014"
+time="2020-01-29T18:03:17+01:00" level=info msg="Time spent with request: 0000 878"
+Success! IP found for id given:127.0.0.1:10014
+time="2020-01-29T18:03:17+01:00" level=info msg="Sending a findSuccessor request to 127.0.0.1:5000"
+time="2020-01-29T18:03:17+01:00" level=info msg="Finding a successor..." ID=4000
+time="2020-01-29T18:03:17+01:00" level=info msg="Success! IP found for id given:127.0.0.1:10007"
+time="2020-01-29T18:03:17+01:00" level=info msg="Time spent with request: 4000 1097"
+Success! IP found for id given:127.0.0.1:10007
+time="2020-01-29T18:03:17+01:00" level=info msg="Sending a findSuccessor request to 127.0.0.1:5000"
+time="2020-01-29T18:03:17+01:00" level=info msg="Finding a successor..." ID=8000
+time="2020-01-29T18:03:17+01:00" level=info msg="Success! IP found for id given:127.0.0.1:10003"
+time="2020-01-29T18:03:17+01:00" level=info msg="Time spent with request: 8000 1328"
+Success! IP found for id given:127.0.0.1:10003
+time="2020-01-29T18:03:17+01:00" level=info msg="Sending a findSuccessor request to 127.0.0.1:5000"
+time="2020-01-29T18:03:17+01:00" level=info msg="Finding a successor..." ID=c000
+time="2020-01-29T18:03:17+01:00" level=info msg="Success! IP found for id given:127.0.0.1:5000"
+time="2020-01-29T18:03:17+01:00" level=info msg="Time spent with request: c000 1280"
+Success! IP found for id given:127.0.0.1:5000
+time="2020-01-29T18:03:17+01:00" level=info msg="Sending a findSuccessor request to 127.0.0.1:5000"
+time="2020-01-29T18:03:17+01:00" level=info msg="Finding a successor..." ID=0000
+time="2020-01-29T18:03:17+01:00" level=info msg="Success! IP found for id given:127.0.0.1:10014"
+time="2020-01-29T18:03:17+01:00" level=info msg="Time spent with request: 0000 784"
+Success! IP found for id given:127.0.0.1:10014
+time="2020-01-29T18:03:17+01:00" level=info msg="Sending a findSuccessor request to 127.0.0.1:5000"
+time="2020-01-29T18:03:17+01:00" level=info msg="Finding a successor..." ID=4000
+time="2020-01-29T18:03:17+01:00" level=info msg="Success! IP found for id given:127.0.0.1:10007"
+time="2020-01-29T18:03:17+01:00" level=info msg="Time spent with request: 4000 1118"
+Success! IP found for id given:127.0.0.1:10007
+time="2020-01-29T18:03:17+01:00" level=info msg="Sending a findSuccessor request to 127.0.0.1:5000"
+time="2020-01-29T18:03:17+01:00" level=info msg="Finding a successor..." ID=8000
+time="2020-01-29T18:03:17+01:00" level=info msg="Success! IP found for id given:127.0.0.1:10003"
+time="2020-01-29T18:03:17+01:00" level=info msg="Time spent with request: 8000 1283"
+Success! IP found for id given:127.0.0.1:10003
+time="2020-01-29T18:03:17+01:00" level=info msg="Sending a findSuccessor request to 127.0.0.1:5000"
+time="2020-01-29T18:03:17+01:00" level=info msg="Finding a successor..." ID=c000
+time="2020-01-29T18:03:17+01:00" level=info msg="Success! IP found for id given:127.0.0.1:5000"
+time="2020-01-29T18:03:17+01:00" level=info msg="Time spent with request: c000 1196"
+Success! IP found for id given:127.0.0.1:5000
+time="2020-01-29T18:03:17+01:00" level=info msg="Sending a findSuccessor request to 127.0.0.1:5000"
+time="2020-01-29T18:03:17+01:00" level=info msg="Finding a successor..." ID=0000
+time="2020-01-29T18:03:17+01:00" level=info msg="Success! IP found for id given:127.0.0.1:10014"
+time="2020-01-29T18:03:17+01:00" level=info msg="Time spent with request: 0000 886"
+Success! IP found for id given:127.0.0.1:10014
+time="2020-01-29T18:03:17+01:00" level=info msg="Sending a findSuccessor request to 127.0.0.1:5000"
+time="2020-01-29T18:03:17+01:00" level=info msg="Finding a successor..." ID=4000
+time="2020-01-29T18:03:17+01:00" level=info msg="Success! IP found for id given:127.0.0.1:10007"
+time="2020-01-29T18:03:17+01:00" level=info msg="Time spent with request: 4000 1041"
+Success! IP found for id given:127.0.0.1:10007
+time="2020-01-29T18:03:17+01:00" level=info msg="Sending a findSuccessor request to 127.0.0.1:5000"
+time="2020-01-29T18:03:17+01:00" level=info msg="Finding a successor..." ID=8000
+time="2020-01-29T18:03:17+01:00" level=info msg="Success! IP found for id given:127.0.0.1:10003"
+time="2020-01-29T18:03:17+01:00" level=info msg="Time spent with request: 8000 1081"
+Success! IP found for id given:127.0.0.1:10003
+time="2020-01-29T18:03:17+01:00" level=info msg="Sending a findSuccessor request to 127.0.0.1:5000"
+time="2020-01-29T18:03:17+01:00" level=info msg="Finding a successor..." ID=c000
+time="2020-01-29T18:03:17+01:00" level=info msg="Success! IP found for id given:127.0.0.1:5000"
+time="2020-01-29T18:03:17+01:00" level=info msg="Time spent with request: c000 1223"
+Success! IP found for id given:127.0.0.1:5000
+time="2020-01-29T18:03:17+01:00" level=info msg="Sending a findSuccessor request to 127.0.0.1:5000"
+time="2020-01-29T18:03:17+01:00" level=info msg="Finding a successor..." ID=0000
+time="2020-01-29T18:03:17+01:00" level=info msg="Success! IP found for id given:127.0.0.1:10014"
+time="2020-01-29T18:03:17+01:00" level=info msg="Time spent with request: 0000 734"
+Success! IP found for id given:127.0.0.1:10014
+time="2020-01-29T18:03:17+01:00" level=info msg="Sending a findSuccessor request to 127.0.0.1:5000"
+time="2020-01-29T18:03:17+01:00" level=info msg="Finding a successor..." ID=4000
+time="2020-01-29T18:03:17+01:00" level=info msg="Success! IP found for id given:127.0.0.1:10007"
+time="2020-01-29T18:03:17+01:00" level=info msg="Time spent with request: 4000 1235"
+Success! IP found for id given:127.0.0.1:10007
+time="2020-01-29T18:03:17+01:00" level=info msg="Sending a findSuccessor request to 127.0.0.1:5000"
+time="2020-01-29T18:03:17+01:00" level=info msg="Finding a successor..." ID=8000
+time="2020-01-29T18:03:17+01:00" level=info msg="Success! IP found for id given:127.0.0.1:10003"
+time="2020-01-29T18:03:17+01:00" level=info msg="Time spent with request: 8000 1346"
+Success! IP found for id given:127.0.0.1:10003
+time="2020-01-29T18:03:17+01:00" level=info msg="Sending a findSuccessor request to 127.0.0.1:5000"
+time="2020-01-29T18:03:17+01:00" level=info msg="Finding a successor..." ID=c000
+time="2020-01-29T18:03:17+01:00" level=info msg="Success! IP found for id given:127.0.0.1:5000"
+time="2020-01-29T18:03:17+01:00" level=info msg="Time spent with request: c000 1085"
+Success! IP found for id given:127.0.0.1:5000
+time="2020-01-29T18:03:17+01:00" level=info msg="Sending a findSuccessor request to 127.0.0.1:5000"
+time="2020-01-29T18:03:17+01:00" level=info msg="Finding a successor..." ID=0000
+time="2020-01-29T18:03:17+01:00" level=info msg="Success! IP found for id given:127.0.0.1:10014"
+time="2020-01-29T18:03:17+01:00" level=info msg="Time spent with request: 0000 798"
+Success! IP found for id given:127.0.0.1:10014
+time="2020-01-29T18:03:17+01:00" level=info msg="Sending a findSuccessor request to 127.0.0.1:5000"
+time="2020-01-29T18:03:17+01:00" level=info msg="Finding a successor..." ID=4000
+time="2020-01-29T18:03:17+01:00" level=info msg="Success! IP found for id given:127.0.0.1:10007"
+time="2020-01-29T18:03:17+01:00" level=info msg="Time spent with request: 4000 1479"
+Success! IP found for id given:127.0.0.1:10007
+time="2020-01-29T18:03:17+01:00" level=info msg="Sending a findSuccessor request to 127.0.0.1:5000"
+time="2020-01-29T18:03:17+01:00" level=info msg="Finding a successor..." ID=8000
+time="2020-01-29T18:03:17+01:00" level=info msg="Success! IP found for id given:127.0.0.1:10003"
+time="2020-01-29T18:03:17+01:00" level=info msg="Time spent with request: 8000 1101"
+Success! IP found for id given:127.0.0.1:10003
+time="2020-01-29T18:03:17+01:00" level=info msg="Sending a findSuccessor request to 127.0.0.1:5000"
+time="2020-01-29T18:03:17+01:00" level=info msg="Finding a successor..." ID=c000
+time="2020-01-29T18:03:17+01:00" level=info msg="Success! IP found for id given:127.0.0.1:5000"
+time="2020-01-29T18:03:17+01:00" level=info msg="Time spent with request: c000 1163"
+Success! IP found for id given:127.0.0.1:5000
+time="2020-01-29T18:03:17+01:00" level=info msg="Sending a findSuccessor request to 127.0.0.1:5000"
+time="2020-01-29T18:03:17+01:00" level=info msg="Finding a successor..." ID=0000
+time="2020-01-29T18:03:17+01:00" level=info msg="Success! IP found for id given:127.0.0.1:10014"
+time="2020-01-29T18:03:17+01:00" level=info msg="Time spent with request: 0000 727"
+Success! IP found for id given:127.0.0.1:10014
+time="2020-01-29T18:03:17+01:00" level=info msg="Sending a findSuccessor request to 127.0.0.1:5000"
+time="2020-01-29T18:03:17+01:00" level=info msg="Finding a successor..." ID=4000
+time="2020-01-29T18:03:17+01:00" level=info msg="Success! IP found for id given:127.0.0.1:10007"
+time="2020-01-29T18:03:17+01:00" level=info msg="Time spent with request: 4000 1352"
+Success! IP found for id given:127.0.0.1:10007
+time="2020-01-29T18:03:17+01:00" level=info msg="Sending a findSuccessor request to 127.0.0.1:5000"
+time="2020-01-29T18:03:17+01:00" level=info msg="Finding a successor..." ID=8000
+time="2020-01-29T18:03:17+01:00" level=info msg="Success! IP found for id given:127.0.0.1:10003"
+time="2020-01-29T18:03:17+01:00" level=info msg="Time spent with request: 8000 1080"
+Success! IP found for id given:127.0.0.1:10003
+time="2020-01-29T18:03:17+01:00" level=info msg="Sending a findSuccessor request to 127.0.0.1:5000"
+time="2020-01-29T18:03:17+01:00" level=info msg="Finding a successor..." ID=c000
+time="2020-01-29T18:03:17+01:00" level=info msg="Success! IP found for id given:127.0.0.1:5000"
+time="2020-01-29T18:03:17+01:00" level=info msg="Time spent with request: c000 1927"
+Success! IP found for id given:127.0.0.1:5000
+time="2020-01-29T18:03:17+01:00" level=info msg="Sending a findSuccessor request to 127.0.0.1:5000"
+time="2020-01-29T18:03:17+01:00" level=info msg="Finding a successor..." ID=0000
+time="2020-01-29T18:03:17+01:00" level=info msg="Success! IP found for id given:127.0.0.1:10014"
+time="2020-01-29T18:03:17+01:00" level=info msg="Time spent with request: 0000 863"
+Success! IP found for id given:127.0.0.1:10014
+time="2020-01-29T18:03:17+01:00" level=info msg="Sending a findSuccessor request to 127.0.0.1:5000"
+time="2020-01-29T18:03:17+01:00" level=info msg="Finding a successor..." ID=4000
+time="2020-01-29T18:03:17+01:00" level=info msg="Success! IP found for id given:127.0.0.1:10007"
+time="2020-01-29T18:03:17+01:00" level=info msg="Time spent with request: 4000 1200"
+Success! IP found for id given:127.0.0.1:10007
+time="2020-01-29T18:03:17+01:00" level=info msg="Sending a findSuccessor request to 127.0.0.1:5000"
+time="2020-01-29T18:03:17+01:00" level=info msg="Finding a successor..." ID=8000
+time="2020-01-29T18:03:17+01:00" level=info msg="Success! IP found for id given:127.0.0.1:10003"
+time="2020-01-29T18:03:17+01:00" level=info msg="Time spent with request: 8000 1128"
+Success! IP found for id given:127.0.0.1:10003
+time="2020-01-29T18:03:17+01:00" level=info msg="Sending a findSuccessor request to 127.0.0.1:5000"
+time="2020-01-29T18:03:17+01:00" level=info msg="Finding a successor..." ID=c000
+time="2020-01-29T18:03:17+01:00" level=info msg="Success! IP found for id given:127.0.0.1:5000"
+time="2020-01-29T18:03:17+01:00" level=info msg="Time spent with request: c000 1116"
+Success! IP found for id given:127.0.0.1:5000
+time="2020-01-29T18:03:17+01:00" level=info msg="Sending a findSuccessor request to 127.0.0.1:5000"
+time="2020-01-29T18:03:17+01:00" level=info msg="Finding a successor..." ID=0000
+time="2020-01-29T18:03:17+01:00" level=info msg="Success! IP found for id given:127.0.0.1:10014"
+time="2020-01-29T18:03:17+01:00" level=info msg="Time spent with request: 0000 825"
+Success! IP found for id given:127.0.0.1:10014
+time="2020-01-29T18:03:17+01:00" level=info msg="Sending a findSuccessor request to 127.0.0.1:5000"
+time="2020-01-29T18:03:17+01:00" level=info msg="Finding a successor..." ID=4000
+time="2020-01-29T18:03:17+01:00" level=info msg="Success! IP found for id given:127.0.0.1:10007"
+time="2020-01-29T18:03:17+01:00" level=info msg="Time spent with request: 4000 1348"
+Success! IP found for id given:127.0.0.1:10007
+time="2020-01-29T18:03:17+01:00" level=info msg="Sending a findSuccessor request to 127.0.0.1:5000"
+time="2020-01-29T18:03:17+01:00" level=info msg="Finding a successor..." ID=8000
+time="2020-01-29T18:03:17+01:00" level=info msg="Success! IP found for id given:127.0.0.1:10003"
+time="2020-01-29T18:03:17+01:00" level=info msg="Time spent with request: 8000 1234"
+Success! IP found for id given:127.0.0.1:10003
+time="2020-01-29T18:03:17+01:00" level=info msg="Sending a findSuccessor request to 127.0.0.1:5000"
+time="2020-01-29T18:03:17+01:00" level=info msg="Finding a successor..." ID=c000
+time="2020-01-29T18:03:17+01:00" level=info msg="Success! IP found for id given:127.0.0.1:5000"
+time="2020-01-29T18:03:17+01:00" level=info msg="Time spent with request: c000 1234"
+Success! IP found for id given:127.0.0.1:5000
+time="2020-01-29T18:03:17+01:00" level=info msg="Sending a findSuccessor request to 127.0.0.1:5000"
+time="2020-01-29T18:03:17+01:00" level=info msg="Finding a successor..." ID=0000
+time="2020-01-29T18:03:17+01:00" level=info msg="Success! IP found for id given:127.0.0.1:10014"
+time="2020-01-29T18:03:17+01:00" level=info msg="Time spent with request: 0000 862"
+Success! IP found for id given:127.0.0.1:10014
+time="2020-01-29T18:03:17+01:00" level=info msg="Sending a findSuccessor request to 127.0.0.1:5000"
+time="2020-01-29T18:03:17+01:00" level=info msg="Finding a successor..." ID=4000
+time="2020-01-29T18:03:17+01:00" level=info msg="Success! IP found for id given:127.0.0.1:10007"
+time="2020-01-29T18:03:17+01:00" level=info msg="Time spent with request: 4000 1065"
+Success! IP found for id given:127.0.0.1:10007
+time="2020-01-29T18:03:17+01:00" level=info msg="Sending a findSuccessor request to 127.0.0.1:5000"
+time="2020-01-29T18:03:17+01:00" level=info msg="Finding a successor..." ID=8000
+time="2020-01-29T18:03:17+01:00" level=info msg="Success! IP found for id given:127.0.0.1:10003"
+time="2020-01-29T18:03:17+01:00" level=info msg="Time spent with request: 8000 1249"
+Success! IP found for id given:127.0.0.1:10003
+time="2020-01-29T18:03:17+01:00" level=info msg="Sending a findSuccessor request to 127.0.0.1:5000"
+time="2020-01-29T18:03:17+01:00" level=info msg="Finding a successor..." ID=c000
+time="2020-01-29T18:03:17+01:00" level=info msg="Success! IP found for id given:127.0.0.1:5000"
+time="2020-01-29T18:03:17+01:00" level=info msg="Time spent with request: c000 1132"
+Success! IP found for id given:127.0.0.1:5000
+time="2020-01-29T18:03:17+01:00" level=info msg="Sending a findSuccessor request to 127.0.0.1:5000"
+time="2020-01-29T18:03:17+01:00" level=info msg="Finding a successor..." ID=0000
+time="2020-01-29T18:03:17+01:00" level=info msg="Success! IP found for id given:127.0.0.1:10014"
+time="2020-01-29T18:03:17+01:00" level=info msg="Time spent with request: 0000 758"
+Success! IP found for id given:127.0.0.1:10014
+time="2020-01-29T18:03:17+01:00" level=info msg="Sending a findSuccessor request to 127.0.0.1:5000"
+time="2020-01-29T18:03:17+01:00" level=info msg="Finding a successor..." ID=4000
+time="2020-01-29T18:03:17+01:00" level=info msg="Success! IP found for id given:127.0.0.1:10007"
+time="2020-01-29T18:03:17+01:00" level=info msg="Time spent with request: 4000 1042"
+Success! IP found for id given:127.0.0.1:10007
+time="2020-01-29T18:03:17+01:00" level=info msg="Sending a findSuccessor request to 127.0.0.1:5000"
+time="2020-01-29T18:03:17+01:00" level=info msg="Finding a successor..." ID=8000
+time="2020-01-29T18:03:17+01:00" level=info msg="Success! IP found for id given:127.0.0.1:10003"
+time="2020-01-29T18:03:17+01:00" level=info msg="Time spent with request: 8000 1080"
+Success! IP found for id given:127.0.0.1:10003
+time="2020-01-29T18:03:17+01:00" level=info msg="Sending a findSuccessor request to 127.0.0.1:5000"
+time="2020-01-29T18:03:17+01:00" level=info msg="Finding a successor..." ID=c000
+time="2020-01-29T18:03:17+01:00" level=info msg="Success! IP found for id given:127.0.0.1:5000"
+time="2020-01-29T18:03:17+01:00" level=info msg="Time spent with request: c000 1066"
+Success! IP found for id given:127.0.0.1:5000
+time="2020-01-29T18:03:17+01:00" level=info msg="Sending a findSuccessor request to 127.0.0.1:5000"
+time="2020-01-29T18:03:17+01:00" level=info msg="Finding a successor..." ID=0000
+time="2020-01-29T18:03:17+01:00" level=info msg="Success! IP found for id given:127.0.0.1:10014"
+time="2020-01-29T18:03:17+01:00" level=info msg="Time spent with request: 0000 872"
+Success! IP found for id given:127.0.0.1:10014
+time="2020-01-29T18:03:17+01:00" level=info msg="Sending a findSuccessor request to 127.0.0.1:5000"
+time="2020-01-29T18:03:17+01:00" level=info msg="Finding a successor..." ID=4000
+time="2020-01-29T18:03:17+01:00" level=info msg="Success! IP found for id given:127.0.0.1:10007"
+time="2020-01-29T18:03:17+01:00" level=info msg="Time spent with request: 4000 1275"
+Success! IP found for id given:127.0.0.1:10007
+time="2020-01-29T18:03:17+01:00" level=info msg="Sending a findSuccessor request to 127.0.0.1:5000"
+time="2020-01-29T18:03:17+01:00" level=info msg="Finding a successor..." ID=8000
+time="2020-01-29T18:03:17+01:00" level=info msg="Success! IP found for id given:127.0.0.1:10003"
+time="2020-01-29T18:03:17+01:00" level=info msg="Time spent with request: 8000 1104"
+Success! IP found for id given:127.0.0.1:10003
+time="2020-01-29T18:03:17+01:00" level=info msg="Sending a findSuccessor request to 127.0.0.1:5000"
+time="2020-01-29T18:03:17+01:00" level=info msg="Finding a successor..." ID=c000
+time="2020-01-29T18:03:17+01:00" level=info msg="Success! IP found for id given:127.0.0.1:5000"
+time="2020-01-29T18:03:17+01:00" level=info msg="Time spent with request: c000 1248"
+Success! IP found for id given:127.0.0.1:5000
+time="2020-01-29T18:03:17+01:00" level=info msg="Sending a findSuccessor request to 127.0.0.1:5000"
+time="2020-01-29T18:03:17+01:00" level=info msg="Finding a successor..." ID=0000
+time="2020-01-29T18:03:17+01:00" level=info msg="Success! IP found for id given:127.0.0.1:10014"
+time="2020-01-29T18:03:17+01:00" level=info msg="Time spent with request: 0000 753"
+Success! IP found for id given:127.0.0.1:10014
+time="2020-01-29T18:03:17+01:00" level=info msg="Sending a findSuccessor request to 127.0.0.1:5000"
+time="2020-01-29T18:03:17+01:00" level=info msg="Finding a successor..." ID=4000
+time="2020-01-29T18:03:17+01:00" level=info msg="Success! IP found for id given:127.0.0.1:10007"
+time="2020-01-29T18:03:17+01:00" level=info msg="Time spent with request: 4000 1022"
+Success! IP found for id given:127.0.0.1:10007
+time="2020-01-29T18:03:17+01:00" level=info msg="Sending a findSuccessor request to 127.0.0.1:5000"
+time="2020-01-29T18:03:17+01:00" level=info msg="Finding a successor..." ID=8000
+time="2020-01-29T18:03:17+01:00" level=info msg="Success! IP found for id given:127.0.0.1:10003"
+time="2020-01-29T18:03:17+01:00" level=info msg="Time spent with request: 8000 1142"
+Success! IP found for id given:127.0.0.1:10003
+time="2020-01-29T18:03:17+01:00" level=info msg="Sending a findSuccessor request to 127.0.0.1:5000"
+time="2020-01-29T18:03:17+01:00" level=info msg="Finding a successor..." ID=c000
+time="2020-01-29T18:03:17+01:00" level=info msg="Success! IP found for id given:127.0.0.1:5000"
+time="2020-01-29T18:03:17+01:00" level=info msg="Time spent with request: c000 1073"
+Success! IP found for id given:127.0.0.1:5000
+time="2020-01-29T18:03:17+01:00" level=info msg="Sending a findSuccessor request to 127.0.0.1:5000"
+time="2020-01-29T18:03:17+01:00" level=info msg="Finding a successor..." ID=0000
+time="2020-01-29T18:03:17+01:00" level=info msg="Success! IP found for id given:127.0.0.1:10014"
+time="2020-01-29T18:03:17+01:00" level=info msg="Time spent with request: 0000 728"
+Success! IP found for id given:127.0.0.1:10014
+time="2020-01-29T18:03:17+01:00" level=info msg="Sending a findSuccessor request to 127.0.0.1:5000"
+time="2020-01-29T18:03:17+01:00" level=info msg="Finding a successor..." ID=4000
+time="2020-01-29T18:03:17+01:00" level=info msg="Success! IP found for id given:127.0.0.1:10007"
+time="2020-01-29T18:03:17+01:00" level=info msg="Time spent with request: 4000 1069"
+Success! IP found for id given:127.0.0.1:10007
+time="2020-01-29T18:03:17+01:00" level=info msg="Sending a findSuccessor request to 127.0.0.1:5000"
+time="2020-01-29T18:03:17+01:00" level=info msg="Finding a successor..." ID=8000
+time="2020-01-29T18:03:17+01:00" level=info msg="Success! IP found for id given:127.0.0.1:10003"
+time="2020-01-29T18:03:17+01:00" level=info msg="Time spent with request: 8000 950"
+Success! IP found for id given:127.0.0.1:10003
+time="2020-01-29T18:03:17+01:00" level=info msg="Sending a findSuccessor request to 127.0.0.1:5000"
+time="2020-01-29T18:03:17+01:00" level=info msg="Finding a successor..." ID=c000
+time="2020-01-29T18:03:17+01:00" level=info msg="Success! IP found for id given:127.0.0.1:5000"
+time="2020-01-29T18:03:17+01:00" level=info msg="Time spent with request: c000 1001"
+Success! IP found for id given:127.0.0.1:5000
+time="2020-01-29T18:03:17+01:00" level=info msg="Sending a findSuccessor request to 127.0.0.1:5000"
+time="2020-01-29T18:03:17+01:00" level=info msg="Finding a successor..." ID=0000
+time="2020-01-29T18:03:17+01:00" level=info msg="Success! IP found for id given:127.0.0.1:10014"
+time="2020-01-29T18:03:17+01:00" level=info msg="Time spent with request: 0000 718"
+Success! IP found for id given:127.0.0.1:10014
+time="2020-01-29T18:03:17+01:00" level=info msg="Sending a findSuccessor request to 127.0.0.1:5000"
+time="2020-01-29T18:03:17+01:00" level=info msg="Finding a successor..." ID=4000
+time="2020-01-29T18:03:17+01:00" level=info msg="Success! IP found for id given:127.0.0.1:10007"
+time="2020-01-29T18:03:17+01:00" level=info msg="Time spent with request: 4000 1062"
+Success! IP found for id given:127.0.0.1:10007
+time="2020-01-29T18:03:17+01:00" level=info msg="Sending a findSuccessor request to 127.0.0.1:5000"
+time="2020-01-29T18:03:17+01:00" level=info msg="Finding a successor..." ID=8000
+time="2020-01-29T18:03:17+01:00" level=info msg="Success! IP found for id given:127.0.0.1:10003"
+time="2020-01-29T18:03:17+01:00" level=info msg="Time spent with request: 8000 1015"
+Success! IP found for id given:127.0.0.1:10003
+time="2020-01-29T18:03:17+01:00" level=info msg="Sending a findSuccessor request to 127.0.0.1:5000"
+time="2020-01-29T18:03:17+01:00" level=info msg="Finding a successor..." ID=c000
+time="2020-01-29T18:03:17+01:00" level=info msg="Success! IP found for id given:127.0.0.1:5000"
+time="2020-01-29T18:03:17+01:00" level=info msg="Time spent with request: c000 1018"
+Success! IP found for id given:127.0.0.1:5000
+time="2020-01-29T18:03:17+01:00" level=info msg="Sending a findSuccessor request to 127.0.0.1:5000"
+time="2020-01-29T18:03:17+01:00" level=info msg="Finding a successor..." ID=0000
+time="2020-01-29T18:03:17+01:00" level=info msg="Success! IP found for id given:127.0.0.1:10014"
+time="2020-01-29T18:03:17+01:00" level=info msg="Time spent with request: 0000 755"
+Success! IP found for id given:127.0.0.1:10014
+time="2020-01-29T18:03:17+01:00" level=info msg="Sending a findSuccessor request to 127.0.0.1:5000"
+time="2020-01-29T18:03:17+01:00" level=info msg="Finding a successor..." ID=4000
+time="2020-01-29T18:03:17+01:00" level=info msg="Success! IP found for id given:127.0.0.1:10007"
+time="2020-01-29T18:03:17+01:00" level=info msg="Time spent with request: 4000 1226"
+Success! IP found for id given:127.0.0.1:10007
+time="2020-01-29T18:03:17+01:00" level=info msg="Sending a findSuccessor request to 127.0.0.1:5000"
+time="2020-01-29T18:03:17+01:00" level=info msg="Finding a successor..." ID=8000
+time="2020-01-29T18:03:17+01:00" level=info msg="Success! IP found for id given:127.0.0.1:10003"
+time="2020-01-29T18:03:17+01:00" level=info msg="Time spent with request: 8000 1040"
+Success! IP found for id given:127.0.0.1:10003
+time="2020-01-29T18:03:17+01:00" level=info msg="Sending a findSuccessor request to 127.0.0.1:5000"
+time="2020-01-29T18:03:17+01:00" level=info msg="Finding a successor..." ID=c000
+time="2020-01-29T18:03:17+01:00" level=info msg="Success! IP found for id given:127.0.0.1:5000"
+time="2020-01-29T18:03:17+01:00" level=info msg="Time spent with request: c000 1232"
+Success! IP found for id given:127.0.0.1:5000
+time="2020-01-29T18:03:17+01:00" level=info msg="Sending a findSuccessor request to 127.0.0.1:5000"
+time="2020-01-29T18:03:17+01:00" level=info msg="Finding a successor..." ID=0000
+time="2020-01-29T18:03:17+01:00" level=info msg="Success! IP found for id given:127.0.0.1:10014"
+time="2020-01-29T18:03:17+01:00" level=info msg="Time spent with request: 0000 815"
+Success! IP found for id given:127.0.0.1:10014
+time="2020-01-29T18:03:17+01:00" level=info msg="Sending a findSuccessor request to 127.0.0.1:5000"
+time="2020-01-29T18:03:17+01:00" level=info msg="Finding a successor..." ID=4000
+time="2020-01-29T18:03:17+01:00" level=info msg="Success! IP found for id given:127.0.0.1:10007"
+time="2020-01-29T18:03:17+01:00" level=info msg="Time spent with request: 4000 1243"
+Success! IP found for id given:127.0.0.1:10007
+time="2020-01-29T18:03:17+01:00" level=info msg="Sending a findSuccessor request to 127.0.0.1:5000"
+time="2020-01-29T18:03:17+01:00" level=info msg="Finding a successor..." ID=8000
+time="2020-01-29T18:03:17+01:00" level=info msg="Success! IP found for id given:127.0.0.1:10003"
+time="2020-01-29T18:03:17+01:00" level=info msg="Time spent with request: 8000 1037"
+Success! IP found for id given:127.0.0.1:10003
+time="2020-01-29T18:03:17+01:00" level=info msg="Sending a findSuccessor request to 127.0.0.1:5000"
+time="2020-01-29T18:03:17+01:00" level=info msg="Finding a successor..." ID=c000
+time="2020-01-29T18:03:17+01:00" level=info msg="Success! IP found for id given:127.0.0.1:5000"
+time="2020-01-29T18:03:17+01:00" level=info msg="Time spent with request: c000 1717"
+Success! IP found for id given:127.0.0.1:5000
+time="2020-01-29T18:03:17+01:00" level=info msg="Sending a findSuccessor request to 127.0.0.1:5000"
+time="2020-01-29T18:03:17+01:00" level=info msg="Finding a successor..." ID=0000
+time="2020-01-29T18:03:17+01:00" level=info msg="Success! IP found for id given:127.0.0.1:10014"
+time="2020-01-29T18:03:17+01:00" level=info msg="Time spent with request: 0000 796"
+Success! IP found for id given:127.0.0.1:10014
+time="2020-01-29T18:03:17+01:00" level=info msg="Sending a findSuccessor request to 127.0.0.1:5000"
+time="2020-01-29T18:03:17+01:00" level=info msg="Finding a successor..." ID=4000
+time="2020-01-29T18:03:17+01:00" level=info msg="Success! IP found for id given:127.0.0.1:10007"
+time="2020-01-29T18:03:17+01:00" level=info msg="Time spent with request: 4000 1098"
+Success! IP found for id given:127.0.0.1:10007
+time="2020-01-29T18:03:17+01:00" level=info msg="Sending a findSuccessor request to 127.0.0.1:5000"
+time="2020-01-29T18:03:17+01:00" level=info msg="Finding a successor..." ID=8000
+time="2020-01-29T18:03:17+01:00" level=info msg="Success! IP found for id given:127.0.0.1:10003"
+time="2020-01-29T18:03:17+01:00" level=info msg="Time spent with request: 8000 1053"
+Success! IP found for id given:127.0.0.1:10003
+time="2020-01-29T18:03:17+01:00" level=info msg="Sending a findSuccessor request to 127.0.0.1:5000"
+time="2020-01-29T18:03:17+01:00" level=info msg="Finding a successor..." ID=c000
+time="2020-01-29T18:03:17+01:00" level=info msg="Success! IP found for id given:127.0.0.1:5000"
+time="2020-01-29T18:03:17+01:00" level=info msg="Time spent with request: c000 1191"
+Success! IP found for id given:127.0.0.1:5000

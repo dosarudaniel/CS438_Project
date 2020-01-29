@@ -26,7 +26,7 @@ func main() {
 
 	log := logrus.New()
 	if *trace {
-		log.SetLevel(logrus.TraceLevel)
+		log.SetLevel(logrus.DebugLevel)
 	}
 
 	// Setup the random seed
