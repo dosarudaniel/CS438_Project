@@ -54,28 +54,16 @@ cd ..
 
 
 sleep 1
+# Kill all CS438_Project processes
 pkill -f CS438_Project
 
+sleep 1
 
-echo "------   findSuccessor latency test (N = $1)   ------" > test4_stats.txt
-SUM1=0; for i in `cat test4_out.txt | grep Time | grep 0000 | cut -d ":" -f2 | cut -d "," -f2`; do SUM1=$(($SUM1 + $i)); done; echo $((SUM1/10)) >> test4_stats.txt
-SUM1=0; for i in `cat test4_out.txt | grep Time | grep 4000 | cut -d ":" -f2 | cut -d "," -f2`; do SUM1=$(($SUM1 + $i)); done; echo $((SUM1/10)) >> test4_stats.txt
-SUM1=0; for i in `cat test4_out.txt | grep Time | grep 8000 | cut -d ":" -f2 | cut -d "," -f2`; do SUM1=$(($SUM1 + $i)); done; echo $((SUM1/10)) >> test4_stats.txt
-SUM1=0; for i in `cat test4_out.txt | grep Time | grep c000 | cut -d ":" -f2 | cut -d "," -f2`; do SUM1=$(($SUM1 + $i)); done; echo $((SUM1/10)) >> test4_stats.txt
+echo "------   findSuccessor latency test (N = $1)   ------" > test4_stats_$1.txt
+SUM1=0; for i in `cat test4_out.txt | grep Time | grep 0000 | cut -d ":" -f2 | cut -d "," -f2`; do SUM1=$(($SUM1 + $i)); done; echo $((SUM1/10)) >> test4_stats_$1.txt
+SUM2=0; for i in `cat test4_out.txt | grep Time | grep 4000 | cut -d ":" -f2 | cut -d "," -f2`; do SUM2=$(($SUM2 + $i)); done; echo $((SUM2/10)) >> test4_stats_$1.txt
+SUM3=0; for i in `cat test4_out.txt | grep Time | grep 8000 | cut -d ":" -f2 | cut -d "," -f2`; do SUM3=$(($SUM3 + $i)); done; echo $((SUM3/10)) >> test4_stats_$1.txt
+SUM4=0; for i in `cat test4_out.txt | grep Time | grep c000 | cut -d ":" -f2 | cut -d "," -f2`; do SUM4=$(($SUM4 + $i)); done; echo $((SUM4/10)) >> test4_stats_$1.txt
+echo "" >> test4_stats_$1.txt
+echo "Average: $(((SUM1+SUM2+SUM3+SUM4)/40))" >> test4_stats_$1.txt
 
-#
-## Kill all CS438_Project processes
-
-#sleep 1
-#
-## Compare with reference file
-#diff test4_out.txt test4_ref.txt > test4_debug.txt
-#diff_ret_code=$?
-#
-## Print result
-#if [ $diff_ret_code == 0 ]; then
-#  echo "TEST PASSED"
-#  rm test4_out.txt  # Clean
-#else
-#  echo "TEST FAILED, see test4_*.txt files"
-#fi
