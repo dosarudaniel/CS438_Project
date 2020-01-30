@@ -10,7 +10,7 @@ import (
 )
 
 // RequestFile RPC caller function
-func requestFile(client clientService.ClientServiceClient, fileMetadata *clientService.FileMetadata) error {
+func requestFile(client clientService.ClientServiceClient, fileMetadata *clientService.FileMetadata) (clientService.Response, error) {
 	log.WithFields(logrus.Fields{
 		"requested file":  fileMetadata.FilenameAtOwner,
 		"file owner's ID": fileMetadata.OwnersID,
@@ -22,11 +22,10 @@ func requestFile(client clientService.ClientServiceClient, fileMetadata *clientS
 	response, err := client.RequestFile(ctx, fileMetadata)
 	if err != nil {
 		fmt.Printf("%v.RequestFile(_) = _, %v: ", client, err)
-		return err
+		return *response, err
 	}
 
-	log.Info(response.Text)
-	return nil
+	return *response, nil
 }
 
 // FindSuccessorClient RPC caller function

@@ -19,7 +19,7 @@ var log = logrus.New()
 
 func main() {
 	peersterAddress := flag.String("PeersterAddress", "", "Peerster address to connect to")
-	command := flag.String("command", "", "Command to be sent to Peerster: download/upload/findSuccessor")
+	command := flag.String("command", "", "Command to be sent to Peerster: download/upload/findSuccessor/search")
 	file := flag.String("file", "", "file name at owner")
 	ID := flag.String("ID", "", "Download: File owner's ID / FindSuccessor: ID for which the IP is requested ")
 	nameToStore := flag.String("nameToStore", "", "Name used to store the downloaded file")
@@ -50,23 +50,24 @@ func main() {
 			*nameToStore = *file
 		}
 
-		log.Debug("Sending a download request to " + *peersterAddress)
+		fmt.Println("Sending a download request to " + *peersterAddress + " for " + *file + " file...")
 
 		fileMetadata := &clientService.FileMetadata{FilenameAtOwner: *file, OwnersID: *ID, NameToStore: *nameToStore}
 
 		conn, err := grpc.Dial(*peersterAddress, grpc.WithBlock(), grpc.WithInsecure())
 		if err != nil {
-			fmt.Printf("Fail to dial: %v", err)
+			fmt.Printf("Fail to dial: %v, %v", *peersterAddress, err)
 		}
 		defer conn.Close()
 
 		client := clientService.NewClientServiceClient(conn)
 
-		err = requestFile(client, fileMetadata)
+		response, err := requestFile(client, fileMetadata)
 		if err != nil {
 			fmt.Printf("Fail to requestFile: %v", err)
+			os.Exit(1)
 		}
-
+		fmt.Println(response.Text + response.Info) // Print "Success! File downloaded at _download/" + fileMetadata.NameToStore"
 	case "upload":
 		/*
 			How to use:
@@ -94,14 +95,17 @@ func main() {
 				"filename": *file,
 				"err":      err,
 			}).Warn("uploading a file failed...")
+		} else {
+			fmt.Println("Upload was successful")
 		}
 
 	case "findSuccessor":
-		log.Debug("Sending a findSuccessor request to " + *peersterAddress)
 
 		if *ID == "" { // required
 			log.Fatal("FindSuccessor: No ID given. Specify an ID to find the corresponding IP.")
 		}
+
+		fmt.Println("Sending a findSuccessor request to " + *peersterAddress)
 
 		conn, err := grpc.Dial(*peersterAddress, grpc.WithBlock(), grpc.WithInsecure())
 		if err != nil {
@@ -193,10 +197,11 @@ func main() {
 			NameToStore:     *file,
 		}
 
-		err = requestFile(client, fileMetadata)
+		response, err := requestFile(client, fileMetadata)
 		if err != nil {
 			fmt.Printf("Fail to requestFile: %v", err)
 		}
+		fmt.Println(response.Text + response.Info) // Print "Success! File downloaded at _download/" + fileMetadata.NameToStore"
 
 	default:
 		log.Fatal(fmt.Sprintf("No correct command given, try one of the following download/upload/findSuccessor"))
