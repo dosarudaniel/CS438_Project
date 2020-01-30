@@ -50,23 +50,24 @@ func main() {
 			*nameToStore = *file
 		}
 
-		log.Debug("Sending a download request to " + *peersterAddress)
+		fmt.Println("Sending a download request to " + *peersterAddress + " for " + *file + " file...")
 
 		fileMetadata := &clientService.FileMetadata{FilenameAtOwner: *file, OwnersID: *ID, NameToStore: *nameToStore}
 
 		conn, err := grpc.Dial(*peersterAddress, grpc.WithBlock(), grpc.WithInsecure())
 		if err != nil {
-			fmt.Printf("Fail to dial: %v", err)
+			fmt.Printf("Fail to dial: %v, %v", *peersterAddress, err)
 		}
 		defer conn.Close()
 
 		client := clientService.NewClientServiceClient(conn)
 
-		err = requestFile(client, fileMetadata)
+		response, err := requestFile(client, fileMetadata)
 		if err != nil {
 			fmt.Printf("Fail to requestFile: %v", err)
+			os.Exit(1)
 		}
-
+		fmt.Println(response.Text + response.Info) // Print "Success! File downloaded at _download/" + fileMetadata.NameToStore"
 	case "upload":
 		/*
 			How to use:
@@ -193,10 +194,11 @@ func main() {
 			NameToStore:     *file,
 		}
 
-		err = requestFile(client, fileMetadata)
+		response, err := requestFile(client, fileMetadata)
 		if err != nil {
 			fmt.Printf("Fail to requestFile: %v", err)
 		}
+		fmt.Println(response.Text + response.Info) // Print "Success! File downloaded at _download/" + fileMetadata.NameToStore"
 
 	default:
 		log.Fatal(fmt.Sprintf("No correct command given, try one of the following download/upload/findSuccessor"))
