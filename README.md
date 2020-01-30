@@ -20,7 +20,7 @@ In the picture below there are four Peersters. One of them is the genesis node, 
 
 
 ## Performance   
-Our implementation is offering a `O(logN)` ID search time complexity in a Chord ring network, the graph below was obtained by runnning multiple (N) Peerster processes on the same localhost.     
+Our implementation is offering a `O(logN)` ID search time complexity in a Chord ring network, the graph below was obtained by runnning multiple (N) Peerster processes on the same localhost. Considering this, we can see a lower bound of just 0.5ms for the Find Successor query. Testing for various values of N, reveals the logarithmic curve below:
      
 ![Query time of findSuccessor RPC](https://github.com/dosarudaniel/CS438_Project/blob/dosarudaniel-improve-readme/docs/QueryTime_FindSuccessor.png)     
 
