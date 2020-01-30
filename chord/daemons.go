@@ -43,7 +43,7 @@ func StabilizeDaemon(chordNode *ChordNode) {
 	if succ.Id != chordNode.node.Id {
 		err = chordNode.stubNotify(ipAddr(succ.Ip), context.Background(), &chordNode.node)
 	}
-	log.Debug(chordNode)
+	chordNode.logDebugPretty()
 }
 
 /*
@@ -82,7 +82,7 @@ func FixFingersDaemon(chordNode *ChordNode) func(*ChordNode) {
 		chordNode.fingerTable.table[next] = succ
 		chordNode.fingerTable.Unlock()
 
-		log.Debug(chordNode)
+		chordNode.logDebugPretty()
 	}
 }
 

@@ -319,12 +319,12 @@ func (chordNode *ChordNode) String() string {
 	}
 	chordNode.hashTable.RUnlock()
 
-	outputString += "\t Connections: \n"
-	chordNode.stubsPool.RLock()
-	for ip := range chordNode.stubsPool.pool {
-		outputString += "\t\t" + string(ip) + "\n"
-	}
-	chordNode.stubsPool.RUnlock()
+	//outputString += "\t Connections: \n"
+	//chordNode.stubsPool.RLock()
+	//for ip := range chordNode.stubsPool.pool {
+	//	outputString += "\t\t" + string(ip) + "\n"
+	//}
+	//chordNode.stubsPool.RUnlock()
 
 	return outputString
 }
