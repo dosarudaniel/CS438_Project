@@ -7,16 +7,16 @@ search (WIP).
 
 For the implementation of the overlay network, we use
 [Chord](https://pdos.csail.mit.edu/papers/chord:sigcomm01/chord_sigcomm.pdf).
-Some properties of chord:
- - Every node will store at most `O(logN)` nodes, where N is the number
+Peerster v2.0 has now the following properties of chord:
+ - Every peerster will store in its finger table at most `O(logN)` nodes, where N is the number
    of nodes in the network.
--  As well, every search for ID will take at most `O(logN)` "messages".
+-  As well, every search for ID will take at most `O(logN)` "messages" (see `tests/test4.sh`)
 
 We create a distributed hash table using our Chord overlay. Every node
 will be responsible for keys, such that `hash(node.predecessor.IP) <
 hash(key) <= hash(node.IP)`.
 
-In order to suppor keyword-based search, we will be implementing the
+In order to support keyword-based search, we will be implementing the
 algorithm sketched out in
 [this paper](https://www.cs.utexas.edu/users/browne/CS395Tf2002/Papers/Keywordsearch.pdf).
 We will build a (distributed) inverted index tree. In other words, we
@@ -45,3 +45,5 @@ $ ./client --help
 ```
 
 Thank you for taking time to check out our project!
+
+daniel-florin.dosaru@epfl.ch
