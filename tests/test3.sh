@@ -1,6 +1,6 @@
 #!/bin/bash
 
-
+cd ..
 # Test the FindSuccessor RPC
 
 go build   # build the Peerster Node
@@ -21,37 +21,37 @@ go build   # build the Peerster Node
 sleep 30
 
 # Reset the output of the current test
-echo "" > test3_out.txt
+echo "" > tests/test3_out.txt
 
 cd client
 go build
 # Call findSuccessor for each node
 # Request id for node B id = "21"
-./client -PeersterAddress=127.0.0.1:5000 -command=findSuccessor -ID="21" > ../test3_out.txt
+./client -PeersterAddress=127.0.0.1:5000 -command=findSuccessor -ID="21" > ../tests/test3_out.txt
 sleep 0.5
 # Request id for node C id = 9b
-./client -PeersterAddress=127.0.0.1:5000 -command=findSuccessor -ID="9b" >> ../test3_out.txt
+./client -PeersterAddress=127.0.0.1:5000 -command=findSuccessor -ID="9b" >> ../tests/test3_out.txt
 sleep 0.5
 # Request id for node D id = 83
-./client -PeersterAddress=127.0.0.1:5000 -command=findSuccessor -ID="83" >> ../test3_out.txt
+./client -PeersterAddress=127.0.0.1:5000 -command=findSuccessor -ID="83" >> ../tests/test3_out.txt
 sleep 0.5
 # Request id for node E id = 5a
-./client -PeersterAddress=127.0.0.1:5000 -command=findSuccessor -ID="5a" >> ../test3_out.txt
+./client -PeersterAddress=127.0.0.1:5000 -command=findSuccessor -ID="5a" >> ../tests/test3_out.txt
 sleep 0.5
 # Request id for node F id = 68
-./client -PeersterAddress=127.0.0.1:5000 -command=findSuccessor -ID="68" >> ../test3_out.txt
+./client -PeersterAddress=127.0.0.1:5000 -command=findSuccessor -ID="68" >> ../tests/test3_out.txt
 sleep 0.5
 # Request id for node G id = 0e
-./client -PeersterAddress=127.0.0.1:5000 -command=findSuccessor -ID="0e" >> ../test3_out.txt
+./client -PeersterAddress=127.0.0.1:5000 -command=findSuccessor -ID="0e" >> ../tests/test3_out.txt
 sleep 0.5
 # Request id for node H id = 70
-./client -PeersterAddress=127.0.0.1:5004 -command=findSuccessor -ID="70" >> ../test3_out.txt
+./client -PeersterAddress=127.0.0.1:5004 -command=findSuccessor -ID="70" >> ../tests/test3_out.txt
 sleep 0.5
 # Request id for node I id = 03
-./client -PeersterAddress=127.0.0.1:5003 -command=findSuccessor -ID="03" >> ../test3_out.txt
+./client -PeersterAddress=127.0.0.1:5003 -command=findSuccessor -ID="03" >> ../tests/test3_out.txt
 sleep 0.5
 # Request id for node J id = a8
-./client -PeersterAddress=127.0.0.1:5001 -command=findSuccessor -ID="a8" >> ../test3_out.txt
+./client -PeersterAddress=127.0.0.1:5001 -command=findSuccessor -ID="a8" >> ../tests/test3_out.txt
 sleep 0.5
 cd ..
 
@@ -60,13 +60,17 @@ pkill -f CS438_Project
 sleep 1
 
 # Compare with reference file
-diff test3_out.txt test3_ref.txt > test3_debug.txt
+diff tests/test3_out.txt tests/test3_ref.txt > tests/test3_debug.txt
 diff_ret_code=$?
 
 # Print result
 if [ $diff_ret_code == 0 ]; then
   echo "TEST PASSED"
-  rm test3_out.txt  # Clean
+  rm tests/test3_out.txt  # Clean
 else
-  echo "TEST FAILED, see test3_*.txt files"
+  echo "TEST FAILED, see tests/test3_*.txt files"
 fi
+
+
+# Go back to tests
+cd tests

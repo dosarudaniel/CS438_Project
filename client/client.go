@@ -118,8 +118,9 @@ func main() {
 			log.WithField("err", err).Fatal("Fail to findSuccessorClient")
 		}
 		elapsed := time.Since(start)
-
-		fmt.Println("Time spent with request:" +  *ID + ",", elapsed.Microseconds())
+		if *verbose == true {
+			fmt.Println("Time spent with request:" +  *ID + ",", elapsed.Microseconds())
+		}
 		fmt.Println(response.Text + response.Info) // Print the IP
 
 	case "search":

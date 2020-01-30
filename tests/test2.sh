@@ -2,6 +2,7 @@
 
 
 # Test the FileSharing service and client interaction
+cd ..
 
 go build
 
@@ -15,3 +16,6 @@ go build
 cd ..
 echo "Diference between uploaded and downloaded:"
 diff _upload/file1.txt _download/file1.txt
+
+# Go back to tests
+cd tests

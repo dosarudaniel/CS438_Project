@@ -1,0 +1,81 @@
+------   findSuccessor latency test (N = 5)   ------
+Time spent with request:0000, 781
+Success! IP found for id given:127.0.0.1:10001
+Time spent with request:4000, 513
+Success! IP found for id given:127.0.0.1:10001
+Time spent with request:8000, 803
+Success! IP found for id given:127.0.0.1:10003
+Time spent with request:c000, 857
+Success! IP found for id given:127.0.0.1:5000
+Time spent with request:0000, 506
+Success! IP found for id given:127.0.0.1:10001
+Time spent with request:4000, 501
+Success! IP found for id given:127.0.0.1:10001
+Time spent with request:8000, 958
+Success! IP found for id given:127.0.0.1:10003
+Time spent with request:c000, 948
+Success! IP found for id given:127.0.0.1:5000
+Time spent with request:0000, 592
+Success! IP found for id given:127.0.0.1:10001
+Time spent with request:4000, 596
+Success! IP found for id given:127.0.0.1:10001
+Time spent with request:8000, 840
+Success! IP found for id given:127.0.0.1:10003
+Time spent with request:c000, 1142
+Success! IP found for id given:127.0.0.1:5000
+Time spent with request:0000, 596
+Success! IP found for id given:127.0.0.1:10001
+Time spent with request:4000, 525
+Success! IP found for id given:127.0.0.1:10001
+Time spent with request:8000, 903
+Success! IP found for id given:127.0.0.1:10003
+Time spent with request:c000, 847
+Success! IP found for id given:127.0.0.1:5000
+Time spent with request:0000, 648
+Success! IP found for id given:127.0.0.1:10001
+Time spent with request:4000, 763
+Success! IP found for id given:127.0.0.1:10001
+Time spent with request:8000, 920
+Success! IP found for id given:127.0.0.1:10003
+Time spent with request:c000, 895
+Success! IP found for id given:127.0.0.1:5000
+Time spent with request:0000, 568
+Success! IP found for id given:127.0.0.1:10001
+Time spent with request:4000, 779
+Success! IP found for id given:127.0.0.1:10001
+Time spent with request:8000, 996
+Success! IP found for id given:127.0.0.1:10003
+Time spent with request:c000, 957
+Success! IP found for id given:127.0.0.1:5000
+Time spent with request:0000, 547
+Success! IP found for id given:127.0.0.1:10001
+Time spent with request:4000, 536
+Success! IP found for id given:127.0.0.1:10001
+Time spent with request:8000, 1001
+Success! IP found for id given:127.0.0.1:10003
+Time spent with request:c000, 972
+Success! IP found for id given:127.0.0.1:5000
+Time spent with request:0000, 575
+Success! IP found for id given:127.0.0.1:10001
+Time spent with request:4000, 519
+Success! IP found for id given:127.0.0.1:10001
+Time spent with request:8000, 951
+Success! IP found for id given:127.0.0.1:10003
+Time spent with request:c000, 1021
+Success! IP found for id given:127.0.0.1:5000
+Time spent with request:0000, 712
+Success! IP found for id given:127.0.0.1:10001
+Time spent with request:4000, 532
+Success! IP found for id given:127.0.0.1:10001
+Time spent with request:8000, 909
+Success! IP found for id given:127.0.0.1:10003
+Time spent with request:c000, 866
+Success! IP found for id given:127.0.0.1:5000
+Time spent with request:0000, 848
+Success! IP found for id given:127.0.0.1:10001
+Time spent with request:4000, 601
+Success! IP found for id given:127.0.0.1:10001
+Time spent with request:8000, 1013
+Success! IP found for id given:127.0.0.1:10003
+Time spent with request:c000, 915
+Success! IP found for id given:127.0.0.1:5000
