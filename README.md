@@ -18,6 +18,8 @@ Peerster v2.0 has now the following properties of chord:
 In the picture below there are four Peersters. One of them is the genesis node, let's say A. Nodes B, C and D will join the ring network knowning one existing node. We can interact with a particular node using a client program or a web interface.
 ![Architecture](https://github.com/dosarudaniel/CS438_Project/blob/master/docs/Chord_ring_request_File.png) 
 
+### Communication in Peerster
+Since [Chord](https://pdos.csail.mit.edu/papers/chord:sigcomm01/chord_sigcomm.pdf) original algorithm uses Remote procedures calls, we decided to use [gRPC](https://grpc.io/), a high performance, general purpose Remote Procedure Call library. For Chord control messages this project uses Unary RPC, but for file download and upload we are using the Client/Server streaming RPC (see [gRPC concepts](https://grpc.io/docs/guides/concepts/) ). This library provides a simple interface and a fast development environment. Because the RPCs are using TCP, our Peersters will reliably transmit files between each other and it will also avoid congestions.
 
 ## Performance   
 Our implementation is offering a `O(logN)` ID search time complexity in a Chord ring network, the graph below was obtained by runnning multiple (N) Peerster processes on the same localhost. Considering this, we can see a lower bound of just 0.5ms for the Find Successor query. Testing for various values of N, reveals the logarithmic curve below:
