@@ -45,7 +45,29 @@ what flags you need to provide to the Peerster:
 ```
 $ go build
 $ ./CS438_Project --help
-  ...
+  Usage of ./CS438_Project:
+  -checkPredecessorInterval int
+    	Number of seconds between two runs of CheckPredecessor Daemon (default 1)
+  -create
+    	Pass this flag to create a new Chord ring
+  -existingNodeId string
+    	The id to which this node should join
+  -existingNodeIp string
+    	ip:port for the existing Peerster in the Chord ring to join
+  -fixFingerInterval int
+    	Number of seconds between two runs of FixFingers Daemon (default 1)
+  -ipAddr string
+    	ip:port for the Peerster (default "127.0.0.1:5000")
+  -join
+    	Pass this flag to join to an existing Chord ring
+  -m int
+    	Number of bits in one node's id; max = 256, min = 4 (multiple of 4) (default 8)
+  -name string
+    	name of the Peerster
+  -stabilizeInterval int
+    	Number of seconds between two runs of Stabilize Daemon (default 1)
+  -v	more verbosity of the program
+
 ```
 
 In order to give commands to your node, e.g., "look up this file" or
@@ -55,7 +77,22 @@ folder of the project run in terminal:
 $ cd client 
 $ go build
 $ ./client --help
-  ...
+  Usage of ./client:
+  -ID string
+    	Download: File owner's ID / FindSuccessor: ID for which the IP is requested 
+  -PeersterAddress string
+    	Peerster address to connect to
+  -command string
+    	Command to be sent to Peerster: download/upload/findSuccessor/search
+  -file string
+    	file name at owner
+  -nameToStore string
+    	Name used to store the downloaded file
+  -query string
+    	Search query (required for search command)
+  -v	verbose mode
+  -withDownload
+    	Used with search command if you want to download one of the found results
 ```
 
 Thank you for taking time to check out our project!
