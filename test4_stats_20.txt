@@ -1,7 +1,0 @@
-------   findSuccessor latency test (N = 20)   ------
-520
-1006
-997
-973
-
-Average: 874
