@@ -21,6 +21,9 @@ func main() {
 	existingNodeIp := flag.String("existingNodeIp", "", "ip:port for the existing Peerster in the Chord ring to join")
 	trace := flag.Bool("v", false, "more verbosity of the program")
 	m := flag.Int("m", 8, "Number of bits in one node's id; max = 256, min = 4 (multiple of 4)")
+	fixFingerInterval := flag.Int("fixFingerInterval", 1, "Number of seconds between two runs of FixFingers Daemon")
+	stabilizeInterval := flag.Int("stabilizeInterval", 1, "Number of seconds between two runs of Stabilize Daemon")
+	checkPredecessorInterval := flag.Int("checkPredecessorInterval", 1, "Number of seconds between two runs of CheckPredecessor Daemon")
 
 	flag.Parse()
 
@@ -47,8 +50,11 @@ func main() {
 	}
 
 	chordNode, err := chord.NewChordNode(listener, chord.ChordConfig{
-		NumOfBitsInID: *m,
-		ChunkSize:     1024,
+		NumOfBitsInID:				*m,
+		ChunkSize:     				1024,
+		StabilizeInterval:     		time.Duration(*stabilizeInterval) * time.Second,
+		FixFingersInterval:			time.Duration(*fixFingerInterval) * time.Second,
+		CheckPredecessorInterval: 	time.Duration(*checkPredecessorInterval) * time.Second,
 	}, *trace)
 	if err != nil || chordNode == nil {
 		log.Fatal("creating new Chord node failed")

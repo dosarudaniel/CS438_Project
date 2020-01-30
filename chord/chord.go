@@ -106,9 +106,9 @@ func NewChordNode(listener net.Listener, config ChordConfig, verbose bool) (*Cho
 	go chordNode.grpcServer.Serve(listener)
 
 	// TODO replace by a constant or config.fixFingerInterval
-	go chordNode.RunAtInterval(StabilizeDaemon, 1)
-	go chordNode.RunAtInterval(FixFingersDaemon(chordNode), 1)
-	go chordNode.RunAtInterval(CheckPredecessorDaemon, 1)
+	go chordNode.RunAtInterval(StabilizeDaemon, chordNode.config.StabilizeInterval)
+	go chordNode.RunAtInterval(FixFingersDaemon(chordNode), chordNode.config.FixFingersInterval)
+	go chordNode.RunAtInterval(CheckPredecessorDaemon, chordNode.config.CheckPredecessorInterval)
 
 	return chordNode, nil
 }

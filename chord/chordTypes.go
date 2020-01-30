@@ -3,6 +3,7 @@ package chord
 import (
 	. "github.com/dosarudaniel/CS438_Project/services/chord_service"
 	"sync"
+	"time"
 )
 
 /*
@@ -32,6 +33,9 @@ type stubsPoolWithMux struct {
 }
 
 type ChordConfig struct {
-	NumOfBitsInID int // number of bits in ID
-	ChunkSize int
+	NumOfBitsInID int 						// number of bits in ID
+	ChunkSize int							// Chunk size used to download a file
+	StabilizeInterval time.Duration			// run stabilize daemon every stabilizeInterval seconds
+	FixFingersInterval time.Duration
+	CheckPredecessorInterval time.Duration
 }
