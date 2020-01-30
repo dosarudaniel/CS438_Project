@@ -36,9 +36,15 @@ $("#share_file_btn").click(function (e) {
         url: "/upload_file",
         type: "POST",
         data: fd,
-        success: () => alert("hy"),
+        success: () => {
+            let uploadResultDiv = $("#upload_result");
+            uploadResultDiv.html("Upload successful! 😃");
+            setTimeout(() => uploadResultDiv.html(""), 5000)
+        },
         error: function (err) {
-            console.log(err)
+            let uploadResultDiv = $("#upload_result");
+            uploadResultDiv.html("Upload unsuccessful! 💔");
+            setTimeout(() => uploadResultDiv.html(""), 5000)
         },
         cache: false,
         contentType: false,
