@@ -13,13 +13,20 @@ Peerster v2.0 has now the following properties of chord:
 -  As well, every search for ID will take at most `O(logN)` "messages" (see `tests/test4.sh`)     
 
     
+## Architecture    
+    
+![Architecture](https://github.com/dosarudaniel/CS438_Project/blob/master/docs/Chord_ring_request_File.png) 
+
+
+## Performance   
 ![Query time of findSuccessor RPC](https://github.com/dosarudaniel/CS438_Project/blob/dosarudaniel-improve-readme/docs/QueryTime_FindSuccessor.png)     
 
-    
 
 We create a distributed hash table using our Chord overlay. Every node
 will be responsible for keys, such that `hash(node.predecessor.IP) <
 hash(key) <= hash(node.IP)`.
+
+## Keyword-based search
 
 In order to support keyword-based search, we will be implementing the
 algorithm sketched out in
