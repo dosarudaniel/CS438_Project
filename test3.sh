@@ -45,13 +45,13 @@ sleep 0.5
 ./client -PeersterAddress=127.0.0.1:5000 -command=findSuccessor -ID="0e" >> ../test3_out.txt
 sleep 0.5
 # Request id for node H id = 70
-./client -PeersterAddress=127.0.0.1:5000 -command=findSuccessor -ID="70" >> ../test3_out.txt
+./client -PeersterAddress=127.0.0.1:5004 -command=findSuccessor -ID="70" >> ../test3_out.txt
 sleep 0.5
 # Request id for node I id = 03
-./client -PeersterAddress=127.0.0.1:5000 -command=findSuccessor -ID="03" >> ../test3_out.txt
+./client -PeersterAddress=127.0.0.1:5003 -command=findSuccessor -ID="03" >> ../test3_out.txt
 sleep 0.5
 # Request id for node J id = a8
-./client -PeersterAddress=127.0.0.1:5000 -command=findSuccessor -ID="a8" >> ../test3_out.txt
+./client -PeersterAddress=127.0.0.1:5001 -command=findSuccessor -ID="a8" >> ../test3_out.txt
 sleep 0.5
 cd ..
 
