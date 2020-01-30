@@ -129,7 +129,7 @@ func main() {
 			How to use:
 			client/client -PeersterAddress 127.0.0.1:5000 -command search -query="hello"
 			client/client -PeersterAddress 127.0.0.1:5000 -command search -query="hello" -withDownload
-			client/client -PeersterAddress 127.0.0.1:5000 -command search -query="hello" -withDownload -file newfilename
+			client/client -PeersterAddress 127.0.0.1:5000 -command search -query="hello" -withDownload -nameToStore newfilename
 		*/
 		if *query == "" {
 			log.Fatal("-query is required but not given")
@@ -191,7 +191,7 @@ func main() {
 		fileMetadata := &clientService.FileMetadata{
 			FilenameAtOwner: fileRecords[index].Filename,
 			OwnersID:        ownersID.Id,
-			NameToStore:     *file,
+			NameToStore:     *nameToStore,
 		}
 
 		response, err := requestFile(client, fileMetadata)
