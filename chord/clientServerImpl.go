@@ -40,11 +40,13 @@ func (chordNode *ChordNode) UploadFile(ctx context.Context, msgFilenamePtr *File
 
 	for _, keyword := range keywords {
 		err := chordNode.PutInDHT(keyword, filename) //TODO impl proper error handling
-		log.WithFields(logrus.Fields{
-			"filename": filename,
-			"keyword":  keyword,
-			"err":      err,
-		}).Warn("putting keyword-fileRecord failed")
+		if err != nil {
+			log.WithFields(logrus.Fields{
+				"filename": filename,
+				"keyword":  keyword,
+				"err":      err,
+			}).Warn("putting keyword-fileRecord failed")
+		}
 	}
 	log.Info("Uploading a file has finished :-)")
 

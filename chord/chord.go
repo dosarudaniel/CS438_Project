@@ -113,6 +113,14 @@ func NewChordNode(listener net.Listener, config ChordConfig, verbose bool) (*Cho
 	return chordNode, nil
 }
 
+func (chordNode *ChordNode) ID() string {
+	return chordNode.node.Id
+}
+
+func (chordNode *ChordNode) IP() string {
+	return chordNode.node.Ip
+}
+
 func (chordNode *ChordNode) setSuccessor(nodePtr *Node) {
 	chordNode.fingerTable.Lock()
 	defer chordNode.fingerTable.Unlock()
