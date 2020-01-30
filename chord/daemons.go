@@ -108,6 +108,7 @@ func CheckPredecessorDaemon(chordNode *ChordNode) {
 	// transfer keys from the predecessor that have ID higher than
 	// predecessor's ID
 	err = chordNode.stubTransferKeys(ipAddr(pred.Ip), ctx, pred.Id, chordNode.node)
-
-	log.WithField("err", err).Info("check predecessor daemon failed")
+	if err != nil {
+		log.WithField("err", err).Info("check predecessor daemon failed")
+	}
 }
