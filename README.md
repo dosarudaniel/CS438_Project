@@ -10,7 +10,12 @@ For the implementation of the overlay network, we use
 Peerster v2.0 has now the following properties of chord:
  - Every peerster will store in its finger table at most `O(logN)` nodes, where N is the number
    of nodes in the network.
--  As well, every search for ID will take at most `O(logN)` "messages" (see `tests/test4.sh`)
+-  As well, every search for ID will take at most `O(logN)` "messages" (see `tests/test4.sh`)     
+
+    
+![Query time of findSuccessor RPC](https://github.com/dosarudaniel/CS438_Project/blob/dosarudaniel-improve-readme/docs/QueryTime_FindSuccessor.png)     
+
+    
 
 We create a distributed hash table using our Chord overlay. Every node
 will be responsible for keys, such that `hash(node.predecessor.IP) <
