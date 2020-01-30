@@ -9,6 +9,7 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
+	"time"
 )
 
 var server = struct {
@@ -34,6 +35,7 @@ func RunServer(guiIPAddr string, chordNode *chord.ChordNode) {
 	r.GET("/", indexHandler)
 	r.POST("/upload_file", postUploadFile)
 	r.POST("/search_file", postSearchFileHandler)
+	r.GET("/download_file", getDownloadFile)
 
 	err = r.Run(guiIPAddr)
 	if err != nil {
@@ -105,6 +107,37 @@ func postUploadFile(c *gin.Context) {
 	}
 
 	c.Status(http.StatusOK)
+}
+
+func getDownloadFile(c *gin.Context) {
+	var err error
+
+	filenameToDownload := c.Query("filename")
+	ownerIP := c.Query("owner_ip")
+
+	if filenameToDownload == "" || ownerIP == "" {
+		c.AbortWithStatus(http.StatusBadRequest)
+		return
+	}
+
+	err = server.chordNode.RequestFileFromIP(filenameToDownload, filenameToDownload, ownerIP)
+	if err != nil {
+		c.AbortWithStatus(http.StatusBadRequest)
+		return
+	}
+
+	time.Sleep(time.Second)
+
+	absolutePathToFile, err := JoinToAbsolutePath("_download", filenameToDownload)
+	if err != nil {
+		c.AbortWithStatus(http.StatusBadRequest)
+		return
+	}
+
+	c.Header("Content-Description", "File Transfer")
+	c.Header("Content-Transfer-Encoding", "binary")
+	c.Header("Content-Disposition", "attachment; filename="+filenameToDownload)
+	c.File(absolutePathToFile)
 }
 
 // JoinToAbsolutePath returns an absolute path to the project appended by the given strings

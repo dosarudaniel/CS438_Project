@@ -2,7 +2,6 @@ let log = console.log;
 
 $("#search_file").on('submit', function (e) {
     e.preventDefault();
-    log(this);
     $.ajax({
         type: "POST",
         url: "/search_file",
@@ -16,7 +15,8 @@ $("#search_file").on('submit', function (e) {
                 foundFilesDiv.html("No files found");
             } else {
                 fileRecords.map(fileRecord => {
-                    let fileRecPar = $('<p>', {
+                    let fileRecPar = $('<a>', {
+                        href: "/download_file?filename=" + fileRecord.filename + "&owner_ip=" + fileRecord.owner_ip,
                         text: fileRecord.filename + " \t\tat " + fileRecord.owner_ip
                     });
                     foundFilesDiv.append(fileRecPar)
