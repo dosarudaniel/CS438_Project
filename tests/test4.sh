@@ -10,7 +10,7 @@ usage(){
 # Safety checks
 [[ $# -eq 0 ]] && usage
 
-
+cd ..
 go build   # build the Peerster Node
 
 ## Create a N node Chord ring using m == 16
@@ -36,7 +36,7 @@ done
 sleep 30
 
 # Reset the output of the current test
-echo "------   findSuccessor latency test (N = $1)   ------" > test4_out.txt
+echo "------   findSuccessor latency test (N = $1)   ------" > tests/test4_out.txt
 
 cd client
 go build
@@ -44,10 +44,10 @@ go build
 
 for (( c = 0; c < 10; c++ ))
 do
-  ./client -PeersterAddress=127.0.0.1:5000 -command=findSuccessor -ID="0000" >> ../test4_out.txt
-  ./client -PeersterAddress=127.0.0.1:5000 -command=findSuccessor -ID="4000" >> ../test4_out.txt
-  ./client -PeersterAddress=127.0.0.1:5000 -command=findSuccessor -ID="8000" >> ../test4_out.txt
-  ./client -PeersterAddress=127.0.0.1:5000 -command=findSuccessor -ID="c000" >> ../test4_out.txt
+  ./client -PeersterAddress=127.0.0.1:5000 -command=findSuccessor -ID="0000" -v >> ../tests/test4_out.txt
+  ./client -PeersterAddress=127.0.0.1:5000 -command=findSuccessor -ID="4000" -v >> ../tests/test4_out.txt
+  ./client -PeersterAddress=127.0.0.1:5000 -command=findSuccessor -ID="8000" -v >> ../tests/test4_out.txt
+  ./client -PeersterAddress=127.0.0.1:5000 -command=findSuccessor -ID="c000" -v >> ../tests/test4_out.txt
 done
 
 cd ..
@@ -59,11 +59,14 @@ pkill -f CS438_Project
 
 sleep 1
 
-echo "------   findSuccessor latency test (N = $1)   ------" > test4_stats_$1.txt
-SUM1=0; for i in `cat test4_out.txt | grep Time | grep 0000 | cut -d ":" -f2 | cut -d "," -f2`; do SUM1=$(($SUM1 + $i)); done; echo $((SUM1/10)) >> test4_stats_$1.txt
-SUM2=0; for i in `cat test4_out.txt | grep Time | grep 4000 | cut -d ":" -f2 | cut -d "," -f2`; do SUM2=$(($SUM2 + $i)); done; echo $((SUM2/10)) >> test4_stats_$1.txt
-SUM3=0; for i in `cat test4_out.txt | grep Time | grep 8000 | cut -d ":" -f2 | cut -d "," -f2`; do SUM3=$(($SUM3 + $i)); done; echo $((SUM3/10)) >> test4_stats_$1.txt
-SUM4=0; for i in `cat test4_out.txt | grep Time | grep c000 | cut -d ":" -f2 | cut -d "," -f2`; do SUM4=$(($SUM4 + $i)); done; echo $((SUM4/10)) >> test4_stats_$1.txt
-echo "" >> test4_stats_$1.txt
-echo "Average: $(((SUM1+SUM2+SUM3+SUM4)/40))" >> test4_stats_$1.txt
+echo "------   findSuccessor latency test (N = $1)   ------" > ./tests/test4_stats_$1.txt
+SUM1=0; for i in `cat ./tests/test4_out.txt | grep Time | grep 0000 | cut -d ":" -f2 | cut -d "," -f2`; do SUM1=$(($SUM1 + $i)); done; echo $((SUM1/10)) >> ./tests/test4_stats_$1.txt
+SUM2=0; for i in `cat ./tests/test4_out.txt | grep Time | grep 4000 | cut -d ":" -f2 | cut -d "," -f2`; do SUM2=$(($SUM2 + $i)); done; echo $((SUM2/10)) >> ./tests/test4_stats_$1.txt
+SUM3=0; for i in `cat ./tests/test4_out.txt | grep Time | grep 8000 | cut -d ":" -f2 | cut -d "," -f2`; do SUM3=$(($SUM3 + $i)); done; echo $((SUM3/10)) >> ./tests/test4_stats_$1.txt
+SUM4=0; for i in `cat ./tests/test4_out.txt | grep Time | grep c000 | cut -d ":" -f2 | cut -d "," -f2`; do SUM4=$(($SUM4 + $i)); done; echo $((SUM4/10)) >> ./tests/test4_stats_$1.txt
+echo "" >> ./tests/test4_stats_$1.txt
+echo "Average: $(((SUM1+SUM2+SUM3+SUM4)/40))" >> ./tests/test4_stats_$1.txt
+
+# Go back to tests
+cd tests
 
