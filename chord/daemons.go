@@ -6,11 +6,11 @@ import (
 	"time"
 )
 
-func (chordNode *ChordNode) RunAtInterval(daemon func(*ChordNode), intervalSeconds int) {
+func (chordNode *ChordNode) RunAtInterval(daemon func(*ChordNode), intervalSeconds time.Duration) {
 	daemon(chordNode)
 	for {
 		select {
-		case <-time.Tick(time.Duration(intervalSeconds) * time.Second):
+		case <-time.Tick(intervalSeconds):
 			daemon(chordNode)
 		}
 	}
