@@ -19,7 +19,7 @@ var log = logrus.New()
 
 func main() {
 	peersterAddress := flag.String("PeersterAddress", "", "Peerster address to connect to")
-	command := flag.String("command", "", "Command to be sent to Peerster: download/upload/findSuccessor")
+	command := flag.String("command", "", "Command to be sent to Peerster: download/upload/findSuccessor/search")
 	file := flag.String("file", "", "file name at owner")
 	ID := flag.String("ID", "", "Download: File owner's ID / FindSuccessor: ID for which the IP is requested ")
 	nameToStore := flag.String("nameToStore", "", "Name used to store the downloaded file")
@@ -95,14 +95,17 @@ func main() {
 				"filename": *file,
 				"err":      err,
 			}).Warn("uploading a file failed...")
+		} else {
+			fmt.Println("Upload was successful")
 		}
 
 	case "findSuccessor":
-		log.Debug("Sending a findSuccessor request to " + *peersterAddress)
 
 		if *ID == "" { // required
 			log.Fatal("FindSuccessor: No ID given. Specify an ID to find the corresponding IP.")
 		}
+
+		fmt.Println("Sending a findSuccessor request to " + *peersterAddress)
 
 		conn, err := grpc.Dial(*peersterAddress, grpc.WithBlock(), grpc.WithInsecure())
 		if err != nil {
