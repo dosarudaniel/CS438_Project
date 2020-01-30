@@ -1,4 +1,4 @@
-# \[WIP\] Peerster v2.0
+# Peerster v2.0: DHT based file sharing in Peerster
 
 Peerster v2.0 is a peer-to-peer file sharing application based on
 structured overlay network. It allows downloading files either by
@@ -14,19 +14,21 @@ Peerster v2.0 has now the following properties of chord:
 
     
 ## Architecture    
-    
+
+In the picture below there are four Peersters. One of them is the genesis node, let's say A. Nodes B, C and D will join the ring network knowning one existing node. We can interact with a particular node using a client program or a web interface.
 ![Architecture](https://github.com/dosarudaniel/CS438_Project/blob/master/docs/Chord_ring_request_File.png) 
 
 
 ## Performance   
+Our implementation is offering a `O(logN)` ID search time complexity in a Chord ring network, the graph below was obtained by runnning multiple (N) Peerster processes on the same localhost.     
+     
 ![Query time of findSuccessor RPC](https://github.com/dosarudaniel/CS438_Project/blob/dosarudaniel-improve-readme/docs/QueryTime_FindSuccessor.png)     
 
+## Keyword-based search
 
 We create a distributed hash table using our Chord overlay. Every node
 will be responsible for keys, such that `hash(node.predecessor.IP) <
 hash(key) <= hash(node.IP)`.
-
-## Keyword-based search
 
 In order to support keyword-based search, we will be implementing the
 algorithm sketched out in
