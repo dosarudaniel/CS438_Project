@@ -5,7 +5,7 @@ option go_package = "github.com/dosarudaniel/CS438_Project/services/client_servi
 package chord;
 
 message FileMetadata {
-    string filenameAtOwner = 1; // filename (unique in the Chord ring)
+    string filenameAtOwner = 1;
     string ownersID = 2;
     string nameToStore = 3;
 }
