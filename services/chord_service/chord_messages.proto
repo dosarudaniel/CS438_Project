@@ -1,4 +1,7 @@
 syntax = "proto3";
+
+option go_package = "github.com/dosarudaniel/CS438_Project/services/chord_service";
+
 package chord;
 
 // For Chord ring (overlay network)
@@ -27,7 +30,7 @@ message FileRecord {
     string owner_ip = 2;
 }
 
-message Val {
+message FileRecords {
     repeated FileRecord fileRecords = 1;
 }
 
