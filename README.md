@@ -46,4 +46,5 @@ $ ./client --help
 
 Thank you for taking time to check out our project!
 
+ulugbek.abdullaev@epfl.ch    
 daniel-florin.dosaru@epfl.ch
