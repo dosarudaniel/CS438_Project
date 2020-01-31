@@ -32,7 +32,6 @@ func StabilizeDaemon(chordNode *ChordNode) {
 		return
 	}
 
-	// TODO what if successor is down
 	x, err := chordNode.stubGetPredecessor(ipAddr(succ.Ip), context.Background())
 	if err == nil && x != nil {
 		if isBetweenTwoNodesExclusive(chordNode.node.Id, x.Id, succ.Id) || chordNode.node.Id == succ.Id {
@@ -43,7 +42,7 @@ func StabilizeDaemon(chordNode *ChordNode) {
 	if succ.Id != chordNode.node.Id {
 		err = chordNode.stubNotify(ipAddr(succ.Ip), context.Background(), &chordNode.node)
 	}
-	log.Debug(chordNode)
+	chordNode.logDebugPretty()
 }
 
 /*
@@ -82,7 +81,7 @@ func FixFingersDaemon(chordNode *ChordNode) func(*ChordNode) {
 		chordNode.fingerTable.table[next] = succ
 		chordNode.fingerTable.Unlock()
 
-		log.Debug(chordNode)
+		chordNode.logDebugPretty()
 	}
 }
 
@@ -92,12 +91,11 @@ func FixFingersDaemon(chordNode *ChordNode) func(*ChordNode) {
  n.check_predecessor()
  	if (predecessor has failed) <- in our case responds to a FindSuccessor rpc call within 3 seconds
 		predecessor = nil;
- FIXME: implement correctly
 */
 func CheckPredecessorDaemon(chordNode *ChordNode) {
 	var err error
 
-	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second) //TODO the timeout should be flexible
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
 
 	pred, doesExist := chordNode.getPredecessor()
@@ -108,6 +106,7 @@ func CheckPredecessorDaemon(chordNode *ChordNode) {
 	// transfer keys from the predecessor that have ID higher than
 	// predecessor's ID
 	err = chordNode.stubTransferKeys(ipAddr(pred.Ip), ctx, pred.Id, chordNode.node)
-
-	log.WithField("err", err).Info("check predecessor daemon failed")
+	if err != nil {
+		log.WithField("err", err).Info("check predecessor daemon failed")
+	}
 }

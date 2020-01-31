@@ -4,6 +4,9 @@ import (
 	"crypto"
 	"encoding/hex"
 	"errors"
+	"os"
+	"os/exec"
+	"strings"
 )
 
 // In this file, we put all helper functions and types used by Chord package
@@ -18,6 +21,23 @@ func (chordNode *ChordNode) hashString(s string) (string, error) {
 	}
 	hash := sha256.Sum(nil)
 	return hex.EncodeToString(hash)[64-(numOfBitsInID/4):], nil
+}
+
+func (chordNode *ChordNode) logDebugPretty() {
+	cmd := exec.Command("clear") //Linux example, its tested
+	cmd.Stdout = os.Stdout
+	_ = cmd.Run()
+	log.Debug(chordNode.String())
+}
+
+// cleanFilename removes frequent punctuation marks and " and " and " of "
+func cleanFilename(filename string) string {
+	cleanFilename := filename
+	for _, char := range []string{".", ",", "?", "!", " of ", " and ", " a ", " the "} {
+		cleanFilename = strings.ReplaceAll(cleanFilename, char, " ")
+	}
+	cleanFilename = strings.ToLower(cleanFilename)
+	return cleanFilename
 }
 
 func nilError(s string) error {

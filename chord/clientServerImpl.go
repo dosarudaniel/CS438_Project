@@ -34,19 +34,19 @@ func (chordNode *ChordNode) UploadFile(ctx context.Context, msgFilenamePtr *File
 
 	filename := msgFilenamePtr.Filename
 
-	// TODO remove file extension
-
-	keywords := strings.Split(filename, " ")
+	keywords := strings.Split(cleanFilename(filename), " ")
 
 	for _, keyword := range keywords {
-		err := chordNode.PutInDHT(keyword, filename) //TODO impl proper error handling
-		log.WithFields(logrus.Fields{
-			"filename": filename,
-			"keyword":  keyword,
-			"err":      err,
-		}).Warn("putting keyword-fileRecord failed")
+		err := chordNode.PutInDHT(keyword, filename)
+		if err != nil {
+			log.WithFields(logrus.Fields{
+				"filename": filename,
+				"keyword":  keyword,
+				"err":      err,
+			}).Warn("putting keyword-fileRecord failed")
+		}
 	}
-	log.Info("Uploading a file has finished :-)")
+	log.Info("Uploading a file has finished")
 
 	return &empty.Empty{}, nil
 }
@@ -57,6 +57,8 @@ func (chordNode *ChordNode) SearchFile(ctx context.Context, msgQueryPtr *Query) 
 	}
 
 	query := msgQueryPtr.Query
+
+	query = cleanFilename(query)
 
 	keywords := strings.Split(query, " ")
 

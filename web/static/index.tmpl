@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <link rel="stylesheet" type="text/css" href="/assets/semantic.min.css">
+    <script
+            src="https://code.jquery.com/jquery-3.1.1.min.js"
+            integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+            crossorigin="anonymous"></script>
+    <script src="/assets/semantic.min.js"></script>
+
+    <style>
+        .wrapper {
+            display: flex;
+        }
+
+        .left {
+            flex: 0 0 65%;
+        }
+
+        .right {
+            flex: 1;
+        }
+    </style>
+    <title>Peerster {{ .Name }} (IP {{ .IP }})</title>
+</head>
+<body style="padding-left: 10%; padding-top:2%">
+
+
+<div class="ui container">
+
+    <div class="ui two column stackable grid">
+
+        <div class="ui five wide column">
+
+            <section class="ui segment">
+                <b>Your ID:</b> <span class="small button" id="id_box"> {{ .Name }}</span>
+            </section>
+
+            <section class="ui segment">
+                <section id="upload">
+                    <form id="share_file_form" enctype="multipart/form-data" method="post" name="share_file_form">
+                        <div class="ui categor">
+                            <h3><label for="file_to_share">Choose a file to share:</label> <br></h3>
+                            <input type="file" class="ui input" id="file_to_share" name="file_to_share" required> <br>
+                            <input type="submit" class="ui button" value="Share" id="share_file_btn">
+                        </div>
+                    </form>
+                    <div id="upload_result">
+                    </div>
+                </section>
+            </section>
+
+
+        </div>
+
+        <div class="ui seven wide column">
+
+            {{/*            <img src="/assets/logo.png" alt="logo">*/}}
+
+            <section id="search">
+                <form action="" id="search_file">
+                    <div class="ui category search">
+                        <div class="ui icon input">
+                            <input class="prompt" type="text" placeholder="Search for a file..." name="query"
+                                   style="width: 600px">
+                            <i class="search icon"></i>
+                        </div>
+                        <div class="results"></div>
+                    </div>
+                </form>
+
+                <div id="found_files" style="margin-top: 30px; padding-left: 20px">
+                </div>
+            </section>
+
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="/assets/script.js"></script>
+
+</body>
+</html>
+

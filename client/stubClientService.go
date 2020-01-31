@@ -16,7 +16,7 @@ func requestFile(client clientService.ClientServiceClient, fileMetadata *clientS
 		"file owner's ID": fileMetadata.OwnersID,
 	}).Info(fmt.Sprintf("Requesting a file..."))
 
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second) // FIXME ctx is not used in rpc, so doesn't work imo
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second) //
 	defer cancel()
 
 	response, err := client.RequestFile(ctx, fileMetadata)

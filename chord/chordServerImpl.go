@@ -18,7 +18,6 @@ func (chordNode *ChordNode) GetPredecessor(ctx context.Context, _ *empty.Empty) 
 	return &pred, nil
 }
 
-// FIXME CheckPredecessor relies on use of ctx.Timeout
 /*
  FindSuccessor finds the successor of id
  n.find_successor(id)
@@ -107,7 +106,7 @@ func (chordNode *ChordNode) Get(ctx context.Context, messageKeyPtr *Key) (*FileR
 	}
 
 	chordNode.hashTable.RLock()
-	defer chordNode.hashTable.RUnlock() //TODO can using array of pointers create a data race here?
+	defer chordNode.hashTable.RUnlock()
 
 	fileRecords, doesExist := chordNode.hashTable.table[messageKeyPtr.Keyword]
 
@@ -144,7 +143,6 @@ func (chordNode *ChordNode) TransferKeys(ctx context.Context, req *TransferKeysR
 		}
 		// Check that the hashed key lies in the correct range before putting the value in our predecessor
 		if isBetweenTwoNodesRightInclusive(fromID, hashedKey, toNode.Id) {
-			// TODO potential improvement: enable PutManyFileRecords rpc to put several file records at once
 			for _, fileRecordPtr := range val {
 				if fileRecordPtr == nil {
 					continue

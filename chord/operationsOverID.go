@@ -24,7 +24,7 @@ func getFingerStart(id string, ithFinger, numOfBitsInID int) (string, error) {
 	}
 	z := new(big.Int)
 	z.SetBytes(y)
-	z.Add(big.NewInt(int64(1<<ithFinger)), z) //TODO check that converting ithFinger to int64 is safe
+	z.Add(big.NewInt(int64(1<<ithFinger)), z)
 	z = z.Mod(z, big.NewInt(int64(1<<numOfBitsInID)))
 	return hex.EncodeToString(z.Bytes()), nil
 }

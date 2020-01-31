@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/dosarudaniel/CS438_Project/chord"
 	. "github.com/dosarudaniel/CS438_Project/services/chord_service"
+	"github.com/dosarudaniel/CS438_Project/web"
 	"github.com/sirupsen/logrus"
 	"math/rand"
 	"net"
@@ -21,6 +22,7 @@ func main() {
 	existingNodeIp := flag.String("existingNodeIp", "", "ip:port for the existing Peerster in the Chord ring to join")
 	trace := flag.Bool("v", false, "more verbosity of the program")
 	m := flag.Int("m", 8, "Number of bits in one node's id; max = 256, min = 4 (multiple of 4)")
+	guiIPAddr := flag.String("guiIPAddr", "", "ip:port for running the web GUI")
 	fixFingerInterval := flag.Int("fixFingerInterval", 1, "Number of seconds between two runs of FixFingers Daemon")
 	stabilizeInterval := flag.Int("stabilizeInterval", 1, "Number of seconds between two runs of Stabilize Daemon")
 	checkPredecessorInterval := flag.Int("checkPredecessorInterval", 1, "Number of seconds between two runs of CheckPredecessor Daemon")
@@ -50,11 +52,11 @@ func main() {
 	}
 
 	chordNode, err := chord.NewChordNode(listener, chord.ChordConfig{
-		NumOfBitsInID:				*m,
-		ChunkSize:     				1024,
-		StabilizeInterval:     		time.Duration(*stabilizeInterval) * time.Second,
-		FixFingersInterval:			time.Duration(*fixFingerInterval) * time.Second,
-		CheckPredecessorInterval: 	time.Duration(*checkPredecessorInterval) * time.Second,
+		NumOfBitsInID:            *m,
+		ChunkSize:                1024,
+		StabilizeInterval:        time.Duration(*stabilizeInterval) * time.Second,
+		FixFingersInterval:       time.Duration(*fixFingerInterval) * time.Second,
+		CheckPredecessorInterval: time.Duration(*checkPredecessorInterval) * time.Second,
 	}, *trace)
 	if err != nil || chordNode == nil {
 		log.Fatal("creating new Chord node failed")
@@ -87,6 +89,10 @@ func main() {
 
 	default:
 		log.Fatal(fmt.Sprintf("One of the following flags should be true: 'create' or 'join'"))
+	}
+
+	if *guiIPAddr != "" {
+		go web.RunServer(*guiIPAddr, chordNode)
 	}
 
 	// runs infinitely
