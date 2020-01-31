@@ -27,38 +27,60 @@
 </head>
 <body style="padding-left: 10%; padding-top:2%">
 
-Your ID: <span class="small button" id="id_box"> {{ .Name }}</span>
 
-<section id="search">
-    <form action="" id="search_file">
-        <div class="ui category search">
-            <div class="ui icon input">
-                <input class="prompt" type="text" placeholder="Search for a file..." name="query">
-                <i class="search icon"></i>
-            </div>
-            <div class="results"></div>
+<div class="ui container">
+
+    <div class="ui two column stackable grid">
+
+        <div class="ui five wide column">
+
+            <section class="ui segment">
+                <b>Your ID:</b> <span class="small button" id="id_box"> {{ .Name }}</span>
+            </section>
+
+            <section class="ui segment">
+                <section id="upload">
+                    <form id="share_file_form" enctype="multipart/form-data" method="post" name="share_file_form">
+                        <div class="ui categor">
+                            <h3><label for="file_to_share">Choose a file to share:</label> <br></h3>
+                            <input type="file" class="ui input" id="file_to_share" name="file_to_share" required> <br>
+                            <input type="submit" class="ui button" value="Share" id="share_file_btn">
+                        </div>
+                    </form>
+                    <div id="upload_result">
+                    </div>
+                </section>
+            </section>
+
+
         </div>
-    </form>
 
-    <div id="search_result">
+        <div class="ui seven wide column">
 
-    </div>
+            {{/*            <img src="/assets/logo.png" alt="logo">*/}}
 
-    <div id="found_files">
-    </div>
-</section>
+            <section id="search">
+                <form action="" id="search_file">
+                    <div class="ui category search">
+                        <div class="ui icon input">
+                            <input class="prompt" type="text" placeholder="Search for a file..." name="query"
+                                   style="width: 600px">
+                            <i class="search icon"></i>
+                        </div>
+                        <div class="results"></div>
+                    </div>
+                </form>
 
-<section id="upload">
-    <form id="share_file_form" enctype="multipart/form-data" method="post" name="share_file_form">
-        <div class="ui category search">
-            <label for="file_to_share">Choose a file to share:</label> <br>
-            <input type="file" class="ui input" id="file_to_share" name="file_to_share" required> <br>
-            <input type="submit" value="send" id="share_file_btn">
+                <div id="found_files" style="margin-top: 30px; padding-left: 20px">
+                </div>
+            </section>
+
+
         </div>
-    </form>
-    <div id="upload_result">
+
     </div>
-</section>
+
+</div>
 
 <script src="/assets/script.js"></script>
 

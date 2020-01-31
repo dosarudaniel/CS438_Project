@@ -11,15 +11,23 @@ $("#search_file").on('submit', function (e) {
         success: function (fileRecords) { // res: Array({filename: string, owner_ip: string})
             let foundFilesDiv = $("#found_files");
             foundFilesDiv.html("");
+            foundFilesDiv.append("<h3>Search results: </h3>");
             if (fileRecords.length === 0) {
                 foundFilesDiv.html("No files found");
             } else {
                 fileRecords.map(fileRecord => {
                     let fileRecPar = $('<a>', {
                         href: "/download_file?filename=" + fileRecord.filename + "&owner_ip=" + fileRecord.owner_ip,
-                        text: fileRecord.filename + " \t\tat " + fileRecord.owner_ip
+                        text: fileRecord.filename + " @ " + fileRecord.owner_ip,
+                        style: "font-size: 18px"
                     });
-                    foundFilesDiv.append(fileRecPar)
+                    foundFilesDiv.append(fileRecPar);
+                    let info = $('p', {
+                        text: "Available at " + fileRecord.owner_ip
+                    });
+                    foundFilesDiv.append(info);
+                    foundFilesDiv.append("<br>");
+                    foundFilesDiv.append("<br>");
                 })
             }
         },
