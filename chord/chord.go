@@ -11,6 +11,7 @@ import (
 	"github.com/sirupsen/logrus"
 	"google.golang.org/grpc"
 	"net"
+	"sort"
 	"sync"
 )
 
@@ -108,7 +109,7 @@ func NewChordNode(listener net.Listener, config ChordConfig, verbose bool) (*Cho
 	// TODO replace by a constant or config.fixFingerInterval
 	go chordNode.RunAtInterval(StabilizeDaemon, chordNode.config.StabilizeInterval)
 	go chordNode.RunAtInterval(FixFingersDaemon(chordNode), chordNode.config.FixFingersInterval)
-	go chordNode.RunAtInterval(CheckPredecessorDaemon, chordNode.config.CheckPredecessorInterval)
+	//go chordNode.RunAtInterval(CheckPredecessorDaemon, chordNode.config.CheckPredecessorInterval)
 
 	return chordNode, nil
 }
@@ -304,7 +305,27 @@ func (chordNode *ChordNode) String() string {
 
 	outputString += "\t Inverted index tree: \n"
 	chordNode.hashTable.RLock()
+	type keyFileRecord struct {
+		key        string
+		fileRecord []*FileRecord
+	}
+	records := make([]keyFileRecord, 0)
 	for key, fileRecords := range chordNode.hashTable.table {
+
+		records = append(records, keyFileRecord{
+			key:        key,
+			fileRecord: fileRecords,
+		})
+	}
+	chordNode.hashTable.RUnlock()
+
+	sort.Slice(records, func(i, j int) bool {
+		return records[i].key < records[j].key
+	})
+
+	for _, keyFileRecords := range records {
+		key := keyFileRecords.key
+		fileRecords := keyFileRecords.fileRecord
 		hashKey, _ := chordNode.hashString(key)
 		outputString += fmt.Sprintf("\t\t (key %s) (hashKey string %s) (hashKey big.int %s)\n",
 			key, hashKey, idToBigIntString(hashKey))
@@ -317,7 +338,6 @@ func (chordNode *ChordNode) String() string {
 			}
 		}
 	}
-	chordNode.hashTable.RUnlock()
 
 	//outputString += "\t Connections: \n"
 	//chordNode.stubsPool.RLock()

@@ -46,7 +46,10 @@ func RunServer(guiIPAddr string, chordNode *chord.ChordNode) {
 // GET "/"
 // @return index.tmpl with filled in peer name
 func indexHandler(c *gin.Context) {
-	c.HTML(http.StatusOK, "index.tmpl", struct{ Name string }{server.chordNode.ID()})
+	c.HTML(http.StatusOK, "index.tmpl", struct {
+		Name string
+		IP   string
+	}{server.chordNode.ID(), server.chordNode.IP()})
 }
 
 func postSearchFileHandler(c *gin.Context) {
