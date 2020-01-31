@@ -32,7 +32,6 @@ func StabilizeDaemon(chordNode *ChordNode) {
 		return
 	}
 
-	// TODO what if successor is down
 	x, err := chordNode.stubGetPredecessor(ipAddr(succ.Ip), context.Background())
 	if err == nil && x != nil {
 		if isBetweenTwoNodesExclusive(chordNode.node.Id, x.Id, succ.Id) || chordNode.node.Id == succ.Id {
@@ -92,12 +91,11 @@ func FixFingersDaemon(chordNode *ChordNode) func(*ChordNode) {
  n.check_predecessor()
  	if (predecessor has failed) <- in our case responds to a FindSuccessor rpc call within 3 seconds
 		predecessor = nil;
- FIXME: implement correctly
 */
 func CheckPredecessorDaemon(chordNode *ChordNode) {
 	var err error
 
-	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second) //TODO the timeout should be flexible
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
 
 	pred, doesExist := chordNode.getPredecessor()

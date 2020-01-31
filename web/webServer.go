@@ -26,7 +26,7 @@ func RunServer(guiIPAddr string, chordNode *chord.ChordNode) {
 
 	r := gin.Default()
 	r.LoadHTMLGlob("./web/static/*")
-	r.Static("assets/", string(http.Dir("./web/static"))) // TODO: find a nicer solution
+	r.Static("assets/", string(http.Dir("./web/static")))
 
 	gin.DebugPrintRouteFunc = func(httpMethod, absolutePath, handlerName string, nuHandlers int) {
 		log.Printf("endpoint %v %v %v %v\n", httpMethod, absolutePath, handlerName, nuHandlers)

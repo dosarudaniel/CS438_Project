@@ -33,7 +33,7 @@ func (chordNode *ChordNode) RequestFileFromIP(filename string, nameToStore strin
 
 // Download function uses the TransferFile RPC to receive the file chunks which will be stored under _download/nameToStore
 func Download(client FileShareServiceClient, fileInfo *FileInfo, nameToStore string) error {
-	log.Printf("Downloading %v", fileInfo) // TODO for logging PR: Log.Info
+	log.Printf("Downloading %v", fileInfo)
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 	// Request a file from another node by using TransferFile RPC
@@ -65,7 +65,7 @@ func Download(client FileShareServiceClient, fileInfo *FileInfo, nameToStore str
 			fmt.Println(fmt.Sprintf("%v.Download(_): Could not write %v bytes into file %v", client, n, nameToStore))
 			return err
 		}
-		log.Println("Received one chunk: " + string(chunk.Content)) // TODO for logging PR: Log.Info
+		log.Println("Received one chunk: " + string(chunk.Content))
 	}
 
 	return nil

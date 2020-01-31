@@ -37,7 +37,7 @@ func (chordNode *ChordNode) UploadFile(ctx context.Context, msgFilenamePtr *File
 	keywords := strings.Split(cleanFilename(filename), " ")
 
 	for _, keyword := range keywords {
-		err := chordNode.PutInDHT(keyword, filename) //TODO impl proper error handling
+		err := chordNode.PutInDHT(keyword, filename)
 		if err != nil {
 			log.WithFields(logrus.Fields{
 				"filename": filename,
