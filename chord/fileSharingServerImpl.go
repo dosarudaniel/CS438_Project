@@ -26,8 +26,6 @@ func (chordNode *ChordNode) TransferFile(fileInfo *FileInfo, stream FileShareSer
 	if !fileExist(filePath) {
 		fmt.Println(fmt.Sprintf("File [%v] does not exist", filePath))
 		return nil // Do not stop the server
-	} else {
-		fmt.Println(fmt.Sprintf("File [%v] does exist", filePath))
 	}
 
 	file, err := os.Open(filePath)
